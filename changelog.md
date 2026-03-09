@@ -93,7 +93,7 @@ The archive uses sequential folder numbering (v001--v018) which does NOT corresp
 
 ### v0.7 -- External Red Team Pass 1 (Mar 2026, ~345 lines)
 
-- **Red Team: Gemini Oracle (external model adversarial review)**
+- **Red Team:   (external model adversarial review)**
 - Red team identified Hahn-Banach triangle vulnerability
 - Response: Added C_0 semigroup class specification to close the gap
 - Koopman operator interpretation sealed (no longer open to misinterpretation)
@@ -200,7 +200,7 @@ The archive uses sequential folder numbering (v001--v018) which does NOT corresp
 | File | Location | Purpose |
 |------|----------|---------|
 | `readme.md` | `.archive/` | Lean 4 proof correspondence table |
-| `red_team_analysis_v002.md` | `.archive/` | Gemini Oracle Red Team report (Hahn-Banach triangle analysis) |
+| `red_team_analysis_v002.md` | `.archive/` |   Red Team report (Hahn-Banach triangle analysis) |
 | `CHANGELOG_v009_to_v010.md` | `.archive/v010/` | Detailed v0.9 to v1.0 transition with full version history table |
 | Stress test companion | `.archive/v010/` | Adversarial stress test of v1.0 claims |
 
@@ -212,7 +212,7 @@ The archive uses sequential folder numbering (v001--v018) which does NOT corresp
 |-------|------|----------|--------|-------------|
 | RGB 1--3 | Internal | RGB Team (Red/Green/Blue) | Passed | Core theorems sound |
 | RGB 4 | Internal | RGB Team | Passed | Major expansion approved |
-| External RT 1 | Adversarial | Gemini Oracle | Passed (with fixes) | Hahn-Banach triangle gap -- fixed via C_0 semigroup class |
+| External RT 1 | Adversarial |   | Passed (with fixes) | Hahn-Banach triangle gap -- fixed via C_0 semigroup class |
 | External RT 2 | Adversarial | External model | Passed (with upgrade) | Coordinate-free reformulation of Theorem 3.1 |
 | External RT 3 | Adversarial | External model | Passed + LOCKED | 5 surgical fixes, paper locked |
 
