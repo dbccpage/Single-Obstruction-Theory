@@ -1,0 +1,986 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\section{\texorpdfstring{Hodge Structure and Gauge Equivalence of
+\(\ell^1\) Defect
+Fields}{Hodge Structure and Gauge Equivalence of \textbackslash ell\^{}1 Defect Fields}}\label{hodge-structure-and-gauge-equivalence-of-ell1-defect-fields}
+
+\textbf{Author:} Jeremy H. Carroll \textbf{Date:} March 2026
+\textbf{Version:} v4.0 (Pre-print)
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Classification of Results}\label{classification-of-results}
+
+This paper separates rigorous mathematics from original constructions
+and speculative analogies. Each result is annotated with its epistemic
+layer:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2121}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2424}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.5455}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Layer
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Status
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+What it contains
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{A: Theorems} & Established mathematics & Standard results from
+discrete algebraic topology and discrete \(\ell^2\) Hodge theory on
+finite graphs without 2-cells {[}1, 7, 8{]}. \\
+\textbf{B: Construction} & Original to this paper & The Cohomological
+\(\ell^1\) Norm \(\Phi\) (terminology adopted here for the \(\ell^1\)
+quotient norm on graph cohomology), the proof of its sparsity bias, LP
+cut-duality, and the inflation quantification. \\
+\textbf{C: Analogy} & Speculative & The structural parallel to
+anisotropic total variation (graph-TV) denoising in image processing
+{[}2, 13{]}. \\
+\end{longtable}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Abstract}\label{abstract}
+
+The preceding works {[}14, 15, 16{]} establish that additive,
+structure-preserving diagnostics on coboundary spaces uniquely induce an
+\(\ell^1\) geometry under explicit axioms. Given this constraint, a
+natural question is how to define a gauge-invariant measure of the
+irreducible component of a defect field.
+
+On finite graphs, classical discrete Hodge theory provides an
+\(\ell^2\)-orthogonal decomposition separating exact and harmonic
+components. However, this decomposition is not compatible with the
+\(\ell^1\) metric: the \(\ell^2\)-orthogonal projection onto the
+harmonic space does not, in general, minimize \(\ell^1\) cost within a
+cohomology class.
+
+We study the functional \[
+\Phi([\delta]) = \min_{f \in C^0} \|\delta - d_0 f\|_1,
+\] which is the standard \(\ell^1\) quotient norm on
+\(C^1 / \operatorname{im}(d_0)\) (the minimum is attained; see
+Proposition 8.2). While this optimization problem is classical
+(appearing in total variation minimization and minimum homologous chain
+problems {[}12{]}), we show that, under the structural constraints
+identified in {[}14--16{]}, it is the unique gauge-invariant norm
+compatible with the forced \(\ell^1\) geometry, in the sense that any
+norm on \(H^1(G)\) induced from the \(\ell^1\) norm on \(C^1\) via the
+quotient map must equal \(\Phi\) (Theorem 8.1, Remark 8.6).
+
+We further relate \(\Phi\) to discrete Hodge decomposition, prove that
+\(\ell^2\) projection generically inflates \(\ell^1\) cost (with an
+explicit ratio of \(3 - 2/n\) on cycle graphs \(C_n\)), and characterize
+\(\Phi\) via linear programming duality as the dual norm of bounded
+divergence-free circulations. This provides a unified interpretation
+connecting cohomology, \(\ell^1\) optimization, and network flows,
+without introducing new optimization machinery.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{1. Introduction}\label{introduction}
+
+The preceding papers in this series isolated the exact geometric
+magnitude of interaction defects generated when correlated systems are
+projected onto locally factorized manifolds. Paper 002 {[}16{]}
+established that coordinate-wise additivity forces an \(\ell^1\)
+geometry on finite graph cochains. Paper 001 {[}15{]} generalized this
+to Banach presheaves via functoriality under bounded linear maps. Paper
+000 {[}14{]} applied this geometric rigidity to show that projecting
+dynamics onto a product-state manifold creates an \(\ell^1\)-measurable
+curvature obstruction that persists at finite density.
+
+A natural next question arises: given a defect field
+\(\delta \in C^1(G)\), how should one decompose it into removable
+(exact) and irremovable (cohomological) components? The classical tool
+is the discrete Hodge decomposition, which operates in \(\ell^2\). But
+since the preceding papers establish \(\ell^1\) as the uniquely forced
+diagnostic geometry, a tension emerges.
+
+Crucially, the preceding papers do not merely motivate the use of an
+\(\ell^1\) metric --- they \emph{force} it. Throughout, we assume the
+\(\ell^1\) geometry established in {[}14--16{]}; this paper studies its
+consequences. Any decomposition or invariant associated with defect
+fields must therefore be compatible with this geometry. The central
+problem addressed here is thus not to choose a convenient norm, but to
+determine the canonical cohomological structure induced by the uniquely
+determined \(\ell^1\) metric.
+
+\textbf{Classical Hodge decomposition does not generally hold in \(L^1\)
+Banach spaces}, as they lack the inner-product structure necessary to
+define orthogonal projections. We do not construct an \(\ell^1\) Hodge
+decomposition. Instead, we use the classical \(\ell^2\) Hodge
+decomposition as an algebraic coordinate system on \(C^1(G)\) and
+evaluate its components under the \(\ell^1\) norm. By operating on
+\textbf{finite graphs} (finite-dimensional discrete 1-complexes), the
+vector space topology ensures that the \(\ell^2\) decomposition remains
+algebraically available, while the resulting mismatch between orthogonal
+projection in \(\ell^2\) and sparsity structure in \(\ell^1\) is made
+precise.
+
+We demonstrate that while the discrete \(\ell^2\) Hodge operators
+dictate the irremovable topological \emph{shape} of the obstruction,
+they generically increase its \(\ell^1\) \emph{magnitude}. To capture
+the true physical penalty, we construct the \textbf{Cohomological
+\(\ell^1\) Norm}: a well-defined functional
+\(\Phi : H^1(G, \mathbb{R}) \to \mathbb{R}_{\geq 0}\) that evaluates the
+topological defect not by \(\ell^2\) projection, but by infimal
+\(\ell^1\) gauge cost.
+
+\textbf{Scope and Relation to Existing Work.} We emphasize that the
+optimization problem \(\min_f \|\delta - d_0 f\|_1\) is not new. It
+appears in several established contexts, including anisotropic total
+variation on graphs {[}2, 13{]}, \(\ell^1\) regression over incidence
+matrices {[}4{]}, the minimum homologous chain problem {[}12{]}, and is
+related to Gromov's bounded cohomology {[}11{]} in the
+infinite-dimensional setting. Compressed sensing and basis pursuit
+{[}5{]} exploit the same \(\ell^1\) sparsity structure, and shortest
+cycle basis algorithms {[}6{]} address the underlying combinatorial
+structure. The contribution of this paper is not to introduce a new
+optimization framework, but to identify this functional as the unique
+gauge-invariant norm compatible with the \(\ell^1\) geometry that is
+structurally forced under the assumptions of {[}14--16{]}. Accordingly,
+the results here should be understood as a structural interpretation and
+organization of known optimization objects within a cohomological
+framework, rather than as the introduction of new algorithms or
+complexity results.
+
+\textbf{Recall (Papers 001--002).} The \(\ell^1\) coboundary norm
+\(I(s) = \sum_e \|\delta_e(s)\|\) is the unique (up to positive scalar)
+edge-additive, faithful, functorial seminorm on the 1-cochain space
+\(C^1(P, F)\) {[}15, 16{]}. In the presheaf language of {[}15{]}, the
+coboundary is \(\delta_e(s) = r_{b,a}(s(b)) - s(a)\). When the Banach
+presheaf \(F\) is the constant sheaf \(\mathbb{R}\) on a graph \(G\),
+this reduces to \((d_0 f)(e) = f(v) - f(u)\), the total norm \(I(s)\)
+becomes \(\|d_0 f\|_1\), and the quotient norm
+\(\Phi([\delta]) = \min_f I(s - d_0 f)\) measures the irreducible cost
+after gauge optimization. This paper develops the structure of \(\Phi\).
+
+\textbf{Notation bridge.} The following dictionary connects the presheaf
+notation of {[}14, 15{]} to the graph notation used in the remainder of
+this paper:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5692}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.4308}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Presheaf notation (Papers 000--001)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Graph notation (this paper)
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Poset \(P\), covering relations \(E_{\mathrm{cov}}(P)\) & Graph
+\(G = (V, E)\) \\
+Banach presheaf \(F\), stalks \(F(x)\), restrictions \(r_{b,a}\) &
+Constant sheaf \(\mathbb{R}\), identity restrictions \\
+Coboundary \(\delta_e(s) = r_{b,a}(s(b)) - s(a)\) & Discrete derivative
+\((d_0 f)(e) = f(v) - f(u)\) \\
+\(\ell^1\) coboundary norm \(I(s) = \sum_e \lVert\delta_e(s)\rVert\) &
+\(\lVert d_0 f \rVert_1 = \sum_e \lvert (d_0 f)_e \rvert\) \\
+\end{longtable}
+
+\textbf{Conventions.} Throughout this paper, \(G = (V,E)\) denotes a
+finite, connected, undirected graph. Each edge is assigned an arbitrary
+but fixed orientation, used only for algebraic bookkeeping; all results
+are independent of this choice. We work over the scalar field
+\(\mathbb{R}\). Norms are denoted \(\lVert \cdot \rVert\) with
+appropriate subscripts (\(\ell^1\), \(\ell^2\), \(\ell^\infty\));
+absolute values of scalars are denoted \(|\cdot|\). The extension to
+vector-valued defects \(\delta \in C^1(G, \mathbb{R}^k)\) proceeds
+component-wise and is discussed in Section 10.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{\texorpdfstring{2. Gauge Equivalence \textbf{(Layer
+A/B)}}{2. Gauge Equivalence (Layer A/B)}}\label{gauge-equivalence-layer-ab}
+
+Before constructing the decomposition machinery, we introduce the
+central physical notion that motivates the entire analysis.
+
+A defect field \(\delta \in C^1(G)\) records the local projection error
+across each edge. However, the absolute value of \(\delta\) on any
+single edge is not physically meaningful: it depends on the choice of
+local reference state at each vertex. A \textbf{gauge transformation} is
+a reassignment of these local reference states, parameterized by a
+vertex function \(f \in C^0(G) = \mathbb{R}^{|V|}\). We use ``gauge
+equivalence'' in the sense of equivalence under reassignment of local
+reference frames, analogous to the gauge freedom of electromagnetic
+potentials \(A \mapsto A + d\Lambda\).
+
+\textbf{Definition 2.1 (Gauge Equivalence).} Two defect fields
+\(\delta, \delta' \in C^1(G)\) are \textbf{gauge equivalent} if their
+difference is an exact gradient:
+\[ \delta \sim \delta' \iff \delta - \delta' \in \operatorname{im}(d_0) \]
+
+where \(d_0 : C^0 \to C^1\) is the discrete exterior derivative defined
+in Section 3. The equivalence class
+\([\delta] = \delta + \operatorname{im}(d_0)\) is the \textbf{gauge
+class} of \(\delta\).
+
+The physically meaningful quantity is not \(\delta\) itself but its
+gauge class \([\delta]\). The natural gauge-invariant magnitude of an
+obstruction is therefore:
+
+\[ \operatorname{Cost}(\delta) = \min_{f \in C^0} \|\delta - d_0 f\|_1 \]
+
+This is precisely the \(\ell^1\) quotient norm on
+\(C^1 / \operatorname{im}(d_0)\). It represents the minimal \(\ell^1\)
+cost achievable over all gauge-equivalent representatives. We will show
+that this quantity defines a norm on the first cohomology group
+\(H^1(G, \mathbb{R})\) and admits a clean dual formulation connecting it
+to the topological cycle structure of \(G\).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{\texorpdfstring{3. The Discrete de Rham Complex
+\textbf{(Layer
+A)}}{3. The Discrete de Rham Complex (Layer A)}}\label{the-discrete-de-rham-complex-layer-a}
+
+Let \(C^0 = \mathbb{R}^{|V|}\) denote the space of
+\textbf{\(0\)-cochains} (vertex functions) and
+\(C^1 = \mathbb{R}^{|E|}\) denote the space of \textbf{\(1\)-cochains}
+(edge fields). Each edge \(e\) carries its fixed orientation
+\(e = (u,v)\).
+
+\textbf{Definition 3.1 (Discrete Exterior Derivative).} The operator
+\(d_0 : C^0 \to C^1\) is the graph difference operator:
+\[ (d_0 f)(e_{uv}) = f(v) - f(u) \]
+
+Its matrix representation is the signed incidence matrix
+\(B \in \mathbb{R}^{|E| \times |V|}\), with \(B_{e,v} = +1\),
+\(B_{e,u} = -1\) for each oriented edge \(e = (u,v)\).
+
+\textbf{Definition 3.2 (Discrete Codifferential / Divergence).} The
+adjoint \(d_0^* : C^1 \to C^0\) is defined with respect to the standard
+\(\ell^2\) inner products on \(C^0\) and \(C^1\):
+\[ \langle d_0 f, \omega \rangle_{\ell^2} = \langle f, d_0^* \omega \rangle_{\ell^2} \]
+
+Explicitly, \(d_0^* = B^T\) and the \textbf{divergence} of a
+\(1\)-cochain \(\omega\) at a vertex \(u\) is the net signed flow:
+\[ (d_0^* \omega)(u) = \sum_{e \text{ incoming at } u} \omega(e) - \sum_{e \text{ outgoing from } u} \omega(e) \]
+
+The discrete de Rham complex for a graph without \(2\)-cells is:
+\[ C^0 \xrightarrow{d_0} C^1 \xrightarrow{0} 0 \]
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{\texorpdfstring{4. The Hodge Laplacian and Harmonic Cochains
+\textbf{(Layer
+A)}}{4. The Hodge Laplacian and Harmonic Cochains (Layer A)}}\label{the-hodge-laplacian-and-harmonic-cochains-layer-a}
+
+Following Eckmann {[}1{]}, Horak--Jost {[}7{]}, and Lim {[}8{]}, the
+full \(1\)-form Laplacian on a simplicial complex is:
+
+\[ \Delta_1 = d_0 \, d_0^{*} + d_1^{*} \, d_1 \]
+
+\textbf{Remark 4.1 (Convention and Missing 2-Cells).} For a graph (a
+1-dimensional simplicial complex), there are no \(2\)-cells.
+Consequently \(d_1 \equiv 0\), and the Laplacian collapses to:
+
+\[ \Delta_1 = d_0 \, d_0^* \quad \text{(graphs without 2-cells)} \]
+
+\textbf{Definition 4.2.} A \(1\)-cochain \(\omega \in C^1\) is
+\textbf{harmonic} if \(\Delta_1 \omega = 0\):
+\(\mathcal{H}^1(G) = \ker \Delta_1\).
+
+\textbf{Proposition 4.3.} \emph{For a graph without \(2\)-cells,
+\(\ker \Delta_1 = \ker d_0^*\).}
+
+\emph{Proof.} \(\ker d_0^* \subseteq \ker \Delta_1\) is immediate.
+Conversely, \(\Delta_1 \omega = 0\) implies
+\(0 = \langle d_0 d_0^* \omega, \omega \rangle_{\ell^2} = \|d_0^* \omega\|_{\ell^2}^2\),
+so \(d_0^* \omega = 0\). \(\blacksquare\)
+
+\textbf{Proposition 4.4.} \emph{If \(G\) is connected,
+\(\dim \mathcal{H}^1(G) = \beta_1(G) = |E| - |V| + 1\).}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{\texorpdfstring{5. The Discrete Hodge Decomposition
+\textbf{(Layer
+A)}}{5. The Discrete Hodge Decomposition (Layer A)}}\label{the-discrete-hodge-decomposition-layer-a}
+
+On a general continuous manifold, the Hodge theorem splits any 1-form
+into three orthogonal components:
+\(\omega = d\alpha + \delta \beta + h\) (exact, coexact, and harmonic).
+However, because our state space is a finite graph with no 2-cells,
+\(d_1 = 0\), its adjoint \(d_1^* = 0\), and the coexact term vanishes
+entirely. The decomposition reduces to exactly two functional pieces.
+
+\textbf{Theorem 5.1 (Bipartite Hodge Decomposition).} \emph{Every
+\(\delta \in C^1(G)\) decomposes algebraically uniquely as:}
+\[ \delta = \delta_{\text{ex}} + \delta_{\text{harm}}, \quad \delta_{\text{ex}} \in \operatorname{im}(d_0), \quad \delta_{\text{harm}} \in \ker d_0^*, \quad \delta_{\text{ex}} \perp_{\ell^2} \delta_{\text{harm}} \]
+
+\emph{Proof.} By the orthogonal complement theorem in finite dimensions,
+\(C^1 = \operatorname{im}(d_0) \oplus (\operatorname{im}(d_0))^\perp\).
+Since
+\(\langle d_0 f, h \rangle_{\ell^2} = \langle f, d_0^* h \rangle_{\ell^2}\)
+for all \(f, h\), we have
+\((\operatorname{im}(d_0))^\perp = \ker(d_0^*)\). Therefore
+\(C^1 = \operatorname{im}(d_0) \oplus \ker(d_0^*)\) with the two
+summands \(\ell^2\)-orthogonal. \(\blacksquare\)
+
+\textbf{Remark 5.2 (Finite-Dimensional Availability).} This theorem
+explicitly relies on the finite-dimensionality of the graph.
+Infinite-dimensional \(L^1\) spaces lack orthogonal complements, making
+\(L^1\) Hodge theory notoriously pathological. We do not attempt an
+\(\ell^1\) Hodge decomposition. Instead, we use the \(\ell^2\) Hodge
+decomposition as an algebraic coordinate system on \(C^1(G)\) ---
+guaranteed to exist in finite dimensions --- and then evaluate its
+components under the \(\ell^1\) norm. The resulting mismatch reflects
+the incompatibility between orthogonal projection in \(\ell^2\) and
+sparsity structure in \(\ell^1\).
+
+\textbf{Remark 5.3 (Topological Interpretation).} Under this framework,
+\(\operatorname{im}(d_0)\) corresponds to potential difference
+relationships (gauge transformations), while \(\ker d_0^*\) captures
+network circulations. The harmonic component \(\delta_{\text{harm}}\) is
+the gauge-invariant core, unchanged under
+\(\delta \mapsto \delta - d_0 g\). For trees (\(\beta_1 = 0\)), all
+defects are exact and trivially gauge-removable. For graphs with loops
+(\(\beta_1 > 0\)), any non-zero harmonic component constitutes an
+irreducible topological obstruction.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{\texorpdfstring{6. The \(\ell^1 / \ell^2\) Tension
+\textbf{(Layer
+A/B)}}{6. The \textbackslash ell\^{}1 / \textbackslash ell\^{}2 Tension (Layer A/B)}}\label{the-ell1-ell2-tension-layer-ab}
+
+\textbf{Remark 6.1 (Layer A).} \(\|x + y\|_1 \leq \|x\|_1 + \|y\|_1\),
+with equality iff \(x_e y_e \geq 0\) for all \(e\). This is the standard
+triangle inequality.
+
+\textbf{Remark 6.2 (Layer A).} Applying the triangle inequality to the
+Hodge decomposition:
+\(\|\delta\|_1 \leq \|\delta_{\text{ex}}\|_1 + \|\delta_{\text{harm}}\|_1\),
+with equality iff there is edgewise sign compatibility between the exact
+and harmonic components.
+
+\textbf{Remark 6.3.} Generic sign conflicts make the inequality strict.
+Thus, the \(\ell^2\) algebraic Hodge projection operator generically
+yields strictly larger \(\ell^1\) component sums except in
+sign-compatible cases.
+
+\textbf{Proposition 6.4 (Failure of \(\ell^2\) Hodge Minimization for
+\(\ell^1\) Cost) (Layer B).} Let \(\delta \in C^1(G)\) and let
+\(\delta = \delta_{\mathrm{ex}} + \delta_{\mathrm{harm}}\) be its
+\(\ell^2\) Hodge decomposition. Then:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  The harmonic component does not, in general, minimize \(\ell^1\) cost
+  over the cohomology class \([\delta]\):
+  \[\|\delta_{\mathrm{harm}}\|_1 \geq \Phi([\delta]),\] with strict
+  inequality for generic \(\delta\).
+\item
+  Equality holds if and only if \(\delta_{\mathrm{harm}}\) is already an
+  \(\ell^1\)-optimal representative of its cohomology class, which
+  requires sign compatibility between the harmonic component and any
+  exact correction.
+\end{enumerate}
+
+In particular, the \(\ell^2\)-orthogonal projection onto \(\ker d_0^*\)
+is not an \(\ell^1\)-optimal representative of the cohomology class.
+
+\emph{Proof.} By definition,
+\(\Phi([\delta]) = \min_{f \in C^0} \|\delta - d_0 f\|_1 \leq \|\delta_{\mathrm{harm}}\|_1\)
+since \(\delta_{\mathrm{harm}} = \delta - d_0 f_{\ell^2}\) for some
+\(f_{\ell^2}\). Strict inequality holds whenever a different gauge
+representative achieves lower \(\ell^1\) cost. By the crosspolytope
+geometry of the \(\ell^1\) ball, the \(\ell^2\)-optimal representative
+(which minimizes Euclidean distance to \(\ker d_0^*\)) generically
+diffuses mass across coordinates, while the \(\ell^1\)-optimal
+representative concentrates mass on minimal support. These coincide only
+when the harmonic projection is already sparse (sign-compatible). The
+examples below demonstrate strict inequality on all cycle graphs
+\(C_n\), \(n \geq 3\). \(\blacksquare\)
+
+\subsubsection{\texorpdfstring{6.1 Triangle Graph \textbf{(Layer
+B)}}{6.1 Triangle Graph (Layer B)}}\label{triangle-graph-layer-b}
+
+\textbf{Example 6.5.} On \(C_3\) with \(\beta_1 = 1\), cycle vector
+\(c = (1,1,1)^T\). A sparse local defect \(\delta = (1,0,0)^T\) resolves
+via \(\ell^2\) projection to: -
+\(\delta_{\text{harm}} = \frac{1}{3}(1,1,1)^T\),
+\(\quad \delta_{\text{ex}} = \frac{1}{3}(2,-1,-1)^T\) -
+\(\|\delta_{\text{ex}}\|_1 + \|\delta_{\text{harm}}\|_1 = \frac{4}{3} + 1 = \frac{7}{3} > 1 = \|\delta\|_1\)
+- Inflation ratio: \(7/3 \approx 2.33\)
+
+\subsubsection{\texorpdfstring{6.2 Square Cycle \textbf{(Layer
+B)}}{6.2 Square Cycle (Layer B)}}\label{square-cycle-layer-b}
+
+\textbf{Example 6.6.} On \(C_4\) with \(\delta = (1,0,0,0)^T\): -
+\(\delta_{\text{harm}} = \frac{1}{4}(1,1,1,1)^T\),
+\(\quad \delta_{\text{ex}} = \frac{1}{4}(3,-1,-1,-1)^T\) -
+\(\|\delta_{\text{harm}}\|_1 = 1\),
+\(\quad \|\delta_{\text{ex}}\|_1 = \frac{3}{4} + \frac{1}{4} + \frac{1}{4} + \frac{1}{4} = \frac{6}{4} = \frac{3}{2}\)
+-
+\(\|\delta_{\text{ex}}\|_1 + \|\delta_{\text{harm}}\|_1 = \frac{5}{2} > 1 = \|\delta\|_1\)
+- Inflation ratio: \(5/2 = 2.5\)
+
+\subsubsection{\texorpdfstring{6.3 Inflation Ratio on Cycle Graphs
+\textbf{(Layer
+B)}}{6.3 Inflation Ratio on Cycle Graphs (Layer B)}}\label{inflation-ratio-on-cycle-graphs-layer-b}
+
+\textbf{Proposition 6.7 (\(\ell^2\) Inflation Ratio on \(C_n\)).}
+\emph{For a single-edge defect
+\(\delta = \mathbf{e}_1 = (1, 0, \ldots, 0)^T\) on the cycle graph
+\(C_n\) (\(n \geq 3\)), the \(\ell^2\) Hodge decomposition inflation
+ratio is:}
+
+\[ \frac{\|\delta_{\text{ex}}\|_1 + \|\delta_{\text{harm}}\|_1}{\|\delta\|_1} = 3 - \frac{2}{n} \]
+
+\emph{Proof.} The harmonic space of \(C_n\) is
+\(\ker(d_0^*) = \operatorname{span}(\mathbf{1})\), where
+\(\mathbf{1} = (1,1,\ldots,1)^T\). The \(\ell^2\)-orthogonal projection
+onto \(\ker(d_0^*)\) gives:
+\[\delta_{\text{harm}} = \frac{\langle \delta, \mathbf{1} \rangle}{\langle \mathbf{1}, \mathbf{1} \rangle} \mathbf{1} = \frac{1}{n}\mathbf{1}\]
+\[\delta_{\text{ex}} = \delta - \delta_{\text{harm}} = \left(\frac{n-1}{n}, \frac{-1}{n}, \ldots, \frac{-1}{n}\right)\]
+
+Computing the \(\ell^1\) norms:
+\[\|\delta_{\text{harm}}\|_1 = n \cdot \frac{1}{n} = 1\]
+\[\|\delta_{\text{ex}}\|_1 = \frac{n-1}{n} + (n-1) \cdot \frac{1}{n} = \frac{2(n-1)}{n}\]
+
+The inflation ratio is:
+\[\frac{\|\delta_{\text{ex}}\|_1 + \|\delta_{\text{harm}}\|_1}{\|\delta\|_1} = \frac{\frac{2(n-1)}{n} + 1}{1} = \frac{2n - 2 + n}{n} = \frac{3n - 2}{n} = 3 - \frac{2}{n}\]
+
+This grows monotonically with \(n\) and approaches 3 as
+\(n \to \infty\). \(\blacksquare\)
+
+\textbf{Remark 6.8 (Crosspolytope Bias).} There is a geometric reason
+why the \(\ell^2\) harmonic projection generically increases \(\ell^1\)
+magnitude. The mismatch stems from the fundamental difference between
+Euclidean balls (\(\ell^2\)) and crosspolytopes (\(\ell^1\)) in high
+dimensions. The \(\ell^2\) orthogonal projection minimizes Euclidean
+distance but naturally diffuses mass across coordinates uniformly (e.g.,
+\(1/3, 1/3, 1/3\)). The \(\ell^1\) cost, dictated by the crosspolytope
+geometry, privileges sparse, extreme configurations (corners). When
+mapping a sparse exact defect onto the harmonic cycle space, \(\ell^2\)
+projection destroys its sparsity -- an inflation directly proportional
+to the loss of corner-localization.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{\texorpdfstring{7. The Cohomological \(\ell^1\) Norm
+\textbf{(Layer
+B)}}{7. The Cohomological \textbackslash ell\^{}1 Norm (Layer B)}}\label{the-cohomological-ell1-norm-layer-b}
+
+This section develops the \textbf{Cohomological \(\ell^1\) Norm}, a term
+we adopt for the \(\ell^1\) quotient norm on
+\(C^1/\operatorname{im}(d_0)\). The quotient norm construction is
+standard in functional analysis {[}4, 9{]}; the \(\ell^1\) quotient norm
+on homology classes appears in the bounded cohomology literature
+{[}11{]} and the minimum homologous chain problem {[}12{]}. The
+contribution here is not the optimization framework itself, but the
+identification, under the additivity and functoriality assumptions
+established in {[}14--16{]}, of \(\Phi\) as the unique gauge-invariant
+norm on \(H^1(G)\) induced by the forced \(\ell^1\) geometry (Remark
+8.6).
+
+\subsubsection{\texorpdfstring{7.1 The \(\ell^1\) Quotient
+Norm}{7.1 The \textbackslash ell\^{}1 Quotient Norm}}\label{the-ell1-quotient-norm}
+
+As established in Section 2, the scalar magnitude invariant under
+arbitrary local reference rescalings is the \textbf{\(\ell^1\) quotient
+norm} on the space of cochains modulo exact gradients
+\(C^1 / \operatorname{im}(d_0)\):
+\[ \operatorname{Cost}(\delta) = \min_{f \in C^0} \|\delta - d_0 f\|_1 \]
+
+\subsubsection{7.2 Descent to Cohomology}\label{descent-to-cohomology}
+
+The gauge class \([\delta] = \delta + \operatorname{im}(d_0)\) contains
+a unique element of \(\ker d_0^*\), namely
+\(\delta_{\text{harm}} = \Pi_{\ker d_0^*}(\delta)\), the
+\(\ell^2\)-orthogonal projection. This identification uses the
+\(\ell^2\) Hodge decomposition to select a canonical representative
+within each cohomology class; the \(\ell^1\) minimization itself is
+independent of this choice. Therefore:
+
+\[ \operatorname{Cost}(\delta) = \min_{r \in \delta_{\text{harm}} + \operatorname{im}(d_0)} \|r\|_1 \]
+
+This evaluates to a purely cohomological constraint. It depends only on
+the cohomology class \([\delta]\), with the harmonic representative
+providing a canonical coordinate in \(H^1(G, \mathbb{R})\).
+
+\subsubsection{7.3 The Cohomological Norm}\label{the-cohomological-norm}
+
+\textbf{Proposition 7.1 (Existence of Minimizers).} \emph{The minimum
+\(\min_{f \in C^0} \|\delta - d_0 f\|_1\) is attained for every
+\(\delta \in C^1(G)\).}
+
+\emph{Proof.} The objective \(f \mapsto \|\delta - d_0 f\|_1\) is
+continuous and coercive on \(C^0 / \ker(d_0) \cong \mathbb{R}^{|V|-1}\)
+(since \(\ker(d_0) = \operatorname{span}(\mathbf{1})\) for connected
+\(G\) and \(\|d_0 f\|_1 \to \infty\) as \(\|f\|_2 \to \infty\) on this
+quotient). A continuous coercive function on a finite-dimensional space
+attains its infimum {[}9{]}. \(\blacksquare\)
+
+\emph{Every minimizer \(r^* = \delta - d_0 f^*\) satisfies the
+first-order optimality condition \(B^T s^* = 0\) where
+\(s^* \in \partial\|\cdot\|_1(r^*)\) is a subgradient {[}9, Section
+23{]}. That is, \(s^*\) is a divergence-free flow bounded entrywise by
+1.}
+
+\textbf{Theorem 7.2 (Cohomological \(\ell^1\) Norm).} \emph{The
+functional}
+
+\[ \Phi : H^1(G, \mathbb{R}) \to \mathbb{R}_{\geq 0}, \qquad \Phi([\delta]) = \min_{r \in [\delta]} \|r\|_1 \]
+
+\emph{is a norm on \(H^1(G, \mathbb{R})\).}
+
+\emph{Proof.} \textbf{Positive definiteness.} If \(\Phi([\delta]) = 0\),
+then by Proposition 7.1 the minimum is attained: there exists \(f^*\)
+with \(\|\delta - d_0 f^*\|_1 = 0\), hence \(\delta = d_0 f^*\), so
+\([\delta] = 0\). Conversely, \([\delta] = 0\) gives
+\(\delta \in \operatorname{im}(d_0)\), so \(\Phi([\delta]) = 0\).
+
+\textbf{Absolute homogeneity.} For \(\lambda \neq 0\):
+\(\Phi([\lambda \delta]) = \min_f \|\lambda \delta - d_0 f\|_1 = \min_f \|\lambda(\delta - d_0(f/\lambda))\|_1 = |\lambda| \min_g \|\delta - d_0 g\|_1 = |\lambda| \Phi([\delta])\),
+where \(g = f/\lambda\). For \(\lambda = 0\): \(\Phi([0]) = 0\).
+
+\textbf{Triangle inequality.} Let \(f^*, g^*\) be minimizers for
+\([\delta]\) and \([\delta']\) respectively (existing by Proposition
+7.1). Choosing \(f = f^* + g^*\) in the minimization for
+\([\delta + \delta']\):
+\[\Phi([\delta + \delta']) = \min_f \|\delta + \delta' - d_0 f\|_1 \leq \|(\delta - d_0 f^*) + (\delta' - d_0 g^*)\|_1 \leq \|\delta - d_0 f^*\|_1 + \|\delta' - d_0 g^*\|_1 = \Phi([\delta]) + \Phi([\delta'])\]
+\(\blacksquare\)
+
+\subsubsection{7.4 Sparsity Bias}\label{sparsity-bias}
+
+\textbf{Remark 7.3 (Geometric Sparsity Bias).} \(\ell^1\) minimization
+inherently contacts the bounding faces of the crosspolytope geometry on
+low-dimensional faces (minimizing support). Consequently, optimization
+concentrates defects onto minimal edge cycles rather than expanding them
+as uniform fractional obstructions like the \(\ell^2\) harmonic
+projection inevitably does.
+
+\subsubsection{7.5 Structure on Cycle Bases and Minimum Weight
+Combinations}\label{structure-on-cycle-bases-and-minimum-weight-combinations}
+
+While minimizing \(\ell^1\) cost generally necessitates linear
+programming, the structural geometry of the cycle space allows for a
+direct evaluation on the graph's loops under favorable conditions.
+
+\textbf{Theorem 7.4 (Evaluation on Edge-Disjoint Cycles).} \emph{Let
+\(\{C_1, \ldots, C_{\beta_1}\}\) be a cycle basis for \(H^1(G)\) in
+which the cycles are pairwise edge-disjoint and vertex-disjoint (i.e.,
+no two cycles share an edge or a vertex). Given the harmonic expansion
+\(\delta_{\text{harm}} = \sum_{i=1}^{\beta_1} a_i C_i\), the
+cohomological norm is:}
+
+\[ \Phi([\delta]) = \sum_{i=1}^{\beta_1} |a_i| \|C_i\|_1 \]
+
+\emph{Proof.} Since the cycles are vertex-disjoint, their vertex sets
+\(V_i\) are pairwise disjoint. The potential \(f \in C^0\) decomposes as
+\(f = \sum_i f_i\) where \(f_i\) is supported on \(V_i\). The exact form
+\(d_0 f\) restricted to edge set \(E_i\) depends only on \(f_i\)
+(vertices outside \(V_i\) contribute zero to edges in \(E_i\)).
+Therefore:
+
+\[\min_f \|\delta - d_0 f\|_1 = \sum_{i=1}^{\beta_1} \min_{f_i \in \mathbb{R}^{V_i}} \sum_{e \in E_i} |a_i (C_i)_e - (d_0 f_i)_e|\]
+
+On each component, the cohomology class \([a_i C_i]\) is
+one-dimensional, and any exact correction on a single cycle changes the
+representative by \(d_0 f_i\) for \(f_i\) supported on \(V_i\). Since
+\(C_i\) is a single cycle, the minimum \(\ell^1\) representative of the
+class \([a_i C_i]\) has cost \(|a_i| \|C_i\|_1\) (any exact correction
+on a cycle merely redistributes, never reduces, the total absolute
+circulation). \(\blacksquare\)
+
+\textbf{Remark 7.5.} When cycles share vertices but not edges, the
+decomposition may still hold in practice, but the proof requires a more
+delicate LP analysis showing that the shared-vertex coupling constraints
+are independently satisfiable. When cycles share edges, the general case
+requires the linear program to resolve interactions, corresponding to
+the \textbf{minimum weight homologous chain} {[}12{]}.
+
+\textbf{Remark 7.6 (Geometry of the Cycle Polytope).} Under the \(\Phi\)
+functional, the metric geometry of \(H^1(G)\) behaves structurally as a
+polyhedral metric space whose unit locus mirrors the network's bounded
+cycle polytope
+(\(\operatorname{conv}\{\pm C_1, \ldots, \pm C_{\beta_1}\}\)).
+
+\textbf{Remark 7.7 (Uniqueness of \(\Phi\)).} The norm \(\Phi\) is the
+unique norm on \(H^1(G)\) induced via the \(\ell^1\) quotient
+construction on \(C^1(G)\) through the quotient map
+\(C^1 \to C^1/\operatorname{im}(d_0)\). This follows from the standard
+construction: the quotient norm \(\|[x]\| = \inf\{\|y\| : y \in [x]\}\)
+is the largest norm on the quotient space making the projection
+non-expansive {[}9, Section 2{]}. Since {[}14--16{]} establish
+\(\ell^1\) as the uniquely forced norm on \(C^1\), the quotient
+construction uniquely determines \(\Phi\). Choosing any other
+gauge-invariant norm on \(H^1\) (e.g., the \(\ell^2\) norm on harmonic
+representatives) would break compatibility with the induced \(\ell^1\)
+geometry.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{\texorpdfstring{8. Total Variation Denoising and Fast
+Algorithms \textbf{(Layer
+C)}}{8. Total Variation Denoising and Fast Algorithms (Layer C)}}\label{total-variation-denoising-and-fast-algorithms-layer-c}
+
+The gauge optimization \(\min_f \|\delta - B f\|_1\) exhibits structural
+isomorphism to \textbf{anisotropic total variation (TV) denoising}
+extensively developed in image filtering {[}2, 13{]}. Although the
+optimization is formally identical to graph total variation
+minimization, its role here is different: it arises as the quotient norm
+induced by the uniquely determined \(\ell^1\) geometry on coboundary
+spaces {[}14--16{]}, rather than as a regularization principle or signal
+recovery objective. Setting the mapping between computational models:
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule\noalign{}
+Imaging & Defect Topology \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Image Signal & Vertex Potential (\(f\)) \\
+Image Gradient (\(\nabla\)) & Exterior Derivative (\(d_0 = B\)) \\
+Observed Gradient (\(y\)) & Source Defect Field (\(\delta\)) \\
+TV Residual (\(y - \nabla u\)) & Topological Obstruction (\(r\)) \\
+\end{longtable}
+
+Consequently, the optimization objective directly mirrors \textbf{graph
+total variation (graph-TV)}. Where classical TV identifies structural
+borders (sparse semantic image edges), the framework localizes purely
+topological features (\textbf{sparse cycle contradictions}).
+
+\textbf{Computational Remark.} This overlap permits the use of
+algorithms designed for large-scale imaging tasks. Rather than utilizing
+generic \(O(|E|^3)\) interior point bounds, the \(\ell^1\) quotient norm
+is computable using splitting protocols (Chambolle--Pock primal-dual
+{[}2{]}, Split Bregman, ADMM), which admit per-iteration complexity
+scaling linearly in \(|E|\). Whether these methods achieve comparable
+convergence rates in the graph cohomology setting is an empirical
+question not addressed here; we note only the formal structural
+correspondence.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{\texorpdfstring{9. Cut Duality and Flow Circulation
+\textbf{(Layer
+B)}}{9. Cut Duality and Flow Circulation (Layer B)}}\label{cut-duality-and-flow-circulation-layer-b}
+
+We establish that the topological magnitude of the norm is strictly
+characterized by valid internal network configurations.
+
+\textbf{Theorem 9.1 (Cut Duality).}
+\[ \Phi([\delta]) = \max_{\phi} \left\{ \langle \phi, \delta \rangle : \|\phi\|_\infty \leq 1, \; d_0^* \phi = 0 \right\} \]
+
+\emph{Proof.} The primal problem \(\min_{f} \|\delta - B f\|_1\) is
+reformulated as a linear program by introducing auxiliary variables
+\(t_e \geq 0\):
+
+\[\text{Primal: } \min_{f, t} \sum_e t_e \quad \text{subject to} \quad -t_e \leq \delta_e - (Bf)_e \leq t_e, \quad t_e \geq 0\]
+
+Let \(\phi^+_e, \phi^-_e \geq 0\) be the dual variables for the upper
+and lower bound constraints respectively. Setting
+\(\phi_e = \phi^+_e - \phi^-_e\), the dual problem becomes:
+
+\[\text{Dual: } \max_{\phi} \langle \phi, \delta \rangle \quad \text{subject to} \quad B^T \phi = 0, \quad |\phi_e| \leq 1 \text{ for all } e\]
+
+The constraint \(B^T \phi = d_0^* \phi = 0\) requires \(\phi\) to be
+divergence-free (a circulation). The bound \(|\phi_e| \leq 1\)
+constrains \(\phi \in B_\infty\). Strong duality holds because the
+problem is a finite-dimensional LP with a non-empty primal feasible set
+(\(f = 0\) is feasible) and a bounded primal objective {[}4, Chapter
+5{]}. \(\blacksquare\)
+
+\textbf{Remark 9.2 (Dual Norm of Bounded Circulations).} The
+\(d_0^* \phi = 0\) condition fixes \(\phi \in Z_1(G)\), the cycle space.
+The bounded infinity constraint yields:
+
+\[ \Phi([\delta]) = \max_{\phi \in Z_1(G) \cap B_\infty} \langle \phi, \delta \rangle \]
+
+Hence, \(\Phi\) resolves as the exact \textbf{dual norm of bounded
+circulations}. Within the network interpretation, it isolates the
+maximal potential flow pairing compatible with the measured
+contradiction field \(\delta\).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{\texorpdfstring{10. Extension to Vector-Valued Defects
+\textbf{(Layer
+A/B)}}{10. Extension to Vector-Valued Defects (Layer A/B)}}\label{extension-to-vector-valued-defects-layer-ab}
+
+For \(\delta \in C^1(G, \mathbb{R}^k)\), define the separable \(\ell^1\)
+norm \(\|\delta\|_1 = \sum_{e \in E} \sum_{j=1}^k |\delta_{e,j}|\)
+(i.e., \(\ell^1\) over edges, then \(\ell^1\) over components). Under
+this norm, the decomposition and cohomological norm extend
+component-wise: \(\Phi([\delta]) = \sum_{j=1}^k \Phi([\delta^{(j)}])\).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{11. Discussion}\label{discussion}
+
+\subsubsection{11.1 What This Paper
+Establishes}\label{what-this-paper-establishes}
+
+The discrete \(\ell^2\) Hodge decomposition canonically identifies the
+topological shape of a cohomology class, but it does not respect the
+\(\ell^1\) geometry established in the preceding papers {[}14, 15, 16{]}
+as the uniquely forced diagnostic norm. The Cohomological \(\ell^1\)
+Norm \(\Phi([\delta])\) resolves this by optimizing over
+gauge-equivalent representatives to find the one of minimal \(\ell^1\)
+cost.
+
+The conceptual progression is: 1. \textbf{Topological classification}
+(Theorem 5.1, Layer A): Finite dimensions rescue the algebraic Hodge
+decomposition, categorizing gauge-removable and irreducible
+obstructions. 2. \textbf{\(\ell^1/\ell^2\) tension} (Section 6, Layer
+B): Evaluates Euclidean vs crosspolytope geometry, quantifying the
+harmonic \(\ell^2\) projection cost inflation at a ratio of \(3 - 2/n\)
+on cycle graphs. 3. \textbf{Cohomological norm} (Theorem 7.2, Layer B):
+Formalizes \(\Phi([\delta]) = \min_r \|r\|_1\) as the \(\ell^1\)
+quotient norm evaluating the defect's cycle space structure. 4.
+\textbf{Circulation duality} (Theorem 9.1, Layer B): Expresses
+obstruction severity as the maximal bounded divergence-free flow
+pairing. 5. \textbf{Image processing parallelism} (Section 8, Layer C):
+Notes the structural correspondence to TV denoising methods.
+
+\subsubsection{11.2 Relation to Prior
+Work}\label{relation-to-prior-work}
+
+The discrete de Rham complex on graphs is due to Eckmann {[}1{]}. The
+bipartite Hodge decomposition on graphs without 2-cells is standard (see
+Lim {[}8{]} for a modern treatment). The LP duality formulation of
+\(\Phi\) connects to classical network flow theory (Ford--Fulkerson
+{[}3{]}) and the coarea formula for graph total variation (Chambolle et
+al.~{[}2{]}). The \(\ell^1\) quotient norm on cohomology is related to
+Gromov's bounded cohomology {[}11{]}, though the finite-dimensional
+setting here avoids the subtleties of the infinite-dimensional theory.
+The quotient norm construction itself is standard in functional analysis
+{[}9{]}. The discrete calculus framework is developed systematically in
+{[}10{]}.
+
+\subsubsection{11.3 Position in the Unified
+Program}\label{position-in-the-unified-program}
+
+This paper completes the structural program initiated in the preceding
+works by resolving the final open question: given that \(\ell^1\) is the
+uniquely forced geometry on coboundary defects, what is the canonical
+gauge-invariant decomposition and measurement of such defects?
+
+The progression is now complete:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Combinatorial Level (Paper 002)} {[}16{]}: Local additivity
+  over disjoint coordinate supports and edge separability force
+  \(\ell^1\) geometry on finite cochains.
+\item
+  \textbf{Functional Level (Paper 001)} {[}15{]}: Structural
+  compatibility (functoriality under bounded linear maps) extends this
+  rigidity to Banach presheaves.
+\item
+  \textbf{Dynamical Level (Paper 000)} {[}14{]}: Projection of linear
+  dynamics onto nonlinear manifolds generates intrinsic coboundary
+  defects measured in this geometry, persisting at non-vanishing
+  density.
+\item
+  \textbf{Cohomological Level (this paper)}: The forced \(\ell^1\)
+  geometry induces a canonical quotient norm \(\Phi\) on \(H^1\),
+  providing the unique gauge-invariant measure of irreducible
+  obstruction (Remark 7.7). The \(\ell^2\) Hodge decomposition
+  identifies the topological shape; \(\Phi\) measures the true
+  \(\ell^1\) cost.
+\end{enumerate}
+
+Thus, the \(\ell^1\) structure is not an isolated phenomenon but
+persists across combinatorial, functional, dynamical, and topological
+layers. The measurement, decomposition, and optimization of defect
+fields are not independent choices, but are constrained by a single
+underlying geometric requirement.
+
+\emph{Remark (Observer-theoretic grounding).} The axioms forcing
+\(\ell^1\) geometry at each level of this escalation ladder admit an
+interpretation in terms of observational consistency: they correspond to
+the minimal structural conditions under which a local agent can
+consistently detect and aggregate defects. Edge locality requires local
+evaluability; coordinate additivity requires that independent channels
+contribute without cancellation; symmetry requires indifference to
+relabeling of structurally identical subsystems. Under this reading, the
+four-level program --- from combinatorial cochains through Banach
+presheaves and dynamics to the cohomological quotient norm developed
+here --- admits an interpretation as grounded in a single operational
+criterion: the existence of consistent local observers. The
+gauge-invariant norm \(\Phi\) inherits this interpretation: it measures
+the irreducible obstruction as seen by any observer who satisfies these
+consistency requirements. This perspective is developed in {[}14,
+Section 1.2{]} and parallels the combinatorial and functional-analytic
+versions established in {[}16, Section 3.3{]} and {[}15, Section 6.4{]}.
+
+\subsubsection{11.4 Limitations and Future
+Work}\label{limitations-and-future-work}
+
+The inflation analysis in Section 6 is restricted to cycle graphs
+\(C_n\) with a single-edge localized defect. A complete characterization
+of the inflation factor for general graphs remains open. The TV
+denoising analogy in Section 8 is structural rather than rigorous;
+formalizing the correspondence and establishing convergence rates is
+left to future work. The restriction to graphs without 2-cells means the
+coexact term vanishes. Extending the analysis to simplicial 2-complexes,
+where the full tripartite Hodge decomposition
+\(\delta = d\alpha + \delta\beta + h\) is active, is a natural next
+step.
+
+\subsubsection{11.5 Closing Remark}\label{closing-remark}
+
+The results of this paper do not introduce new optimization problems or
+algorithms; rather, they identify the structural role of an existing
+\(\ell^1\) minimization within a cohomological framework. When combined
+with the preceding classification results {[}14--16{]}, this shows that
+the measurement, decomposition, and optimization of defect fields are
+not independent choices, but are constrained by a single underlying
+geometric requirement. The \(\ell^1\) quotient norm \(\Phi\) thus serves
+as the consistent endpoint of this structure, linking local defect
+aggregation, global topology, and convex optimization in a common
+framework.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Acknowledgments}\label{acknowledgments}
+
+No external funding. No conflicts of interest.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{References}\label{references}
+
+{[}1{]} B. Eckmann, ``Harmonische Funktionen und Randwertaufgaben in
+einem Komplex,'' \emph{Commentarii Mathematici Helvetici} \textbf{17}
+(1944/45), 240--255.
+
+{[}2{]} A. Chambolle and T. Pock, ``A first-order primal-dual algorithm
+for convex problems with applications to imaging,'' \emph{J. Math.
+Imaging Vision} \textbf{40} (2011), 120--145.
+
+{[}3{]} L. R. Ford and D. R. Fulkerson, \emph{Flows in Networks},
+Princeton University Press, 1962.
+
+{[}4{]} S. Boyd and L. Vandenberghe, \emph{Convex Optimization},
+Cambridge University Press, 2004.
+
+{[}5{]} E. J. Cand`es and T. Tao, ``Decoding by linear programming,''
+\emph{IEEE Trans. Inform. Theory} \textbf{51} (2005), 4203--4215.
+
+{[}6{]} J. D. Horton, ``A polynomial-time algorithm to find the shortest
+cycle basis of a graph,'' \emph{SIAM J. Comput.} \textbf{16} (1987),
+358--366.
+
+{[}7{]} D. Horak and J. Jost, ``Spectra of combinatorial Laplace
+operators on simplicial complexes,'' \emph{Adv. Math.} \textbf{244}
+(2013), 303--336.
+
+{[}8{]} L.-H. Lim, ``Hodge Laplacians on Graphs,'' \emph{SIAM Review}
+\textbf{62} (2020), 685--715.
+
+{[}9{]} R. T. Rockafellar, \emph{Convex Analysis}, Princeton University
+Press, 1970.
+
+{[}10{]} R. Grady and A. Polimeni, \emph{Discrete Calculus}, Springer,
+2010.
+
+{[}11{]} M. Gromov, ``Volume and bounded cohomology,''
+\emph{Publications Math\textquotesingle ematiques de
+l'IH\textquotesingle ES} \textbf{56} (1982), 5--99.
+
+{[}12{]} T. K. Dey, A. N. Hirani, and B. Krishnamoorthy, ``Optimal
+homologous cycles, total unimodularity, and linear programming,''
+\emph{SIAM J. Comput.} \textbf{40} (2011), 1026--1044.
+
+{[}13{]} L. I. Rudin, S. Osher, and E. Fatemi, ``Nonlinear total
+variation based noise removal algorithms,'' \emph{Physica D: Nonlinear
+Phenomena} \textbf{60} (1992), 259--268.
+
+{[}14{]} J. H. Carroll, ``Single Obstruction Theory: Retraction
+Nonlinearity, \(\ell^1\) Rigidity, and Density Scaling,'' Zenodo, 2026.
+https://doi.org/10.5281/zenodo.19151803
+
+{[}15{]} J. H. Carroll, ``The Free \(\ell^1\) Seminorm on Banach
+Presheaf Coboundaries,'' Zenodo, 2026.
+https://doi.org/10.5281/zenodo.19152115
+
+{[}16{]} J. H. Carroll, ``Coordinate-Wise Additivity and the \(\ell^1\)
+Norm on Finite Graph Cochains,'' Zenodo, 2026.
+https://doi.org/10.5281/zenodo.18945342
+
+{[}17{]} S. Kakutani, ``Concrete representation of abstract
+\((L)\)-spaces and the mean ergodic theorem,'' \emph{Annals of
+Mathematics} \textbf{42} (1941), 523--537.
+
+\end{document}
