@@ -1,11 +1,3 @@
----
-title: "Global $\\ell^1$ Rigidity on Finite Graph Cochains"
-author: Jeremy H. Carroll
-documentclass: amsart
-abstract: |
-  This paper proves a classification theorem for seminorms on graph cochains, showing that structural independence and symmetry constraints force $\ell^1$ geometry. Any seminorm on $C^1(G,\mathbb{R}^k)$ that connects independent measurements—acting locally across edges and additively across disjoint coordinates—under permutation symmetry must be a scalar multiple of the $\ell^1$ norm. This establishes that the defect field is isometrically equivalent to $L^1(E \times \{1,\dots,k\})$ under the counting measure. The resulting $\ell^1 \otimes \ell^1$ metric demonstrates why total variation, graph cuts, and projection obstruction correlation measures inevitably restrict to sparse $\ell^1$ aggregation.
----
-
 ## 1. Introduction
 
 This paper completes a trilogy studying projection obstructions on presheaf coboundaries:

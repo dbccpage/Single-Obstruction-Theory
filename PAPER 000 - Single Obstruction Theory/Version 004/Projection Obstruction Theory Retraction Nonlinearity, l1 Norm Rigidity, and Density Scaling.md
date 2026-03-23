@@ -1,20 +1,8 @@
---- yaml
-title: Projection Obstruction Theory: Retraction Nonlinearity, l1 Rigidity, and Density Scaling
-author: Jeremy H. Carroll
-date: March 2026
-version: 28
-keywords: [retraction nonlinearity, l1 rigidity, presheaf coboundary, density scaling, Lieb-Robinson bounds, projected dynamics]
-license: CC-BY-4.0
-doi_series:
-  paper_000: 10.5281/zenodo.18896776
-  paper_001: 10.5281/zenodo.18897080
-  paper_002: 10.5281/zenodo.18945342
----
 # Projection Obstruction Theory: Retraction Nonlinearity, $\ell^1$ Rigidity, and Density Scaling
 
 **Author:** Jeremy H. Carroll
 **Date:** March 2026
-**Version:** v4.0 (Pre-print)
+**Version:** v1.0 (Pre-print)
 
 ---
 

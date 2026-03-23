@@ -1,14 +1,3 @@
---- yaml
-title: free_seminorm_classification_v004
-file_name: free_seminorm_classification_v004.md
-file_location: ~/anomalon_kernel\docs\research\.ooutwire_research\.academic_publications\001_free_seminorm_classification\v004/
-status: Goo
-invariance_level: Tier 8
-logic_system: Unclassified
-substrate: Markdown
-content_hash: a8de36e53a8e033c7063796ad6ae9869f9180648dd8878b180c8ccb881cce821
-version: 1
----
 # The Free $\ell^1$ Seminorm on Banach Presheaf Coboundaries
 
 **Author:** Jeremy H. Carroll

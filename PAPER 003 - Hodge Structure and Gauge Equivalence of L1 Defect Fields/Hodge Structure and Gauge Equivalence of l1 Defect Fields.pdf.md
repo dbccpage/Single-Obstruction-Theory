@@ -1,15 +1,3 @@
---- yaml
-title: Hodge Structure and Gauge Equivalence of l1 Defect Fields
-author: Jeremy H. Carroll
-date: March 2026
-version: 15
-keywords: [discrete Hodge theory, l1 quotient norm, gauge equivalence, defect fields, cohomology, linear programming duality]
-license: CC-BY-4.0
-doi_series:
-  paper_000: 10.5281/zenodo.18896776 : latest_version: 10.5281/zenodo.191151803
-  paper_001: 10.5281/zenodo.18897081 : latest_version: 10.5281/zenodo.191152115
-  paper_002: 10.5281/zenodo.18945342 : latest_version: 10.5281/zenodo.19152599
----
 # Hodge Structure and Gauge Equivalence of $\ell^1$ Defect Fields
 
 **Author:** Jeremy H. Carroll

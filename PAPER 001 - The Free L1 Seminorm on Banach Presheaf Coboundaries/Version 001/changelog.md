@@ -1,15 +1,4 @@
---- yaml
-title: Publication 001 Changelog
-paper: The Free ℓ¹ Seminorm on Banach Presheaf Coboundaries
-version: 4.0
-project: anomalon
-sub_project: ooutwire
-team: OmegaEngine
-codename: Woland
-classification_level: UNCLASSIFIED//FOR PUBLIC RELEASE
----
-
-# Changelog: Publication 001
+# Changelog -- Paper 001: The Free l1 Seminorm on Banach Presheaf Coboundaries
 
 This document records the evolution of **Publication 001**, which establishes the $\ell^1$ rigidity across the edges of Banach presheaf coboundaries. 
 

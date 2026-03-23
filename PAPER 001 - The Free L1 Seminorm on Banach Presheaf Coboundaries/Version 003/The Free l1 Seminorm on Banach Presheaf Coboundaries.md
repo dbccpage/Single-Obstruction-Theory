@@ -1,15 +1,3 @@
---- yaml
-title: The Free l1 Seminorm on Banach Presheaf Coboundaries
-author: Jeremy H. Carroll
-date: March 2026
-version: 12
-keywords: [Banach presheaf, l1 seminorm, coboundary norm, functoriality, Hahn-Banach, classification theorem]
-license: CC-BY-4.0
-doi_series:
-  paper_000: 10.5281/zenodo.18896776
-  paper_001: 10.5281/zenodo.18897080
-  paper_002: 10.5281/zenodo.18945342
----
 # The Free $\ell^1$ Seminorm on Banach Presheaf Coboundaries
 
 **Author:** Jeremy H. Carroll

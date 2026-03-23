@@ -1,16 +1,3 @@
---- yaml
-title: Coordinate-Wise Additivity and the l1 Norm on Finite Graph Cochains
-author: Jeremy H. Carroll
-date: March 2026
-version: 27
-keywords: [l1 norm, graph cochains, coordinate additivity, Kakutani L-spaces, defect diagnostics, total variation]
-license: CC-BY-4.0
-doi_series:
-  paper_000: 10.5281/zenodo.18896776 : latest_version: 10.5281/zenodo.191151803
-  paper_001: 10.5281/zenodo.18897081 : latest_version: 10.5281/zenodo.191152115
-  paper_002: 10.5281/zenodo.18945342
----
-
 # Coordinate-Wise Additivity and the $\ell^1$ Norm on Finite Graph Cochains
 
 **Author:** Jeremy H. Carroll
