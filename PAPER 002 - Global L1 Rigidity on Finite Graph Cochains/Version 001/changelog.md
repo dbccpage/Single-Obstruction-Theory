@@ -1,14 +1,5 @@
---- yaml
-title: changelog_classification_of_cochain_diagnostics
-file_name: changelog.md
-project: anomalon
-sub_project: ooutwire
-team: OmegaEngine
-codename: Woland
-classification_level: UNCLASSIFIED//FOR PUBLIC RELEASE
----
+# Changelog — Paper 002: Coordinate-Wise Additivity and the l1 Norm on Finite Graph Cochains
 
-# Changelog: Publication 002
 
 This document traces the evolution of **Publication 002** from its initial drafts through the rigorous adversarial review process, resulting in the final frozen `v021` preprint.
 
