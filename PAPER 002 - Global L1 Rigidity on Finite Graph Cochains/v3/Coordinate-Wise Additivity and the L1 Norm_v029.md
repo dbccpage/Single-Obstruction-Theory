@@ -1,0 +1,188 @@
+# Coordinate-Wise Additivity and the $\ell^1$ Norm on Finite Graph Cochains
+
+**Author:** Jeremy H. Carroll
+**Date:** March 2026
+**Version:** v3.0 (Pre-print)
+
+---
+
+## Abstract
+
+We prove that on finite directed graphs, any system of seminorms on the cochain space $C^1(G, \mathbb{R}^k) = \bigoplus_{e \in E} \mathbb{R}^k$ satisfying edge locality, coordinate additivity over disjoint supports, coordinate symmetry, and graph invariance must be proportional to the $\ell^1$ norm within this class of coordinate-additive, symmetric, and graph-invariant diagnostics, up to a global scalar. This characterizes $\ell^1$ as the unique geometry compatible with separable defect aggregation on finite cochains, providing a combinatorial foundation for the functional-analytic and dynamical classifications established in companion work.
+
+**Conventions.** Norms are denoted $\lVert \cdot \rVert$ with appropriate subscripts; scalar absolute values are denoted $|\cdot|$.
+
+---
+
+## 1. Introduction
+
+This paper is the first step in a sequence analyzing projection-induced defects on presheaf coboundaries through progressively richer structural settings:
+
+* **Paper 002 (this paper)** establishes that coordinate-wise additivity and symmetry on finite graph cochains force an $\ell^1$ geometry. The result is purely combinatorial and requires no functional-analytic or dynamical structure.
+* **Paper 001** [7] extends this classification to Banach presheaves, showing that functoriality under bounded linear maps similarly forces the $\ell^1$ coboundary norm as the unique additive diagnostic compatible with the ambient Banach geometry.
+* **Paper 000** [6] applies this rigidity to dynamics, proving that projection of linear evolution onto a nonlinear manifold produces intrinsic coboundary defects whose natural measurement is therefore necessarily $\ell^1$.
+
+The purpose of the present paper is to isolate the minimal structural mechanism behind this rigidity. Rather than beginning with Banach space assumptions or dynamical systems, we show that $\ell^1$ geometry already emerges at the level of finite graph cochains once one requires separability across independent coordinates and edges. This establishes the combinatorial core of the classification, which is then lifted and applied in subsequent work.
+
+A central mathematical question in obstruction theories is why the local diagnostic norm itself, operating on the $k$-dimensional measurement channels (the stalks), should assume an $\ell^1$ geometry instead of $\ell^2$ or $\ell^\infty$. While it is a classical result in Banach lattice theory that norms additive over disjoint supports correspond to $\ell^1$-type structures (e.g., Kakutani's abstract $L$-spaces [1]), this paper explicitly localizes that principle to finite graph cochains to prove global geometric rigidity. When forced to respect both axes of separability --- edges and coordinates --- the diagnosis becomes uniquely forced.
+
+---
+
+## 2. $\ell^1$ Characterization on Graph Cochains
+
+We recall that a **seminorm** on a vector space $V$ is a functional $\nu: V \to \mathbb{R}_{\ge0}$ that is subadditive ($\nu(x+y) \le \nu(x) + \nu(y)$) and absolutely homogeneous ($\nu(cx) = |c|\nu(x)$ for all scalars $c \in \mathbb{R}$).
+
+**Theorem 2.1.** For any finite directed graph $G=(V,E)$, consider the cochain space
+$$ C^1(G,\mathbb{R}^k)=\bigoplus_{e\in E}\mathbb{R}^k. $$
+
+Let $\nu_G:C^1(G,\mathbb{R}^k)\to\mathbb{R}_{\ge0}$ be a system of seminorms, defined uniformly across all finite graphs (i.e., the assignment $G \mapsto \nu_G$ is functorial with respect to graph isomorphisms), satisfying:
+
+1. **Edge locality (local additivity)**
+   $$ \nu_G(\delta)=\sum_{e\in E}\nu_e(\delta_e) $$
+2. **Coordinate symmetry**
+   $$ \nu_e(x_{\sigma(1)},\dots,x_{\sigma(k)}) = \nu_e(x_1,\dots,x_k) $$
+   for every permutation $\sigma$.
+3. **Coordinate additivity (local additivity over disjoint supports)**
+   If $x,y\in\mathbb{R}^k$ have disjoint coordinate support ($\mathrm{supp}(x) \cap \mathrm{supp}(y) = \varnothing$ where $\mathrm{supp}(x) = \{i : x_i \neq 0\}$), then
+   $$ \nu_e(x+y)=\nu_e(x)+\nu_e(y). $$
+4. **Graph invariance**
+   For any graph isomorphism $\sigma:G\to G'$,
+   $$ \nu_{G'}(\sigma_*\delta)=\nu_G(\delta). $$
+
+*Remark.* Axiom 3 is precisely the defining structural property of abstract $L$-spaces: additivity over disjoint supports [1].
+
+Then there exists $\alpha > 0$ such that universally for all $G$:
+$$ \nu_G(\delta)=\alpha\sum_{e\in E}\|\delta_e\|_1. $$
+
+**Proof.**
+
+By edge locality it suffices to classify the seminorm $\nu_e$ on $\mathbb{R}^k$.
+
+Let $x=(x_1,\dots,x_k)$. Decompose
+$$ x=\sum_{i=1}^k x_i \hat{e}_i. $$
+
+The vectors $x_i \hat{e}_i$ have disjoint coordinate support, so coordinate additivity gives
+$$ \nu_e(x)=\sum_{i=1}^k\nu_e(x_i \hat{e}_i). $$
+
+Since $\nu_e$ is a seminorm, it is absolutely homogeneous, providing
+$$ \nu_e(x_i \hat{e}_i)=|x_i|\nu_e(\hat{e}_i). $$
+
+By coordinate symmetry,
+$$ \nu_e(\hat{e}_i)=w_e $$
+for all $i$.
+
+Hence
+$$ \nu_e(x)=w_e\sum_{i=1}^k |x_i|=w_e\|x\|_1. $$
+
+Thus across the entire graph,
+$$ \nu_G(\delta)=\sum_{e\in E} w_e\|\delta_e\|_1. $$
+
+Finally, graph invariance implies all intrinsic weights coincide. Because the construction is required to be invariant across all finite graphs, the weights must coincide universally. Specifically, for any pair of edges $e_1, e_2$ (possibly in different graphs), consider a graph formed by disjoint union with a symmetric completion (e.g., a cycle or complete graph) admitting an automorphism exchanging the images of $e_1$ and $e_2$; invariance then forces equality of weights. Such symmetric completions can always be constructed by embedding edges into disjoint unions of isomorphic components (e.g., cycles or complete graphs) admitting automorphisms that exchange the embedded edges. Thus:
+$$ w_e=\alpha. $$
+
+Therefore
+$$ \nu_G(\delta)=\alpha\sum_{e\in E}\|\delta_e\|_1. $$
+$\square$
+
+**Corollary 2.2 (Discrete $L^1$ Structure of the Defect Space).** Under the hypotheses of Theorem 2.1, the cochain space equipped with the diagnostic seminorm satisfies
+
+$$
+(C^1(G,\mathbb{R}^k),\nu_G)
+\cong
+L^1(E\times\{1,\dots,k\})
+$$
+
+with respect to the counting measure.
+
+**Proof.**
+
+By Theorem 2.1,
+
+$$
+\nu_G(\delta)
+=
+\alpha\sum_{e\in E}\|\delta_e\|_1.
+$$
+
+Writing $\delta_{e,i}$ for the $i$-th coordinate of $\delta_e$, we obtain
+
+$$
+\nu_G(\delta)
+=
+\alpha\sum_{e\in E}\sum_{i=1}^k |\delta_{e,i}|.
+$$
+
+Define
+
+$$
+f:E\times\{1,\dots,k\}\to\mathbb{R}
+$$
+
+by
+
+$$
+f(e,i)=\delta_{e,i}.
+$$
+
+Then
+
+$$
+\nu_G(\delta)
+=
+\alpha\|f\|_{L^1}.
+$$
+
+Thus the diagnostic space is isometrically equivalent to
+$L^1(E\times\{1,\dots,k\})$ under the counting measure.
+$\square$
+
+
+---
+
+## 3. Structural Consequences
+
+### 3.1 Coarea Duality ($k = 1$)
+
+For scalar signals, the classified norm has a distinguished topological property.
+
+**Fact 3.1 (Discrete Coarea Formula** [2, 3]**).** For $v: V \to \mathbb{R}$:
+$$ \text{TV}_G(v) = \int_{-\infty}^{\infty} |\partial V_t| \, dt $$
+where $V_t = \{m : v_m > t\}$ and $|\partial V_t|$ counts edges crossing the boundary.
+
+When boundary conditions force a binary partition ($v_a = 1, v_b = 0$), $\ell^1$ minimization recovers the minimum $s$-$t$ cut via max-flow/min-cut [5].
+
+**Remark 3.2.** For $k > 1$, the total variation $\sum_e \|v_n - v_m\|_1$ decomposes (by Theorem 2.1) as a sum of $k$ independent scalar total variations, each individually satisfying the coarea formula.
+
+### 3.2 The Geometry of the Defect Field
+
+The explicit inclusion of **Coordinate Additivity** formally captures the physical independence of disparate measurement channels. Permutation symmetry and absolute homogeneity alone permit alternative norms such as $\ell^\infty$ or $\ell^2$. The strict structural requirement that physically isolated defect channels --- the orthogonal coordinates --- must accumulate their structural signatures linearly thereby uniquely determines the $\ell^1$ stalk geometry under these constraints.
+
+Thus, the unique seminorm compatible with the stated structural principles under the imposed local additivity and symmetry constraints is the $\ell^1$ coboundary norm: an $\ell^1$ geometry over the product index set.
+
+Conceptually, our theorem establishes (cf. [4]) that the defect space restricts to:
+$$ C^1(G,\mathbb{R}^k) \cong L^1(E \times \{1,\dots,k\}) $$
+whenever the diagnostic respects independent components. This serves as a finite combinatorial analogue of Kakutani's (1941) concrete characterization of abstract $L$-spaces [1]. Local additivity across independent structural components forces the $\ell^1$ geometry over the counting measure. Defect fields thus behave strictly as discrete 1-forms whose absolute total variation tracks graph cuts and sparse obstructions [3].
+
+### 3.3 Role in the Broader Classification Program
+
+The result obtained here isolates the combinatorial origin of $\ell^1$ geometry as a consequence of coordinate-wise and edge-wise separability. In subsequent work, this principle is shown to be stable under significant generalization. In particular, when the cochain spaces are replaced by Banach presheaves and coordinate additivity is replaced by structural compatibility in the form of functoriality under bounded linear maps [7], the same $\ell^1$ structure is recovered as the unique compatible seminorm.
+
+This stability across levels of abstraction indicates that the appearance of $\ell^1$ is not an artifact of discrete coordinates, but a structural feature of additive defect aggregation. The present theorem therefore provides the minimal case from which the more general Banach [7] and dynamical [6] results can be understood as extensions.
+
+---
+
+## Acknowledgments
+
+No external funding. No conflicts of interest.
+
+---
+
+## References
+
+1. Kakutani, S. (1941). *Concrete representation of abstract $(L)$-spaces and the mean ergodic theorem*. Annals of Mathematics, 42(2), 523-537.
+2. Fleming, W. H., & Rishel, R. (1960). *An integral formula for total gradient variation*. Archiv der Mathematik, 11(1), 218-222.
+3. Chambolle, A., et al. (2010). *An introduction to total variation for image analysis.* In: Theoretical Foundations and Numerical Methods for Sparse Recovery. De Gruyter.
+4. Rockafellar, R. T. (1970). *Convex Analysis.* Princeton University Press.
+5. Ford, L. R., & Fulkerson, D. R. (1956). *Maximal flow through a network.* Canadian Journal of Mathematics, 8, 399-404.
+6. Carroll, J. H. (2026). *Projection Obstruction for Factorized States: Nonlinear Dynamics, Additive ℓ¹ Structure, and Finite-Time Defect Bounds* Zenodo. https://doi.org/10.5281/zenodo.18896776
+7. Carroll, J. H. (2026). *The Free $\ell^1$ Seminorm on Banach Presheaf Coboundaries.* Zenodo. https://doi.org/10.5281/zenodo.18897080
