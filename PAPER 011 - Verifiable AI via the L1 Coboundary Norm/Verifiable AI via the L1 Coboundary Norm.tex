@@ -1,0 +1,2073 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\newenvironment{Shaded}{}{}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.50,0.00}{\textbf{#1}}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\section{\texorpdfstring{Verifiable AI via the \(\ell^1\) Coboundary
+Norm}{Verifiable AI via the \textbackslash ell\^{}1 Coboundary Norm}}\label{verifiable-ai-via-the-ell1-coboundary-norm}
+
+\emph{Domain Graphs, Hallucination Bounds, and the Autopoietic
+Verification Layer}
+
+\textbf{Author:} Jeremy H. Carroll \textbf{Date:} March 2026
+\textbf{Version:} v1.0 (Pre-Print)
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Abstract}\label{abstract}
+
+Current AI systems --- large language models, neural networks, diffusion
+models --- are trained by minimizing \(\ell^2\)-adjacent loss functions
+(mean squared error, cross-entropy, KL divergence). \(\ell^2\)-type
+objectives permit interpolation across inconsistent data, which can
+contribute to hallucination in the absence of explicit structural
+constraints, as the mean of conditional distributions on contradictory
+data may reflect no actual ground truth.
+
+We propose a verification framework based on the \(\ell^1\) coboundary
+norm. Given a domain modeled as a finite directed graph \(G = (V, E)\)
+with concepts as vertices and relationships as edges, an AI system's
+output defines a section \(s: V \to F(V)\) assigning claims to concepts.
+The \(\ell^1\) coboundary norm
+
+\[I(s) = \sum_{e \in E} \|\delta_e(s)\|\]
+
+measures the total inconsistency of this section across all edges.
+Within the class of defect measures satisfying locality, additivity,
+faithfulness, and symmetry, the uniqueness theorems of Papers 000--002
+identify this as the unique norm preserving structural topology. The
+framework's verification guarantee is exactly as strong as the domain
+graph specification.
+
+The Hodge decomposition of Paper 003 splits any defect field into an
+exact (repairable) component and an irreducible (cohomological)
+component. The irreducible component \(\Phi([\delta])\) is the domain's
+intrinsic complexity --- the \textbf{domain inconsistency floor
+(\(\Phi\))} --- the minimum inconsistency that \emph{any} system must
+exhibit on that domain. The autopoietic iterator of Paper 005 provides a
+convergent repair algorithm that drives the repairable component to
+zero.
+
+Together, these results yield: (1) a computable hallucination score for
+any AI output on any graph-modeled domain; (2) a decomposition into
+fixable errors and irreducible domain complexity; (3) a self-repairing
+verification layer with proved convergence; and (4) a categorical
+framework for transferring verification across domains.
+
+\textbf{Scope.} This paper applies established mathematical results
+(Papers 000--005) to AI verification. The mathematical foundations are
+proved; the AI application is a construction {[}Layer B{]} whose
+empirical validation is ongoing.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{1. Why AI Systems Hallucinate: A Structural
+Argument}\label{why-ai-systems-hallucinate-a-structural-argument}
+
+\subsubsection{\texorpdfstring{1.1 The \(\ell^2\) Origin of
+Hallucination}{1.1 The \textbackslash ell\^{}2 Origin of Hallucination}}\label{the-ell2-origin-of-hallucination}
+
+{[}Layer A --- standard machine learning theory; the mean/median
+distinction is classical (Huber 1964, Vapnik 1998). The connection
+between cross-entropy and mean-seeking behavior follows from the
+information-geometric structure of exponential families (Amari 1985).{]}
+
+Consider a training set containing two contradictory facts:
+
+\begin{itemize}
+\tightlist
+\item
+  Source A: ``The boiling point of water is 100C at sea level.''
+\item
+  Source B: ``The boiling point of water is 95C at sea level.''
+  (incorrect)
+\end{itemize}
+
+An \(\ell^2\)-type objective minimizes squared deviations, permitting
+distributions that interpolate between contradictory sources: the model
+can learn to assign probability mass between points, selecting phantom
+average values that may appear in \emph{neither} source. This
+interpolation is a mathematical consequence of how \(\ell^2\)
+minimization handles inconsistent data without strict topological
+constraints.
+
+The \(\ell^1\) minimizer, by contrast, finds the \emph{median}, reducing
+linear deviation without compounding across orthogonal directions. It
+strictly resists interpolating between contradictory boundaries. While
+real language model training is highly complex (e.g., varying decoding
+strategies, out-of-distribution shifts, missing constraints),
+\(\ell^2\)-driven interpolation across inconsistent logic serves as a
+primary contributing structural root to systemic hallucination.
+
+\subsubsection{1.2 The Problem at Scale}\label{the-problem-at-scale}
+
+This extends beyond individual facts. A large language model trained on
+billions of documents encounters contradictions at every scale:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Factual contradictions}: different sources disagree on dates,
+  numbers, names.
+\item
+  \textbf{Framing contradictions}: the same event described with
+  opposite causal narratives.
+\item
+  \textbf{Ontological contradictions}: different domains use the same
+  terms with incompatible meanings.
+\end{itemize}
+
+The \(\ell^2\) training objective averages over all of these, producing
+a model that speaks confidently about a world that is the \emph{mean of
+all worlds in the training data} --- a world that does not exist. The
+model's internal representation is a superposition of contradictory
+worldviews, and any particular output is a sample from this
+superposition. There is no mechanism within the \(\ell^2\) framework to
+detect, quantify, or bound this inconsistency.
+
+\subsubsection{1.3 Why Post-Hoc Fixes Are
+Insufficient}\label{why-post-hoc-fixes-are-insufficient}
+
+Current approaches to hallucination mitigation include:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2381}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3095}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4524}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Approach
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+What it does
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+What it cannot do
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{RAG} (Retrieval-Augmented Generation) & Grounds output in
+retrieved documents & Cannot bound residual inconsistency between
+retrieved documents and model priors \\
+\textbf{Confidence calibration} & Estimates model uncertainty & LLMs are
+confidently wrong; calibration requires held-out data from the
+deployment domain \\
+\textbf{RLHF} & Shapes behavior via reward model & Reward model is
+itself \(\ell^2\)-trained; shifts the hallucination, doesn't bound it \\
+\textbf{Constitutional AI} & Encodes rules as natural language & Rules
+are processed by the same \(\ell^2\)-optimized model; no formal
+guarantee \\
+\textbf{Fact-checking} & Verifies individual claims post-hoc & Does not
+scale; misses structural inconsistencies between claims \\
+\end{longtable}
+
+None of these provide a \emph{mathematical bound} on the total
+inconsistency of the output with respect to a domain. They are
+engineering patches on a structural problem.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{2. Domain Graphs and the
+Coboundary}\label{domain-graphs-and-the-coboundary}
+
+\subsubsection{2.1 Modeling a Domain as a
+Graph}\label{modeling-a-domain-as-a-graph}
+
+{[}Layer B --- construction{]}
+
+\textbf{Definition 2.1.} A \emph{domain graph} is a finite directed
+graph \(G = (V, E)\) where: - \textbf{Vertices} \(V\) represent
+concepts, entities, or propositions in a knowledge domain. -
+\textbf{Edges} \(E\) represent relationships, implications, or
+constraints between concepts.
+
+Each vertex \(v\) carries a \emph{fiber} \(F(v)\) --- the space of
+possible claims about that concept. Each edge \(e = (u, v)\) carries a
+\emph{restriction map} \(r_e: F(v) \to F(u)\) --- the constraint that
+the claim at \(v\) must be compatible with the claim at \(u\) via the
+relationship \(e\).
+
+\textbf{Examples:}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.3125}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2188}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2188}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Domain
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Vertices
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Edges
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Fiber
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Medical diagnosis & Symptoms, diseases, treatments &
+Causal/correlational links & Probability assignments \\
+Legal reasoning & Statutes, precedents, facts & Citations, implications
+& Interpretations \\
+Scientific knowledge & Hypotheses, experiments, data & Evidential
+support & Confidence levels \\
+Software architecture & Modules, interfaces, types & Dependencies, type
+constraints & Implementation states \\
+\end{longtable}
+
+This is a Banach presheaf over a finite poset --- the exact structure
+analyzed in Papers 000--002.
+
+\subsubsection{2.2 Sections and Defects}\label{sections-and-defects}
+
+{[}Layer A --- from Papers 000--002{]}
+
+\textbf{Definition 2.2.} A \emph{section} \(s\) of a domain graph
+assigns to each vertex \(v\) a claim \(s(v) \in F(v)\). An AI system's
+output on a domain defines such a section.
+
+\textbf{Definition 2.3.} The \emph{coboundary defect} at edge
+\(e = (u, v)\) is:
+
+\[\delta_e(s) = r_e(s(v)) - s(u) \in F(u)\]
+
+This measures the inconsistency between what vertex \(v\) claims
+(projected through the constraint \(e\)) and what vertex \(u\) claims
+directly. When \(\delta_e(s) = 0\), the claims are consistent across
+edge \(e\). When \(\delta_e(s) \neq 0\), there is a contradiction.
+
+\textbf{Definition 2.4.} The \emph{total defect} of a section is the
+\(\ell^1\) coboundary norm:
+
+\[I(s) = \sum_{e \in E} \|\delta_e(s)\|\]
+
+\subsubsection{\texorpdfstring{2.3 Why \(\ell^1\) and Only
+\(\ell^1\)}{2.3 Why \textbackslash ell\^{}1 and Only \textbackslash ell\^{}1}}\label{why-ell1-and-only-ell1}
+
+{[}Layer A --- Theorem 2.1 of Paper 002, Theorem 4.2 of Paper 000{]}
+
+\textbf{Theorem 2.5 (\(\ell^1\) Uniqueness).} Any defect measure \(\nu\)
+on the cochain space \(C^1(G, \mathbb{R}^k)\) satisfying:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Edge locality}: \(\nu(\delta) = \sum_e \nu_e(\delta_e)\) ---
+  each edge contributes independently.
+\item
+  \textbf{Coordinate additivity}: defects on disjoint channels aggregate
+  without cross-terms.
+\item
+  \textbf{Faithfulness}: \(\nu_e(\delta_e) = 0 \iff \delta_e = 0\) ---
+  no nonzero defect is invisible.
+\item
+  \textbf{Symmetry}: structurally isomorphic edges are treated
+  identically.
+\end{enumerate}
+
+is proportional to the \(\ell^1\) norm:
+\(\nu(\delta) = \alpha \sum_e \|\delta_e\|_1\) for some \(\alpha > 0\).
+
+\emph{This uniqueness is formal and bounded firmly within the axiomatic
+class.} The axioms themselves specify the minimal conditions for the
+existence of consistent local observers (Paper 000, Section 1.2):
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Locality} means an auditor can check one edge without global
+  access.
+\item
+  \textbf{Additivity} means errors on disconnected components don't
+  cancel.
+\item
+  \textbf{Faithfulness} means no real inconsistency is invisible to the
+  measure.
+\item
+  \textbf{Symmetry} means the measure doesn't depend on arbitrary
+  labeling.
+\end{itemize}
+
+Any organization deploying AI in a domain where wrong answers have
+consequences implicitly requires all four properties. The theorem says:
+then you must use \(\ell^1\).
+
+\subsubsection{2.4 What Other Norms Get
+Wrong}\label{what-other-norms-get-wrong}
+
+{[}Layer A --- direct consequences of the axioms{]}
+
+\textbf{The \(\ell^2\) failure (cancellation).}
+\(\|(+1, -1)\|_2 = \sqrt{2}\), but the \(\ell^2\) norm of the \emph{sum}
+permits cancellation: errors of opposite sign partially mask each other.
+An AI system could have large contradictions in opposite directions that
+appear small under \(\ell^2\) measurement. This is precisely the
+hallucination mechanism: the \(\ell^2\)-trained model has learned to
+balance contradictions rather than resolve them.
+
+\textbf{The \(\ell^\infty\) failure (blindness).}
+\(\|(1, \varepsilon)\|_\infty = 1\) regardless of \(\varepsilon\). The
+max-norm sees only the worst single edge and ignores all others. A
+system with one large error and a thousand small errors looks the same
+as a system with one large error and zero small errors. Distributed
+inconsistency is invisible.
+
+\textbf{The \(\ell^1\) guarantee (no hiding).} \(\|(+1, -1)\|_1 = 2\).
+Every nonzero defect contributes. Nothing cancels. Nothing hides. The
+total defect is the honest sum of all local inconsistencies.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{3. The Hodge Decomposition: Repairable
+vs.~Irreducible}\label{the-hodge-decomposition-repairable-vs.-irreducible}
+
+\subsubsection{3.1 Not All Defects Are
+Equal}\label{not-all-defects-are-equal}
+
+{[}Layer A --- Paper 003{]}
+
+A crucial insight from Paper 003 is that defects decompose into two
+fundamentally different kinds:
+
+\textbf{Definition 3.1.} The \emph{\(\ell^1\)-native decomposition} of a
+defect field \(\delta \in C^1(G)\) is:
+
+\[\delta = d_0 f^* + r^*\]
+
+where: - \(d_0 f^*\) is the \textbf{exact (gauge) component} --- the
+part of the defect that can be removed by changing the section \(s\)
+without changing the domain graph. These are \emph{fixable errors}. -
+\(r^*\) is the \textbf{irreducible (cohomological) component} --- the
+minimum-cost representative of the cohomology class
+\([\delta] \in H^1(G)\). These are \emph{structural inconsistencies
+inherent to the domain}.
+
+The irreducible component has cost:
+
+\[\Phi([\delta]) = \min_{f \in C^0} \|\delta - d_0 f\|_1\]
+
+This is the \(\ell^1\) quotient norm on \(H^1(G)\), computable by linear
+programming (Paper 003, Section 10).
+
+\subsubsection{3.2 What This Means for AI}\label{what-this-means-for-ai}
+
+{[}Layer B --- application{]}
+
+Given an AI system's output section \(s\) on a domain graph \(G\):
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Compute} \(I(s) = \sum_e \|\delta_e(s)\|\) --- the total
+  hallucination score.
+\item
+  \textbf{Decompose} \(\delta(s) = d_0 f^* + r^*\) via LP --- separate
+  fixable from irreducible.
+\item
+  \textbf{Compute} \(\Phi([\delta]) = \|r^*\|_1\) --- the irreducible
+  domain complexity.
+\item
+  \textbf{Report}:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    \textbf{Repairable defect}: \(I(s) - \Phi([\delta])\) --- the amount
+    of inconsistency that \emph{can} be fixed by changing the AI's
+    answers without changing the domain model.
+  \item
+    \textbf{Domain inconsistency floor (\(\Phi\))}: \(\Phi([\delta])\)
+    --- the minimum inconsistency that \emph{any} system must exhibit on
+    this domain, regardless of how good it is.
+  \item
+    \textbf{Hallucination ratio}: \((I(s) - \Phi([\delta])) / I(s)\) ---
+    the fraction of the defect that is the AI's fault vs.~the domain's
+    inherent complexity.
+  \end{itemize}
+\end{enumerate}
+
+\textbf{The irreducible defect \(\Phi\) is a property of the domain, not
+the AI.} If a medical knowledge graph has contradictory guidelines from
+different professional bodies, the resulting \(H^1 \neq 0\) means
+\emph{no system} can be fully consistent on that domain. Knowing this is
+itself valuable: it tells you where domain consensus needs to be built
+before AI deployment can be reliable.
+
+\subsubsection{\texorpdfstring{3.3 The Inflation Ratio: Quantifying
+\(\ell^2\)
+Failure}{3.3 The Inflation Ratio: Quantifying \textbackslash ell\^{}2 Failure}}\label{the-inflation-ratio-quantifying-ell2-failure}
+
+{[}Layer A --- Paper 003, Section 6{]}
+
+Paper 003 proves that \(\ell^2\) Hodge projection generically
+\emph{inflates} the \(\ell^1\) cost of the irreducible component. On
+cycle graphs \(C_n\), the inflation ratio is exactly \(3 - 2/n\).
+
+This means: if you use standard \(\ell^2\) methods (least-squares
+regression, neural network training, PCA-based dimensionality reduction)
+to estimate the irreducible defect, you will \emph{overestimate} it by a
+factor approaching 3. You will attribute to ``inherent domain
+complexity'' what is actually fixable error --- because \(\ell^2\)
+spreads mass where \(\ell^1\) concentrates it. This has direct
+consequences for AI deployment: \(\ell^2\)-based uncertainty estimates
+systematically overstate irreducible uncertainty and understate the AI
+system's correctable errors.
+
+\subsubsection{3.4 Worked Numerical Example: Medical Diagnostic
+Domain}\label{worked-numerical-example-medical-diagnostic-domain}
+
+{[}Layer B --- pedagogical construction demonstrating the framework
+end-to-end with concrete numbers{]}
+
+To make the framework concrete, we present a complete worked example on
+a small medical diagnostic domain.
+
+\textbf{Step 1: Domain Graph Construction}
+
+Consider a simplified diagnostic domain with 5 vertices (concepts) and 8
+directed edges (constraints):
+
+\textbf{Vertices}
+\(V = \{\text{Fever}, \text{Headache}, \text{Flu}, \text{Migraine}, \text{Dehydration}\}\)
+
+\textbf{Fibers}: Each vertex carries a probability fiber
+\(F(v) = [0, 1]\) representing the probability that a patient has that
+symptom or condition.
+
+\textbf{Edges} (with restriction maps): - \(e_1\): Flu \(\to\) Fever ---
+if Flu prob = \(p\), then Fever prob \(\geq 0.8p\) (flu typically causes
+fever) - \(e_2\): Flu \(\to\) Headache --- if Flu prob = \(p\), then
+Headache prob \(\geq 0.6p\) - \(e_3\): Migraine \(\to\) Headache --- if
+Migraine prob = \(p\), then Headache prob \(\geq 0.9p\) - \(e_4\):
+Dehydration \(\to\) Headache --- if Dehydration prob = \(p\), then
+Headache prob \(\geq 0.5p\) - \(e_5\): Dehydration \(\to\) Fever --- if
+Dehydration prob = \(p\), then Fever prob \(\geq 0.3p\) - \(e_6\): Fever
+\(\leftrightarrow\) Dehydration --- mutual exclusion constraint:
+\(|\text{Fever prob} - \text{Dehydration prob}| \geq 0.4\) (for
+simplicity in this example, we model a scenario where high fever and
+high dehydration probabilities should not both be elevated
+simultaneously without additional context) - \(e_7\): Headache \(\to\)
+Migraine --- if Headache prob \(> 0.7\) and no other causes, then
+Migraine prob \(\geq 0.5 \times \text{Headache prob}\) - \(e_8\): Flu
+\(\leftrightarrow\) Migraine --- Flu and Migraine are competing
+diagnoses: if Flu prob \(> 0.5\), then Migraine prob \(< 0.3\)
+(typically, having flu reduces the likelihood of migraine being the
+primary diagnosis)
+
+\textbf{Simplified representation}: To make the defect computation
+transparent, we represent each edge constraint as a linear inequality
+that should be satisfied for consistency. The defect at edge \(e\) is
+the violation magnitude when the constraint is not met.
+
+\textbf{Step 2: AI System Output (Initial Section)}
+
+An AI diagnostic system evaluates a patient and produces the following
+probability assignments:
+
+\begin{verbatim}
+s(Fever) = 0.7
+s(Headache) = 0.8
+s(Flu) = 0.6
+s(Migraine) = 0.5
+s(Dehydration) = 0.4
+\end{verbatim}
+
+\textbf{Step 3: Coboundary Computation}
+
+We compute the defect \(\delta_e(s)\) on each edge by checking
+constraint violations:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1111}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2222}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2037}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.4630}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Edge
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Constraint
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+AI Output
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Defect \(\|\delta_e(s)\|\)
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\(e_1\) & Fever \(\geq 0.8 \times\) Flu &
+\(0.7 \geq 0.8 \times 0.6 = 0.48\) ✓ & 0 (satisfied) \\
+\(e_2\) & Headache \(\geq 0.6 \times\) Flu &
+\(0.8 \geq 0.6 \times 0.6 = 0.36\) ✓ & 0 (satisfied) \\
+\(e_3\) & Headache \(\geq 0.9 \times\) Migraine &
+\(0.8 \geq 0.9 \times 0.5 = 0.45\) ✓ & 0 (satisfied) \\
+\(e_4\) & Headache \(\geq 0.5 \times\) Dehydration &
+\(0.8 \geq 0.5 \times 0.4 = 0.20\) ✓ & 0 (satisfied) \\
+\(e_5\) & Fever \(\geq 0.3 \times\) Dehydration &
+\(0.7 \geq 0.3 \times 0.4 = 0.12\) ✓ & 0 (satisfied) \\
+\(e_6\) & \(\|\text{Fever} - \text{Dehydration}\| \geq 0.4\) &
+\(\|0.7 - 0.4\| = 0.3 < 0.4\) ✗ & \(0.4 - 0.3 = 0.1\) \\
+\(e_7\) & If Headache \(> 0.7\) then Migraine \(\geq 0.5 \times\)
+Headache & \(0.5 \geq 0.5 \times 0.8 = 0.4\) ✓ & 0 (satisfied) \\
+\(e_8\) & If Flu \(> 0.5\) then Migraine \(< 0.3\) & Flu = 0.6, Migraine
+= 0.5 \(\not< 0.3\) ✗ & \(0.5 - 0.3 = 0.2\) \\
+\end{longtable}
+
+\textbf{Step 4: Total Defect}
+
+The total \(\ell^1\) coboundary defect is:
+
+\[I(s) = \sum_{e=1}^8 |\delta_e(s)| = 0 + 0 + 0 + 0 + 0 + 0.1 + 0 + 0.2 = 0.3\]
+
+The AI system has a hallucination score of \(I = 0.3\) on this domain.
+
+\textbf{Step 5: Hodge Decomposition (LP Formulation)}
+
+To separate repairable from irreducible defect, we solve:
+
+\[\Phi([\delta]) = \min_{f \in C^0(V, \mathbb{R})} \sum_{e \in E} |\delta_e(s) - d_0 f(e)|\]
+
+where \(d_0 f(e) = f(v) - f(u)\) for edge \(e = (u, v)\), and
+\(f: V \to \mathbb{R}\) represents a gauge transformation (adjustment to
+the section).
+
+This is a linear program with 5 variables (one per vertex) and
+constraints for each edge. The LP finds the optimal gauge shift that
+minimizes residual defect.
+
+\textbf{Solving the LP} (simplified for exposition):
+
+The two violated constraints are: - \(e_6\): Fever-Dehydration
+separation (defect 0.1) - \(e_8\): Flu-Migraine exclusion (defect 0.2)
+
+By adjusting \(f(\text{Migraine})\) down by 0.2, we can eliminate the
+\(e_8\) defect (bringing Migraine from 0.5 to 0.3). By adjusting
+\(f(\text{Dehydration})\) down by 0.1, we can eliminate the \(e_6\)
+defect (increasing the separation). These are independent repairs with
+no topological obstruction.
+
+\textbf{Result}: \(\Phi([\delta]) = 0\) (the defects are fully
+repairable; there is no irreducible cohomological component for this
+particular configuration).
+
+\textbf{Step 6: Defect Decomposition}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Total defect}: \(I(s) = 0.3\)
+\item
+  \textbf{Irreducible defect}: \(\Phi = 0\)
+\item
+  \textbf{Repairable defect}: \(R = I - \Phi = 0.3\)
+\item
+  \textbf{Hallucination ratio}: \(\eta = R / I = 1.0\) (100\% of the
+  defect is the AI's fault, 0\% is irreducible domain complexity)
+\end{itemize}
+
+\textbf{Step 7: AGI Repair}
+
+The Autopoietic Gauge Iterator repairs the section by iteratively
+applying \(\ell^1\)-median updates:
+
+\textbf{Iteration 1}: Target vertex \(v^* = \text{Migraine}\) (highest
+local defect contribution from \(e_8\))
+
+\begin{itemize}
+\tightlist
+\item
+  Neighbors contributing to Migraine: Headache (via \(e_7\)), Flu (via
+  \(e_8\))
+\item
+  Projected values: Headache suggests Migraine \(\approx 0.4\) (from
+  \(e_7\)), Flu constraint suggests Migraine \(< 0.3\) (from \(e_8\))
+\item
+  Weighted \(\ell^1\) median: \(s(\text{Migraine}) \gets 0.3\) (reduced
+  from 0.5)
+\end{itemize}
+
+\textbf{After Iteration 1}: - \(e_8\) defect: Migraine now 0.3, exactly
+at the boundary --- defect reduced to 0 - New total defect:
+\(I(s) = 0.1\) (only \(e_6\) remains)
+
+\textbf{Iteration 2}: Target vertex \(v^* = \text{Dehydration}\) (only
+remaining defect at \(e_6\))
+
+\begin{itemize}
+\tightlist
+\item
+  Adjusting Dehydration down to 0.3 or Fever up to 0.8 would satisfy
+  \(e_6\)
+\item
+  Given other constraints (Fever is constrained by \(e_1\), \(e_5\)),
+  the median-based repair adjusts Dehydration \(\gets 0.3\)
+\end{itemize}
+
+\textbf{After Iteration 2}: - \(e_6\) defect: \(|0.7 - 0.3| = 0.4\),
+exactly at the boundary --- defect = 0 - New total defect:
+\(I(s^*) = 0\)
+
+\textbf{Convergence}: The AGI has repaired the section to full
+consistency in 2 iterations.
+
+\textbf{Step 8: Hallucination Certificate}
+
+The final certificate for this AI system's output on this domain graph
+is:
+
+\[\mathcal{H}(\mathcal{A}, G) = (I=0.3, \Phi=0, R=0.3, \eta=1.0, \mathcal{C}=\emptyset)\]
+
+\textbf{Interpretation}: - \textbf{\(I = 0.3\)}: The AI's initial output
+had measurable structural inconsistency. - \textbf{\(\Phi = 0\)}: None
+of this inconsistency is irreducible; the domain graph itself is fully
+consistent. - \textbf{\(R = 0.3\)}: All 0.3 units of defect are
+repairable errors made by the AI system. - \textbf{\(\eta = 1.0\)}:
+100\% of the defect is the AI's fault. The domain has no contradictions.
+- \textbf{\(\mathcal{C} = \emptyset\)}: No cohomology classes carry
+irreducible defect (the domain has \(H^1(G) = 0\) or a trivial
+cohomological contribution).
+
+\textbf{After AGI repair}, the certificate for the repaired section
+\(s^*\) is:
+
+\[\mathcal{H}(\mathcal{A}_{\text{repaired}}, G) = (I=0, \Phi=0, R=0, \eta=0, \mathcal{C}=\emptyset)\]
+
+The repaired output is fully consistent with the domain graph.
+
+\textbf{What This Example Demonstrates}:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Concrete computation}: Every step involves actual numbers that
+  can be verified by hand or with a standard LP solver.
+\item
+  \textbf{Transparency}: The defects at \(e_6\) and \(e_8\) are explicit
+  violations of domain constraints, not statistical artifacts.
+\item
+  \textbf{Repairability analysis}: The LP demonstrates that both defects
+  are gauge-removable (no topological obstruction).
+\item
+  \textbf{Convergent repair}: The AGI eliminates both defects in 2
+  iterations using \(\ell^1\)-median updates.
+\item
+  \textbf{Certification}: The final certificate provides a complete,
+  auditable summary of the AI's consistency with the domain.
+\end{enumerate}
+
+\textbf{Contrast with \(\ell^2\) approach}: An \(\ell^2\)-trained system
+minimizing mean squared error would produce probability assignments that
+average over the conflicting constraints at \(e_6\) and \(e_8\),
+potentially outputting Migraine \(\approx 0.4\) (the mean of 0.5 and
+0.3) rather than resolving the conflict. The \(\ell^2\) defect
+\(\|(0.1, 0.2)\|_2 = \sqrt{0.05} \approx 0.22\) would appear smaller
+than the \(\ell^1\) defect \(0.3\), masking the actual inconsistency.
+The \(\ell^1\) framework forces the system to address each edge
+violation explicitly, without averaging.
+
+This example captures the full pipeline from domain graph construction
+through defect measurement, Hodge decomposition, repair, and
+certification --- with every number explicit and verifiable. It serves
+as a template for applying the framework to real-world domains.
+
+\subsubsection{\texorpdfstring{3.5 Worked Example: Irreducible Defect
+(\(\Phi > 0\))}{3.5 Worked Example: Irreducible Defect (\textbackslash Phi \textgreater{} 0)}}\label{worked-example-irreducible-defect-phi-0}
+
+We now present a minimal domain where inconsistency is
+\textbf{structural and unavoidable}.
+
+\textbf{Step 1: Domain Graph} Let \(V = \{A, B, C\}\) Edges: *
+\(e_1: A = B\) * \(e_2: B = C\) * \(e_3: A \neq C\)
+
+\textbf{Step 2: Interpretation} Constraints imply \(A = B\) and
+\(B = C \implies A = C\). But we also require \(A \neq C\). This creates
+a \textbf{cycle inconsistency}.
+
+\textbf{Step 3: Section (AI Output)} Let
+\(s(A) = 1, \quad s(B) = 1, \quad s(C) = 1\)
+
+\textbf{Step 4: Coboundary} Compute defects: * \(e_1: A = B \implies 0\)
+* \(e_2: B = C \implies 0\) * \(e_3: A \neq C \implies 1\)
+
+\textbf{Step 5: Total Defect} \[ I(s) = 1 \]
+
+\textbf{Step 6: Minimize Defect} Try all consistent assignments: *
+\textbf{Case 1:} \(A = B = C\) * equality constraints satisfied *
+inequality violated \(\implies\) defect = 1 * \textbf{Case 2:} break
+equality (e.g.~\(A \neq C\)) * at least one of \(A = B\) or \(B = C\)
+must fail \(\implies\) defect \(\geq 1\)
+
+\textbf{Conclusion:} \[ \Phi = 1 \]
+
+\textbf{Step 7: Decomposition} \[ R = I - \Phi = 1 - 1 = 0 \]
+
+\textbf{Step 8: Certificate}
+\[ \mathcal{H} = (I=1, \Phi=1, R=0, \eta=0, \mathcal{C}=\{\text{cycle}\}) \]
+
+\textbf{Step 9: AGI Behavior} The Autopoietic Gauge Iterator attempts
+median updates and evaluates local consistency. But every configuration
+has defect \(\geq 1\). So no update reduces \(I\), and the system
+converges immediately to:
+
+\textbf{Final State:} \[ s^* = s, \quad I(s^*) = \Phi = 1 \]
+
+\textbf{Interpretation (strict, no philosophy)} * The inconsistency is
+\textbf{not repairable}. * It is a \textbf{cohomological obstruction}. *
+It resides in a nontrivial cycle in \(H^1(G)\).
+
+\emph{The verification layer correctly identifies that no section can
+satisfy all constraints simultaneously and therefore refuses to produce
+a zero-defect output.}
+
+\subsubsection{3.6 Cohomological Interpretation of Irreducible
+Defect}\label{cohomological-interpretation-of-irreducible-defect}
+
+We now connect the irreducible defect in Example 3.5 to nontrivial
+cohomology.
+
+\textbf{Proposition 3.6 (Irreducible defect \(\iff\) nontrivial
+cohomology class)} Let \(\delta \in C^1(G)\) be the coboundary defect of
+a section \(s\). Then:
+\[ \Phi([\delta]) > 0 \quad \Longleftrightarrow \quad [\delta] \neq 0 \in H^1(G) \]
+
+\textbf{Proof Sketch:} We argue directly from the \(\ell^1\)
+formulation.
+
+\textbf{(\(\implies\)) If \(\Phi > 0\), then \([\delta] \neq 0\)} By
+definition: \(\Phi = \min_{f} \|\delta - d_0 f\|_1\). If
+\([\delta] = 0\), then there exists \(f\) such that \(\delta = d_0 f\),
+which implies \(\|\delta - d_0 f\|_1 = 0\), contradicting \(\Phi > 0\).
+Therefore, \(\Phi > 0 \implies [\delta] \neq 0\).
+
+\textbf{(\(\Longleftarrow\)) If \([\delta] \neq 0\), then \(\Phi > 0\)}
+If \([\delta] \neq 0\), then \(\delta \notin \operatorname{im}(d_0)\).
+So for all \(f\), \(\delta - d_0 f \neq 0\). By faithfulness of the
+\(\ell^1\) norm, \(\|\delta - d_0 f\|_1 > 0\). Taking the minimum over
+all \(f\), \(\Phi > 0\).
+
+\textbf{Conclusion:}
+\[ \Phi = 0 \quad \Longleftrightarrow \quad [\delta] = 0 \]
+\[ \Phi > 0 \quad \Longleftrightarrow \quad [\delta] \neq 0 \]
+\(\blacksquare\)
+
+\emph{Irreducible defect is exactly the \(\ell^1\) norm of a nontrivial
+cohomology class; it vanishes if and only if the defect is globally
+exact.}
+
+In Example 3.5, the cycle \(A \to B \to C \to A\) carries a nontrivial
+cohomology class, and the inequality constraint forces a nonzero
+representative, yielding \(\Phi = 1\).
+
+Examples 3.4 and 3.5 demonstrate the two pure, isolated regimes of the
+verification framework: complete repairability (\(\Phi = 0\)) and
+topologically protected inconsistency (\(\Phi > 0\)), corresponding to
+trivial and nontrivial cohomology respectively. In practice, real-world
+knowledge domains are richly mixed, exhibiting clusters of cleanly
+repairable logic entangled with dense, cyclic ambiguities that yield
+nonzero cohomological floors (\(\Phi > 0\)).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{4. The Autopoietic Iterator: Self-Repairing
+AI}\label{the-autopoietic-iterator-self-repairing-ai}
+
+\subsubsection{4.1 The Algorithm}\label{the-algorithm}
+
+{[}Layer A --- Paper 005, with convergence proof in companion
+document{]}
+
+The Autopoietic Gauge Iterator (AGI) is a repair algorithm that drives
+the repairable component of the defect to zero:
+
+\begin{verbatim}
+Input: Domain graph G = (V, E), section s, tolerance epsilon
+Output: Repaired section s* with I(s*) <= Phi([delta]) + epsilon
+
+Repeat:
+    1. DETECT: Find the vertex v* with maximum local defect
+       C_v(s) = sum_{e incident to v} ||delta_e(s)||
+
+    2. OPTIMIZE: Replace s(v*) with the weighted median of
+       its neighbors' projected values
+       s(v*) <- median_L1({r_e(s(u)) : u ~ v*})
+
+       (The weighted median is defined with respect to edge weights induced by the $\ell^1$ norm on fibers, ensuring minimization of local defect contribution at the vertex.)
+
+    3. SUBDIVIDE: If the residual defect at v* exceeds a
+       threshold after optimization, refine the domain graph
+       locally (add vertices and edges to resolve the
+       topological obstruction)
+
+Until I(s) - Phi([delta]) < epsilon
+\end{verbatim}
+
+The median update is a local realization of an underlying \(\ell^1\)
+primal--dual optimization flow (Paper 005, Section 8), ensuring
+convergence to a global \(\ell^1\)-minimal configuration.
+
+\subsubsection{4.2 Convergence Guarantees}\label{convergence-guarantees}
+
+{[}Layer A --- proved in agi\_convergence\_proof.md{]}
+
+\textbf{Theorem 4.1 (Monotone Descent).} Each iteration of the AGI
+strictly decreases the total defect:
+
+\[I(s) - I(s') \geq \frac{\deg(v^*)}{2} |s(v^*) - m^*|\]
+
+where \(m^*\) is the weighted median at vertex \(v^*\).
+
+\textbf{Theorem 4.2 (Convergence Rate).} The AGI reaches an
+\(\varepsilon\)-approximate fixed point in at most
+\(O(I_0 / \varepsilon)\) iterations, where \(I_0\) is the initial
+defect. Under a non-degeneracy condition, convergence is geometric:
+\(O(\log(1/\varepsilon))\) iterations.
+
+\textbf{Theorem 4.3 (Cohomological Floor).} The AGI converges to
+\(I^* = \Phi([\delta])\) --- the irreducible cohomological defect. It
+removes all repairable error and stops at the topological boundary.
+
+\subsubsection{4.3 What This Means for
+AI}\label{what-this-means-for-ai-1}
+
+{[}Layer B --- application{]}
+
+The AGI provides a \emph{post-processing verification and repair layer}
+for any AI system:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  The AI generates output (section \(s\) on domain graph \(G\)).
+\item
+  The AGI computes \(I(s)\) and decomposes the defect.
+\item
+  For each repairable inconsistency, the AGI proposes a median-based
+  correction.
+\item
+  The repaired output \(s^*\) has defect \(I^* = \Phi([\delta])\) ---
+  the minimum achievable.
+\item
+  If \(\Phi > 0\), the AGI reports which cycles in \(G\) carry
+  irreducible inconsistency, identifying the specific domain
+  contradictions that prevent full consistency.
+\end{enumerate}
+
+This is not fine-tuning. It is not RLHF. It is a \emph{mathematical
+verification layer} that sits between the AI and the user, acting
+structurally as a \textbf{consistency projection operator}---not a truth
+optimizer---with proved convergence and a computable bound on residual
+error.
+
+\textbf{Proposition 4.X (AGI realizes the \(\ell^1\) projection).} The
+Autopoietic Gauge Iterator converges to a section \(s^*\) satisfying:
+\[ I(s^*) = \Phi([\delta(s)]) \] and therefore computes a minimizer of
+the \(\ell^1\) coboundary norm over the gauge orbit of \(s\). In
+particular, the repairable defect \(R(s) = I(s) - \Phi([\delta])\) is
+exactly the portion eliminated by the iterator.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{5. The Hallucination
+Certificate}\label{the-hallucination-certificate}
+
+\subsubsection{5.1 Definition}\label{definition}
+
+{[}Layer B --- construction{]}
+
+\textbf{Definition 5.1.} A \emph{hallucination certificate} for an AI
+system \(\mathcal{A}\) on a domain graph \(G\) is a tuple:
+
+\[\mathcal{H}(\mathcal{A}, G) = (I, \Phi, R, \eta, \mathcal{C})\]
+
+where: - \(I = I(s_\mathcal{A})\) is the total defect of the AI's output
+section. - \(\Phi = \Phi([\delta])\) is the irreducible domain
+complexity. - \(R = I - \Phi\) is the repairable defect (the AI's
+fault). - \(\eta = R / I\) is the hallucination ratio
+(\(0 \leq \eta \leq 1\)). - \(\mathcal{C} \subset H^1(G)\) is the set of
+cohomology classes carrying irreducible defect, identifying \emph{which
+domain contradictions} prevent full consistency.
+
+\subsubsection{5.2 Properties}\label{properties}
+
+{[}Layer A --- follows from Papers 002--003{]}
+
+The hallucination certificate has the following guaranteed properties:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Completeness}: \(I = 0 \iff\) the AI's output is fully
+  consistent with the domain graph. No inconsistency is hidden.
+\item
+  \textbf{Soundness}: \(\Phi > 0 \implies\) no system can achieve
+  \(I = 0\) on this domain. The certificate correctly identifies
+  irreducible complexity.
+\item
+  \textbf{Computability}: \(I\) is computed in \(O(|E|)\) time. \(\Phi\)
+  is computed by linear programming in polynomial time.
+\item
+  \textbf{Compositionality}: For domain graphs \(G_1, G_2\) with no
+  shared edges, \(I(s|_{G_1 \sqcup G_2}) = I(s|_{G_1}) + I(s|_{G_2})\).
+  The certificate decomposes over independent subdomains.
+\item
+  \textbf{Monotonicity under repair}: After AGI repair,
+  \(I(s^*) \leq I(s)\) and \(R(s^*) = 0\).
+\end{enumerate}
+
+\subsubsection{5.3 What You Can Put in a
+Contract}\label{what-you-can-put-in-a-contract}
+
+{[}Layer B --- application{]}
+
+The hallucination certificate enables contractual guarantees of a form
+that no current AI system can provide:
+
+\begin{quote}
+\emph{``On domain \(G\) (specified as a graph with \(|V|\) concepts and
+\(|E|\) relationships), the AI system's output has total defect
+\(I \leq X\), of which at most \(\Phi = Y\) is irreducible domain
+complexity. The system's repairable defect is \(R = X - Y\), and after
+verification-layer repair, the residual defect is \(\Phi = Y\). The
+specific domain contradictions preventing full consistency are
+identified in the cohomology report \(\mathcal{C}\).''}
+\end{quote}
+
+This is a number. It goes in a contract. It is auditable. It is
+reproducible. No current AI vendor can provide anything comparable.
+
+The hallucination certificate guarantees bounded structural
+inconsistency with respect to the specified domain graph; it does not
+guarantee factual correctness beyond the fidelity of the domain model.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{6. The Categorical Framework: Cross-Domain
+Transfer}\label{the-categorical-framework-cross-domain-transfer}
+
+\subsubsection{6.1 Domains as Objects in a
+Category}\label{domains-as-objects-in-a-category}
+
+{[}Layer B --- from Paper 006{]}
+
+\textbf{Definition 6.1.} The \emph{category of domain graphs}
+\(\mathbf{Dom}\) has: - \textbf{Objects}: Domain graphs \((G, F, r)\)
+--- graph, fibers, restriction maps. - \textbf{Morphisms}: Graph
+homomorphisms \(\phi: G_1 \to G_2\) that commute with restriction maps:
+\(r_{\phi(e)} \circ \phi_* = \phi_* \circ r_e\).
+
+A morphism \(\phi: G_1 \to G_2\) is a \emph{refinement} if it is
+injective on vertices (the target domain has at least as much structure
+as the source).
+
+\textbf{Theorem 6.2 (Defect Functoriality).} {[}Layer A --- from Paper
+000, Axiom 3{]} For any domain morphism \(\phi: G_1 \to G_2\) and
+section \(s\) on \(G_2\):
+
+\[I(\phi^* s) \leq I(s)\]
+
+Pulling back to a coarser domain cannot increase defect. Equivalently:
+measuring on a finer domain graph can only \emph{reveal} more
+inconsistency, never less.
+
+\subsubsection{6.2 Practical Consequence}\label{practical-consequence}
+
+{[}Layer B --- application{]}
+
+This means: - If you verify an AI system on a detailed domain graph and
+it passes, it will also pass on any coarser version of that domain. - If
+an AI system fails on a coarse domain graph, no amount of additional
+detail will fix it --- the inconsistency is already visible at the
+coarse level. - Domain graph refinement is a \emph{monotone information
+operator}: more structure means more potential defect to detect.
+
+This provides a principled approach to domain graph construction: start
+coarse, compute the hallucination certificate, refine where the defect
+concentrates, repeat. The autopoietic subdivision step (Paper 005)
+automates this process.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{\texorpdfstring{7. Architecture: The \(\ell^1\) Verification
+Stack}{7. Architecture: The \textbackslash ell\^{}1 Verification Stack}}\label{architecture-the-ell1-verification-stack}
+
+\subsubsection{7.1 System Design}\label{system-design}
+
+{[}Layer B --- engineering construction{]}
+
+\begin{verbatim}
+                    +------------------+
+                    |   User / Client  |
+                    +--------+---------+
+                             |
+                    +--------v---------+
+                    | Hallucination    |
+                    | Certificate      |  <-- Output: (I, Phi, R, eta, C)
+                    +--------+---------+
+                             |
+                +------------v-----------+
+                |   Autopoietic Repair   |
+                |   Layer (AGI)          |  <-- Proved convergence
+                +------------+-----------+
+                             |
+                +------------v-----------+
+                |   Hodge Decomposition  |
+                |   (LP Solver)          |  <-- Exact + Irreducible split
+                +------------+-----------+
+                             |
+                +------------v-----------+
+                |   Coboundary Computer  |
+                |   I(s) = Sum ||d_e||   |  <-- O(|E|) computation
+                +------------+-----------+
+                             |
+              +--------------v--------------+
+              |                             |
+     +--------v--------+          +--------v--------+
+     | AI System Output |          | Domain Graph    |
+     | (section s)      |          | (G, F, r)       |
+     +------------------+          +-----------------+
+\end{verbatim}
+
+\subsubsection{7.2 Computational
+Complexity}\label{computational-complexity}
+
+{[}Layer A --- standard complexity results{]}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.3667}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2667}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Operation
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Complexity
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Method
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Coboundary computation \(\delta_e(s)\) & \(O(\|E\|)\) & Direct
+evaluation \\
+Total defect \(I(s)\) & \(O(\|E\|)\) & Sum of norms \\
+Hodge decomposition & \(O(\|E\|^{1.5})\) & LP (network simplex) \\
+Single AGI repair step & \(O(\Delta_{\max})\) & Weighted median \\
+Full AGI convergence & \(O(\|V\| \cdot I_0 / \varepsilon)\) &
+Iterative \\
+Cohomology computation \(H^1(G)\) & \(O(\|E\| - \|V\| + c)\) & Cycle
+space basis \\
+\end{longtable}
+
+For a domain graph with 10,000 concepts and 50,000 relationships, the
+full verification pipeline (coboundary + Hodge + repair + certificate)
+runs in seconds on commodity hardware. This is not a theoretical
+exercise --- it is deployable infrastructure.
+
+\subsubsection{7.3 Integration Modes}\label{integration-modes}
+
+{[}Layer B --- engineering{]}
+
+The \(\ell^1\) verification layer can be deployed in three modes:
+
+\textbf{Mode 1: Post-hoc audit.} Run the verification pipeline on
+completed AI outputs. Produces a hallucination certificate without
+modifying the output. Useful for compliance, auditing, and domain
+qualification.
+
+\textbf{Mode 2: Repair loop.} Run the AGI on AI outputs to produce
+corrected versions with minimum defect. The repaired output satisfies
+\(I(s^*) = \Phi([\delta])\). Useful for high-stakes deployments where
+consistency is required.
+
+\textbf{Mode 3: Training signal.} Use the coboundary defect \(I(s)\) as
+a training loss or reward signal. Replace \(\ell^2\) cross-entropy with
+\(\ell^1\) coboundary loss on a domain graph. Train the AI to minimize
+structural inconsistency directly. {[}Layer C --- conjectural; requires
+empirical validation of training dynamics.{]}
+
+\textbf{Mode 4: Constraint-guided generation.} An extension is to
+integrate local defect gradients into the generation process, enabling
+consistency-aware decoding rather than post-hoc repair.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{8. What This Framework Does Not
+Solve}\label{what-this-framework-does-not-solve}
+
+{[}Layer A --- honest scope limitation{]}
+
+\subsubsection{8.1 Limitations}\label{limitations}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Domain graph construction is non-trivial.} The framework
+  assumes a domain graph \(G\) is given. Constructing \(G\) for a real
+  domain (medicine, law, finance) requires domain expertise and is
+  itself a significant engineering task. The framework does not automate
+  this step --- though the autopoietic subdivision (Paper 005) provides
+  a principled refinement procedure once an initial graph exists.
+\item
+  \textbf{Fiber choice matters.} The fibers \(F(v)\) and restriction
+  maps \(r_e\) must be chosen to reflect the actual constraints of the
+  domain. Poor choices produce vacuous certificates (everything passes)
+  or impossible standards (nothing passes). Domain modeling is an art,
+  not a theorem.
+\item
+  \textbf{The framework measures consistency, not truth.} A section can
+  be fully consistent (\(I = 0\)) and still be \emph{wrong} --- it just
+  needs to be internally coherent. If the domain graph itself contains
+  false relationships, the verification layer will enforce consistency
+  with those false relationships. The AGI repair operator enforces
+  consistency, not correctness, and may distort the truth to achieve
+  mathematical coherence. The verification guarantee is only as strong
+  as the domain graph specification. The \(\ell^1\) framework guarantees
+  \emph{structural integrity}, not \emph{factual correctness}.
+\item
+  \textbf{Computational cost scales with domain graph size.} For domains
+  with millions of concepts and relationships, the LP solver for the
+  Hodge decomposition becomes the bottleneck. Approximation algorithms
+  exist but weaken the guarantees.
+\item
+  \textbf{The autopoietic repair changes the output.} Mode 2 (repair
+  loop) modifies the AI's answers to achieve consistency. This may
+  change correct answers to achieve global consistency --- the
+  median-based repair does not know which individual claims are true,
+  only which configurations are globally consistent. Human review of
+  repairs is advisable for high-stakes domains.
+\item
+  \textbf{Mode 3 (training signal) is unproven.} Using \(\ell^1\)
+  coboundary loss for neural network training is conjectural. The loss
+  landscape, gradient properties (subgradients at non-differentiable
+  points), and interaction with backpropagation require empirical
+  investigation. This is a research direction, not a deployed
+  capability.
+\end{enumerate}
+
+\subsubsection{8.2 What Is Not Claimed}\label{what-is-not-claimed}
+
+This paper does not claim: - That \(\ell^1\) verification eliminates all
+AI errors. It bounds \emph{structural inconsistency}, not \emph{factual
+error}. - That the domain graph is easy to build. It is a prerequisite,
+not a byproduct. - That the framework replaces human judgment. It
+provides \emph{quantitative input} to human judgment. - That LLMs are
+obsolete. The framework is a \emph{verification layer}, not a
+replacement for generation.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{9. Comparison with Existing
+Approaches}\label{comparison-with-existing-approaches}
+
+\subsubsection{9.1 Formal Verification
+(Software)}\label{formal-verification-software}
+
+Traditional formal verification (model checking, theorem proving,
+abstract interpretation) proves that a \emph{program} satisfies a
+\emph{specification}. The \(\ell^1\) framework proves that an
+\emph{output} is \emph{consistent with a domain graph}. The key
+differences:
+
+\begin{itemize}
+\tightlist
+\item
+  Formal verification is binary (pass/fail). The \(\ell^1\) certificate
+  is quantitative (a defect score with decomposition).
+\item
+  Formal verification requires a formal specification. The \(\ell^1\)
+  framework requires a domain graph, which can be built incrementally
+  and refined.
+\item
+  Formal verification scales poorly to neural networks. The \(\ell^1\)
+  framework operates on the \emph{output}, not the model, so it is
+  model-agnostic.
+\end{itemize}
+
+\subsubsection{9.2 Conformal Prediction}\label{conformal-prediction}
+
+Conformal prediction provides distribution-free confidence intervals for
+point predictions. It requires exchangeability assumptions and held-out
+calibration data. The \(\ell^1\) framework:
+
+\begin{itemize}
+\tightlist
+\item
+  Does not require held-out data (it operates on the domain graph
+  structure).
+\item
+  Does not require exchangeability (it works on any graph).
+\item
+  Measures \emph{structural consistency}, not \emph{statistical
+  confidence}.
+\item
+  Is deterministic, not probabilistic.
+\end{itemize}
+
+\subsubsection{9.3 Knowledge Graph
+Embeddings}\label{knowledge-graph-embeddings}
+
+Knowledge graph embedding methods (TransE, DistMult, ComplEx) learn
+continuous representations of entities and relations. The \(\ell^1\)
+framework:
+
+\begin{itemize}
+\tightlist
+\item
+  Does not learn representations (it operates on explicit claims).
+\item
+  Provides exact decomposition (not approximate embedding).
+\item
+  Has proved convergence for repair (not just training convergence).
+\item
+  Produces auditable certificates (not opaque embeddings).
+\end{itemize}
+
+\subsubsection{9.4 Hallucination Detection
+Literature}\label{hallucination-detection-literature}
+
+{[}Layer A --- recent ML research; positioning the \(\ell^1\) framework
+against statistical approaches{]}
+
+Recent work on LLM hallucination detection has produced several notable
+approaches. We position the \(\ell^1\) coboundary framework against
+these methods:
+
+\paragraph{SelfCheckGPT (Manakul et al.,
+2023)}\label{selfcheckgpt-manakul-et-al.-2023}
+
+\textbf{Approach}: Samples multiple outputs from the LLM for the same
+prompt and measures consistency across samples. High variance indicates
+hallucination.
+
+\textbf{Comparison with \(\ell^1\) framework}: - \textbf{SelfCheckGPT}:
+Statistical consistency via repeated sampling (stochastic). -
+\textbf{\(\ell^1\) framework}: Structural consistency via domain graph
+constraints (deterministic). - \textbf{Key difference}: SelfCheckGPT
+detects \emph{stochastic inconsistency} (the model gives different
+answers on repeated trials). The \(\ell^1\) framework detects
+\emph{structural inconsistency} (a single output violates domain
+relationships). A model can be self-consistent (low SelfCheckGPT score)
+but structurally inconsistent (high \(\ell^1\) defect) if it confidently
+produces the same wrong answer repeatedly. - \textbf{Complementarity}:
+SelfCheckGPT catches sampling noise; \(\ell^1\) catches systematic
+structural errors.
+
+\paragraph{HaluEval (Li et al., 2023)}\label{halueval-li-et-al.-2023}
+
+\textbf{Approach}: Constructs a benchmark with human-annotated
+hallucinations across multiple tasks (QA, summarization, dialogue). Uses
+LLM-based evaluators to detect hallucinations.
+
+\textbf{Comparison with \(\ell^1\) framework}: - \textbf{HaluEval}:
+Benchmark for evaluating hallucination detectors; uses LLM-as-judge. -
+\textbf{\(\ell^1\) framework}: Provides a mathematical measure
+independent of human annotation or another LLM. - \textbf{Key
+difference}: HaluEval requires ground-truth labels and an evaluator
+model. The \(\ell^1\) framework requires only a domain graph and
+produces a computable score without labels or additional models. -
+\textbf{Advantage of \(\ell^1\)}: No dependence on another
+potentially-hallucinating LLM or expensive human annotation for every
+deployment domain. - \textbf{Advantage of HaluEval}: Captures semantic
+hallucinations that may not violate explicit graph constraints.
+
+\paragraph{FActScore (Min et al.,
+2023)}\label{factscore-min-et-al.-2023}
+
+\textbf{Approach}: Decomposes a generation into atomic facts and
+verifies each against a knowledge source (e.g., Wikipedia). The
+FActScore is the fraction of facts supported by the source.
+
+\textbf{Comparison with \(\ell^1\) framework}: - \textbf{FActScore}:
+Atomic fact verification against a reference corpus. -
+\textbf{\(\ell^1\) framework}: Structural consistency verification
+against a domain graph. - \textbf{Similarity}: Both decompose outputs
+into checkable units (facts vs.~section values on vertices). -
+\textbf{Key difference}: FActScore checks \emph{factual correctness} (is
+this fact in the corpus?). The \(\ell^1\) framework checks
+\emph{structural consistency} (do these claims satisfy domain
+constraints?). A fact can be in Wikipedia (high FActScore) but still
+violate logical relationships with other facts (high \(\ell^1\) defect).
+- \textbf{Complementarity}: FActScore verifies ground truth; \(\ell^1\)
+verifies coherence. Ideally, both are used: FActScore ensures each claim
+is grounded, \(\ell^1\) ensures the claims don't contradict each other.
+
+\paragraph{Retrieval-Augmented Generation
+(RAG)}\label{retrieval-augmented-generation-rag}
+
+\textbf{Approach}: Ground generation in retrieved documents from an
+external corpus.
+
+\textbf{Comparison with \(\ell^1\) framework}: - \textbf{RAG}: Shifts
+the distribution toward a reference corpus. - \textbf{\(\ell^1\)
+framework}: Verifies consistency regardless of retrieval. - \textbf{Key
+difference}: RAG does not \emph{bound} hallucination --- retrieved
+documents can contradict each other, and the model can still hallucinate
+when interpolating between them. The \(\ell^1\) framework
+\emph{quantifies and bounds} residual inconsistency after RAG. -
+\textbf{Integration}: The \(\ell^1\) verification layer can be applied
+to RAG outputs to detect when retrieved documents contradict the domain
+graph or each other.
+
+\paragraph{Uncertainty Quantification via Conformal
+Prediction}\label{uncertainty-quantification-via-conformal-prediction}
+
+\textbf{Approach}: Constructs prediction sets with statistical coverage
+guarantees based on held-out calibration data.
+
+\textbf{Comparison with \(\ell^1\) framework}: - \textbf{Conformal
+prediction}: Statistical uncertainty quantification (prediction sets). -
+\textbf{\(\ell^1\) framework}: Deterministic inconsistency
+quantification (defect scores). - \textbf{Key difference}: Conformal
+methods provide \emph{probabilistic guarantees} (with probability
+\(1-\alpha\), the true answer is in the prediction set). The \(\ell^1\)
+framework provides \emph{deterministic guarantees} (the total structural
+inconsistency is at most \(I\)). Conformal prediction requires
+exchangeability assumptions and calibration data from the deployment
+distribution; \(\ell^1\) verification requires only a domain graph. -
+\textbf{Trade-off}: Conformal prediction handles statistical
+variability; \(\ell^1\) handles structural inconsistency. Both are
+needed for different aspects of reliability.
+
+\paragraph{Consistency-Based Approaches (Numerous works
+2023-2026)}\label{consistency-based-approaches-numerous-works-2023-2026}
+
+Several recent papers measure internal consistency (e.g., checking if
+\(P(\text{answer}|\text{question})\) matches
+\(P(\text{question}|\text{answer})\), or measuring agreement across
+paraphrased prompts).
+
+\textbf{Comparison with \(\ell^1\) framework}: - \textbf{Consistency
+metrics}: Measure alignment between different conditional distributions
+or prompt perturbations. - \textbf{\(\ell^1\) framework}: Measures
+alignment with domain graph constraints. - \textbf{Key difference}:
+Existing consistency metrics are \emph{model-internal} (do the model's
+own predictions agree with each other?). The \(\ell^1\) framework is
+\emph{model-external} (do the model's predictions agree with domain
+structure?). A model can be internally consistent but externally
+inconsistent with the domain. - \textbf{Advantage of \(\ell^1\)}:
+Provides an external reference (the domain graph) rather than relying
+solely on the model's own beliefs.
+
+\paragraph{\texorpdfstring{Summary Table: Positioning the \(\ell^1\)
+Framework}{Summary Table: Positioning the \textbackslash ell\^{}1 Framework}}\label{summary-table-positioning-the-ell1-framework}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1471}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1471}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.1765}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 8\tabcolsep) * \real{0.2794}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Approach
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+What it measures
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Requires
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Guarantees
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(\ell^1\) framework
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{SelfCheckGPT} & Stochastic consistency & Multiple samples & None
+(heuristic) & Structural consistency, deterministic \\
+\textbf{HaluEval} & Semantic correctness & Human labels, LLM judge &
+None (benchmark only) & Mathematical defect score \\
+\textbf{FActScore} & Factual grounding & Reference corpus & None
+(fraction score) & Structural coherence \\
+\textbf{RAG} & Retrieval-based grounding & External corpus & None
+(shifts distribution) & Quantified residual inconsistency \\
+\textbf{Conformal prediction} & Statistical coverage & Calibration data,
+exchangeability & Probabilistic (\(1-\alpha\) coverage) & Deterministic
+defect bound \\
+\textbf{Internal consistency} & Model self-agreement & Multiple queries
+& None (correlation) & External domain alignment \\
+\textbf{\(\ell^1\) coboundary} & Structural inconsistency & Domain graph
+& Exact decomposition (\(I = \Phi + R\)) & Novel contribution \\
+\end{longtable}
+
+\textbf{The \(\ell^1\) coboundary framework occupies a distinct
+position}: it is the only approach that provides a \emph{deterministic,
+mathematically-proved decomposition} of hallucination into repairable
+vs.~irreducible components, with a \emph{convergent repair algorithm}
+and a \emph{computable certificate}. It is model-agnostic (works on any
+AI system's output), requires no calibration data or ground-truth
+labels, and provides guarantees that are \emph{structural} rather than
+\emph{statistical}.
+
+\textbf{Complementarity, not competition}: The \(\ell^1\) framework is
+complementary to statistical approaches. Ideally, a deployed AI system
+would use: - \textbf{FActScore or RAG} to ground individual facts. -
+\textbf{\(\ell^1\) coboundary verification} to ensure structural
+consistency across facts. - \textbf{Conformal prediction} to quantify
+statistical uncertainty. - \textbf{SelfCheckGPT} to detect stochastic
+inconsistency.
+
+Each addresses a different facet of reliability. The \(\ell^1\)
+framework's unique contribution is the \emph{structural consistency
+layer} with proved convergence and decomposition theorems.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{10. The Observer-Theoretic
+Interpretation}\label{the-observer-theoretic-interpretation}
+
+\subsubsection{10.1 AI Systems as
+Observers}\label{ai-systems-as-observers}
+
+{[}Layer B --- from Paper 000, Section 1.2{]}
+
+Paper 000 establishes that the four axioms (locality, additivity,
+faithfulness, symmetry) are the minimal conditions for the existence of
+\emph{consistent local observers} --- agents that can detect, aggregate,
+and repair local inconsistencies.
+
+An AI system deployed in a domain \emph{is} such an observer. It
+inspects local relationships (edges), makes claims (section values), and
+must remain globally consistent. The \(\ell^1\) coboundary norm is not
+an arbitrary quality metric imposed from outside --- it is the
+\emph{unique measure that the AI system itself would need to use} to
+maintain internal consistency, if it were capable of self-audit.
+
+The autopoietic verification layer provides this self-audit capability
+externally. It performs the consistency check that the AI system's
+\(\ell^2\)-trained internals cannot perform.
+
+\subsubsection{10.2 The Dimension Gap
+Heuristic}\label{the-dimension-gap-heuristic}
+
+{[}Layer C --- conjectural; implemented in tower L040 but not rigorously
+proved{]}
+
+An AI system with training manifold dimension \(d_{\text{train}}\) and
+input manifold dimension \(d_{\text{input}}\) is expected to hallucinate
+when \(d_{\text{input}} > d_{\text{train}}\) --- when the deployment
+domain is richer than the training domain. The dimension gap
+\(d_{\text{input}} - d_{\text{train}}\) is a heuristic measure of the
+\emph{structural capacity for hallucination}.
+
+The \(\ell^1\) coboundary norm can detect this gap operationally: a
+system deployed outside its training manifold should exhibit elevated
+\(I(s)\) on domain graphs that probe the gap dimensions. The
+hallucination certificate would then identify \emph{which} dimensions of
+the domain graph are causing elevated defect, providing targeted
+information about where the AI system's knowledge is insufficient. This
+connection between manifold dimension gaps and coboundary defect
+elevation requires formal proof.
+
+\subsubsection{\texorpdfstring{10.3 Metacognition as \(\ell^1\)
+Inconsistency
+Minimization}{10.3 Metacognition as \textbackslash ell\^{}1 Inconsistency Minimization}}\label{metacognition-as-ell1-inconsistency-minimization}
+
+Beyond auditing, the architecture developed here constitutes a formal
+mathematical model for \textbf{artificial metacognition}. The system
+does not merely produce outputs; it engages in second-order reasoning,
+evaluating its own first-order claims against structured constraints.
+
+We propose the following thesis: \textgreater{} \textbf{Metacognition is
+the process of minimizing \(\ell^1\) inconsistency over a constraint
+graph, decomposed explicitly into repairable errors and irreducible
+domain ambiguities.}
+
+The components of the \(\ell^1\) verification stack map directly onto
+the architecture of a metacognitive belief-revision framework:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.5000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Verification Architecture
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Metacognitive Interpretation
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Section (\(s\)) & The system's current \textbf{belief state}. \\
+Coboundary (\(\delta(s)\)) & Detection of \textbf{internal
+contradiction}. \\
+\(\ell^1\) norm (\(I\)) & Quantification of \textbf{cognitive
+dissonance}. \\
+Repairable component (\(R\)) & \textbf{Correctable reasoning error}
+identified by the system. \\
+Cohomological component (\(\Phi\)) & \textbf{Irreducible uncertainty /
+ambiguity} inherent to the domain. \\
+Autopoietic Gauge Iterator & The active \textbf{belief revision process}
+projecting to consistency. \\
+Hallucination Certificate & A formal \textbf{self-assessment} outputting
+bounded confidence. \\
+\end{longtable}
+
+By separating errors mathematically, the verification layer converts an
+opaque predictive distribution into an agent capable of inspecting,
+diagnosing, and bounding its own epistemic failures, establishing a
+formal, falsifiable pipeline for reliable reasoning and Metacognition.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{11. Implementation Path}\label{implementation-path}
+
+\subsubsection{11.1 Minimum Viable
+Product}\label{minimum-viable-product}
+
+{[}Layer B --- engineering{]}
+
+The smallest useful deployment of this framework requires:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{A domain graph} for one specific domain (e.g., drug
+  interactions, tax law, building codes). 500--5,000 vertices, manually
+  curated with domain expert input.
+\item
+  \textbf{A coboundary computer} that evaluates \(I(s)\) given a
+  section. This is \(O(|E|)\) --- trivial to implement.
+\item
+  \textbf{An LP solver} for the Hodge decomposition. Standard
+  off-the-shelf (GLPK, HiGHS, Gurobi).
+\item
+  \textbf{A certificate generator} that produces the tuple
+  \((I, \Phi, R, \eta, \mathcal{C})\) in a structured format.
+\end{enumerate}
+
+This MVP provides Mode 1 (post-hoc audit) for a single domain. It can be
+built and deployed in weeks, not months.
+
+\subsubsection{11.2 Full Stack}\label{full-stack}
+
+The full \(\ell^1\) verification stack adds:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{AGI repair loop} (Mode 2) --- implements the autopoietic
+  iterator from Paper 005.
+\item
+  \textbf{Multi-domain composition} --- categorical framework from Paper
+  006 for verifying across domain boundaries.
+\item
+  \textbf{Adaptive refinement} --- autopoietic subdivision for domain
+  graph improvement.
+\item
+  \textbf{Training integration} (Mode 3) --- \(\ell^1\) coboundary loss
+  for end-to-end training. {[}Layer C{]}
+\end{itemize}
+
+\subsubsection{11.3 Mathematical Specification of Implementation
+Components}\label{mathematical-specification-of-implementation-components}
+
+The full verification stack admits efficient implementation. The
+mathematical framework decomposes into the following computational
+components:
+
+\begin{itemize}
+\item
+  \textbf{Coboundary auditor}: Computes
+  \(I(s) = \sum_e \|\delta_e(s)\|\) in \(O(|E|)\) time by evaluating
+  defects at each edge independently. Locality of the \(\ell^1\) norm
+  ensures no global state is required.
+\item
+  \textbf{Hodge decomposition solver}: Solves the LP
+  \(\min_{f \in C^0} \|\delta(s) - d_0 f\|_1\) to separate exact
+  (repairable) from harmonic (irreducible) components. Standard network
+  simplex or interior-point methods achieve polynomial complexity in the
+  graph size.
+\item
+  \textbf{Defect pattern classifier}: Analyzes the support of the defect
+  field \(\delta(s)\) to identify recurring structural patterns (e.g.,
+  cycles violating transitivity, conflicting paths, dimensional
+  mismatches). This is a topological analysis of the coboundary's
+  support structure, implementable via standard graph algorithms.
+\item
+  \textbf{Epistemic filter}: Given a threshold \(\tau\), accepts outputs
+  with \(I(s) \leq \tau\) and rejects outputs with \(I(s) > \tau\). For
+  more granular control, applies thresholds to \(R(s)\) (repairable
+  defect) and \(\Phi\) (irreducible floor) separately.
+\item
+  \textbf{Certificate generator}: Constructs the tuple
+  \((I, \Phi, R, \eta, \mathcal{C})\) by combining outputs from the
+  coboundary auditor, Hodge solver, and cohomology computation. The
+  certificate is a structured data object suitable for logging,
+  auditing, or contract enforcement.
+\end{itemize}
+
+The mathematical framework guarantees that these components compose
+correctly: the output of the Hodge decomposition feeds the AGI repair
+loop, the repaired section feeds the coboundary auditor for
+verification, and the final defect score is provably bounded by
+\(\Phi\). No component requires model access or training data --- all
+operate on the domain graph and output section.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{12. Conclusion}\label{conclusion}
+
+The \(\ell^1\) coboundary norm is the unique defect measure compatible
+with local, additive, faithful observation. This is a theorem, not a
+design choice. Current AI systems are trained under \(\ell^2\)
+objectives that permit cancellation, interpolation, and hidden
+inconsistency. The structural consequence is hallucination --- confident
+outputs that correspond to no coherent worldview.
+
+The framework presented here provides:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{A computable hallucination score} \(I(s)\) for any AI output
+  on any graph-modeled domain.
+\item
+  \textbf{A decomposition} into repairable errors (\(R\)) and
+  irreducible domain complexity (\(\Phi\)).
+\item
+  \textbf{A repair algorithm} (AGI) with proved monotone convergence and
+  a cohomological floor.
+\item
+  \textbf{A certificate} \((I, \Phi, R, \eta, \mathcal{C})\) that can be
+  audited, composed, and placed in contracts.
+\item
+  \textbf{A categorical framework} for transferring verification across
+  related domains.
+\end{enumerate}
+
+The mathematical foundations are proved (Papers 000--005). The
+mathematical framework admits efficient implementation. The engineering
+path from theorem to deployment is short: build a domain graph, compute
+the coboundary, solve the LP, issue the certificate.
+
+AI systems equipped with \(\ell^1\) verification layers admit explicit,
+computable bounds on structural inconsistency.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Appendix: Background for ML
+Researchers}\label{appendix-background-for-ml-researchers}
+
+{[}Layer A --- pedagogical exposition of standard mathematical concepts
+in ML-accessible terms{]}
+
+This appendix presents the core mathematical concepts (presheaves,
+coboundaries, Hodge decomposition) in concrete graph-theoretic language,
+without category-theoretic formalism. The goal is to make the framework
+accessible to machine learning researchers with undergraduate linear
+algebra and graph theory.
+
+\subsubsection{A.1 Domain Graphs as Directed Graphs with
+Constraints}\label{a.1-domain-graphs-as-directed-graphs-with-constraints}
+
+\textbf{What is a domain graph?}
+
+A domain graph is just a finite directed graph \(G = (V, E)\) where: -
+Each \textbf{vertex} \(v \in V\) represents a concept or claim (e.g.,
+``the patient has a fever'', ``temperature = 38.5°C''). - Each
+\textbf{edge} \(e = (u, v) \in E\) represents a constraint or
+relationship (e.g., ``if Flu then Fever'', ``temperature \textgreater{}
+37°C implies fever'').
+
+Unlike standard graph embeddings, we don't learn continuous
+representations. Instead, we work with explicit \textbf{sections}:
+assignments of values to vertices.
+
+\textbf{What is a section?}
+
+A section \(s\) is a function \(s: V \to F\) that assigns a value
+\(s(v) \in F\) to each vertex. The fiber \(F\) is the value space --- it
+could be: - \(F = \mathbb{R}\) (real numbers) - \(F = [0, 1]\)
+(probabilities) - \(F = \{0, 1\}\) (binary labels) -
+\(F = \mathbb{R}^k\) (vectors)
+
+An AI system's output on a domain is a section: it assigns a value
+(claim, probability, label) to each concept in the graph.
+
+\textbf{What is a restriction map?}
+
+Each edge \(e = (u, v)\) carries a \textbf{restriction map}
+\(r_e: F \to F\) that says: ``if the value at \(v\) is \(x\), what does
+that imply for the value at \(u\)?''
+
+Example: If edge \(e\) represents ``if Flu (prob \(p\)) then Fever (prob
+\(\geq 0.8p\))'', the restriction map is \(r_e(p) = 0.8p\).
+
+\subsubsection{A.2 The Coboundary: Measuring
+Inconsistency}\label{a.2-the-coboundary-measuring-inconsistency}
+
+\textbf{Definition}: The coboundary \(\delta_e(s)\) at edge
+\(e = (u, v)\) is:
+
+\[\delta_e(s) = r_e(s(v)) - s(u)\]
+
+This measures the \textbf{mismatch} between: - What vertex \(v\) claims
+(projected through the constraint \(e\)): \(r_e(s(v))\) - What vertex
+\(u\) claims directly: \(s(u)\)
+
+If \(\delta_e(s) = 0\), the claims are consistent. If
+\(\delta_e(s) \neq 0\), there's a contradiction.
+
+\textbf{The total defect} is:
+
+\[I(s) = \sum_{e \in E} |\delta_e(s)|\]
+
+This is just the sum of absolute violations across all edges --- the
+\(\ell^1\) norm of the coboundary vector.
+
+\textbf{Why \(\ell^1\) instead of \(\ell^2\)?}
+
+The \(\ell^2\) norm \(\sqrt{\sum_e \delta_e^2}\) permits cancellation:
+errors of opposite sign partially cancel. The \(\ell^1\) norm
+\(\sum_e |\delta_e|\) does not. Every nonzero defect contributes to the
+total. This prevents averaging between contradictory claims.
+
+\subsubsection{A.3 The Hodge Decomposition: Repairable vs.~Irreducible
+Defects}\label{a.3-the-hodge-decomposition-repairable-vs.-irreducible-defects}
+
+\textbf{Question}: Given a defect field
+\(\delta = (\delta_{e_1}, \delta_{e_2}, \ldots, \delta_{e_m}) \in \mathbb{R}^m\)
+(one number per edge), how much of it can be fixed by adjusting the
+section \(s\)?
+
+\textbf{Answer}: Solve the following \textbf{linear program}:
+
+\[\Phi = \min_{f: V \to \mathbb{R}} \sum_{e = (u,v) \in E} |\delta_e - (f(v) - f(u))|\]
+
+Here, \(f\) is a \textbf{gauge transformation} --- a function that
+shifts the section values. The term \(f(v) - f(u)\) is the coboundary of
+\(f\) at edge \(e\), written \(d_0 f(e)\).
+
+\textbf{Interpretation}: - The LP finds the optimal shift \(f\) that
+brings \(\delta\) as close as possible to the \textbf{exact form}
+\(d_0 f\) (a coboundary of a 0-cochain). - The residual \(\Phi\) is what
+remains after the best possible gauge shift. This is the
+\textbf{irreducible defect} --- it cannot be removed by changing \(s\)
+alone.
+
+\textbf{Decomposition}:
+
+\[\delta = d_0 f^* + r^*\]
+
+where: - \(d_0 f^* = (f^*(v) - f^*(u))\) is the \textbf{exact
+(repairable) component} --- fix this by adjusting
+\(s(v) \gets s(v) - f^*(v)\) for all \(v\). - \(r^*\) is the
+\textbf{harmonic (irreducible) component} with \(\|r^*\|_1 = \Phi\) ---
+this cannot be removed without changing the domain graph.
+
+\textbf{Why this matters}:
+
+If \(\Phi > 0\), the domain graph itself contains contradictions. Even a
+perfect AI cannot achieve \(I = 0\) on this domain. Knowing \(\Phi\)
+tells you where the domain model needs fixing.
+
+\subsubsection{A.4 The Autopoietic Repair
+Algorithm}\label{a.4-the-autopoietic-repair-algorithm}
+
+The AGI (Autopoietic Gauge Iterator) repairs the section by iteratively
+applying a simple update rule:
+
+\textbf{For each vertex \(v\) with defect}: 1. Collect all neighbors'
+projected values: \(\{r_e(s(u)) : e = (u, v) \text{ or } e = (v, u)\}\)
+2. Replace \(s(v)\) with the \textbf{\(\ell^1\) median} of these
+projected values.
+
+The \textbf{median} (not mean!) ensures no averaging. The update snaps
+to a value that minimizes the total \(\ell^1\) deviation from neighbors.
+
+\textbf{Convergence}: Each iteration strictly decreases the total defect
+\(I(s)\) until it reaches \(\Phi\) (the irreducible floor). The
+algorithm stops when no further improvement is possible.
+
+\textbf{Complexity}: For a graph with \(|V|\) vertices and \(|E|\)
+edges, the algorithm converges in \(O(|V| \cdot I_0 / \varepsilon)\)
+iterations in the worst case, where \(I_0\) is the initial defect and
+\(\varepsilon\) is the tolerance. Under non-degeneracy, convergence is
+geometric: \(O(\log(1/\varepsilon))\) iterations.
+
+\subsubsection{A.5 Linear Programming Formulation
+(Concrete)}\label{a.5-linear-programming-formulation-concrete}
+
+For readers familiar with LP solvers, here is the explicit formulation
+for the Hodge decomposition:
+
+\textbf{Variables}: \(f_1, \ldots, f_n \in \mathbb{R}\) (one per vertex
+in \(V = \{v_1, \ldots, v_n\}\))
+
+\textbf{Auxiliary variables}: \(z_1, \ldots, z_m \geq 0\) (one per edge
+in \(E\))
+
+\textbf{Objective}:
+
+\[\min \sum_{j=1}^m z_j\]
+
+\textbf{Constraints}: For each edge \(e_j = (v_i, v_k)\):
+
+\[-z_j \leq \delta_{e_j} - (f_k - f_i) \leq z_j\]
+
+This is a standard LP with \(n + m\) variables and \(2m\) inequality
+constraints. Any off-the-shelf LP solver (GLPK, HiGHS, Gurobi, CPLEX)
+can solve it in polynomial time.
+
+\textbf{Output}: The optimal \(f^* = (f_1^*, \ldots, f_n^*)\) and the
+minimal cost \(\Phi = \sum_j z_j^*\).
+
+\subsubsection{A.6 Comparison with Familiar ML
+Concepts}\label{a.6-comparison-with-familiar-ml-concepts}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.3077}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.6923}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+ML Concept
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(\ell^1\) Framework Analog
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\textbf{Feature vector} & Section \(s\) (assigns values to vertices) \\
+\textbf{Loss function} & Coboundary defect
+\(I(s) = \sum_e \|\delta_e\|\) \\
+\textbf{Training data} & Domain graph \(G\) (constraints, not
+samples) \\
+\textbf{Regularization} & Irreducible defect \(\Phi\) (structural lower
+bound) \\
+\textbf{Gradient descent} & AGI median updates (iterative repair) \\
+\textbf{Validation error} & Total defect \(I(s)\) on test graph \\
+\textbf{Overfitting} & Section fits one subgraph but violates global
+constraints \\
+\end{longtable}
+
+\textbf{Key difference}: Standard ML minimizes loss over training
+samples. The \(\ell^1\) framework minimizes defect over
+\textbf{structural constraints}. It is not statistical --- it is
+topological.
+
+\subsubsection{A.7 When to Use This
+Framework}\label{a.7-when-to-use-this-framework}
+
+\textbf{Use the \(\ell^1\) coboundary framework when}: - The domain has
+explicit constraints (logical, causal, ontological). - Inconsistency has
+consequences (medical, legal, financial, safety-critical). - You need a
+\textbf{certificate} of consistency, not just a probability. - The
+deployment domain differs from the training domain
+(out-of-distribution).
+
+\textbf{Do not use this framework when}: - The domain has no explicit
+constraints (purely perceptual tasks like image recognition). -
+Statistical uncertainty is the primary concern (use conformal
+prediction). - You only care about average-case performance (use
+standard \(\ell^2\) metrics).
+
+\subsubsection{A.8 Minimal Working Example (Python
+Pseudocode)}\label{a.8-minimal-working-example-python-pseudocode}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\ImportTok{from}\NormalTok{ scipy.optimize }\ImportTok{import}\NormalTok{ linprog}
+
+\CommentTok{\# Define domain graph}
+\NormalTok{V }\OperatorTok{=}\NormalTok{ [}\StringTok{\textquotesingle{}Fever\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Headache\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Flu\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Migraine\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Dehydration\textquotesingle{}}\NormalTok{]}
+\NormalTok{E }\OperatorTok{=}\NormalTok{ [(}\StringTok{\textquotesingle{}Flu\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Fever\textquotesingle{}}\NormalTok{, }\FloatTok{0.8}\NormalTok{), (}\StringTok{\textquotesingle{}Flu\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}Headache\textquotesingle{}}\NormalTok{, }\FloatTok{0.6}\NormalTok{), ...]  }\CommentTok{\# (u, v, weight)}
+
+\CommentTok{\# AI output (section)}
+\NormalTok{s }\OperatorTok{=}\NormalTok{ \{}\StringTok{\textquotesingle{}Fever\textquotesingle{}}\NormalTok{: }\FloatTok{0.7}\NormalTok{, }\StringTok{\textquotesingle{}Headache\textquotesingle{}}\NormalTok{: }\FloatTok{0.8}\NormalTok{, }\StringTok{\textquotesingle{}Flu\textquotesingle{}}\NormalTok{: }\FloatTok{0.6}\NormalTok{, }\StringTok{\textquotesingle{}Migraine\textquotesingle{}}\NormalTok{: }\FloatTok{0.5}\NormalTok{, }\StringTok{\textquotesingle{}Dehydration\textquotesingle{}}\NormalTok{: }\FloatTok{0.4}\NormalTok{\}}
+
+\CommentTok{\# Compute coboundary defects}
+\NormalTok{defects }\OperatorTok{=}\NormalTok{ []}
+\ControlFlowTok{for}\NormalTok{ (u, v, w) }\KeywordTok{in}\NormalTok{ E:}
+\NormalTok{    delta\_e }\OperatorTok{=}\NormalTok{ w }\OperatorTok{*}\NormalTok{ s[v] }\OperatorTok{{-}}\NormalTok{ s[u]  }\CommentTok{\# simplified restriction map: r\_e(x) = w*x}
+\NormalTok{    defects.append(}\BuiltInTok{abs}\NormalTok{(delta\_e))}
+
+\CommentTok{\# Total defect}
+\NormalTok{I }\OperatorTok{=} \BuiltInTok{sum}\NormalTok{(defects)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"Total defect: }\SpecialCharTok{\{}\NormalTok{I}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)}
+
+\CommentTok{\# Hodge decomposition (LP formulation)}
+\CommentTok{\# Variables: f[v] for each vertex v}
+\CommentTok{\# Minimize: sum |delta\_e {-} (f[v] {-} f[u])|}
+\NormalTok{c }\OperatorTok{=}\NormalTok{ np.ones(}\BuiltInTok{len}\NormalTok{(E))  }\CommentTok{\# objective: minimize sum of z\_j}
+\CommentTok{\# ... construct A\_ub, b\_ub from constraints {-}z\_j \textless{}= delta\_e {-} (f\_v {-} f\_u) \textless{}= z\_j}
+\CommentTok{\# res = linprog(c, A\_ub, b\_ub)}
+\CommentTok{\# Phi = res.fun}
+
+\CommentTok{\# AGI repair (iterative median updates)}
+\ControlFlowTok{for}\NormalTok{ iteration }\KeywordTok{in} \BuiltInTok{range}\NormalTok{(max\_iters):}
+    \ControlFlowTok{for}\NormalTok{ v }\KeywordTok{in}\NormalTok{ V:}
+\NormalTok{        neighbors }\OperatorTok{=}\NormalTok{ [...]  }\CommentTok{\# collect projected values from neighbors}
+\NormalTok{        s[v] }\OperatorTok{=}\NormalTok{ np.median(neighbors)  }\CommentTok{\# L1 median update}
+\NormalTok{    I\_new }\OperatorTok{=}\NormalTok{ compute\_total\_defect(s)}
+    \ControlFlowTok{if}\NormalTok{ I\_new }\OperatorTok{\textgreater{}=}\NormalTok{ I }\OperatorTok{{-}}\NormalTok{ epsilon:}
+        \ControlFlowTok{break}  \CommentTok{\# converged}
+\NormalTok{    I }\OperatorTok{=}\NormalTok{ I\_new}
+
+\CommentTok{\# Certificate}
+\NormalTok{certificate }\OperatorTok{=}\NormalTok{ (I, Phi, I }\OperatorTok{{-}}\NormalTok{ Phi, (I }\OperatorTok{{-}}\NormalTok{ Phi) }\OperatorTok{/}\NormalTok{ I)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"Certificate: }\SpecialCharTok{\{}\NormalTok{certificate}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+This pseudo code captures the entire pipeline: domain graph
+construction, coboundary computation, Hodge decomposition via LP, AGI
+repair, and certificate generation.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{References}\label{references}
+
+{[}1{]} J. H. Carroll, ``Projection Obstruction Theory: Retraction
+Nonlinearity, \(\ell^1\) Rigidity, and Density Scaling,'' 2026. DOI:
+10.5281/zenodo.19151803
+
+{[}2{]} J. H. Carroll, ``The Free \(\ell^1\) Seminorm on Banach Presheaf
+Coboundaries,'' 2026. DOI: 10.5281/zenodo.19152115
+
+{[}3{]} J. H. Carroll, ``Coordinate-Wise Additivity and the \(\ell^1\)
+Norm on Finite Graph Cochains,'' 2026. DOI: 10.5281/zenodo.19152599
+
+{[}4{]} J. H. Carroll, ``Hodge Structure and Gauge Equivalence of
+\(\ell^1\) Defect Fields,'' 2026. DOI: 10.5281/zenodo.19152799
+
+{[}5{]} J. H. Carroll, ``Autopoietic Cohomology: Iterative Obstruction
+Repair, Manifold Emergence, and Gauge Structure on Causal Posets,''
+2026. DOI: 10.5281/zenodo.19155011
+
+{[}6{]} J. H. Carroll, ``A Common \(\ell^1\) Defect Framework for
+Quantum, Causal, and Gravitational Systems,'' 2026. DOI:
+10.5281/zenodo.19155079
+
+{[}7{]} J. H. Carroll, ``Constraint Closure and the \(\ell^1\) Structure
+of Physical Law,'' 2026. DOI: 10.5281/zenodo.19183020
+
+{[}8{]} A. Chambolle, ``An Algorithm for Total Variation Minimization
+and Applications,'' \emph{J. Math. Imaging Vis.} 20, 89--97, 2004.
+
+{[}9{]} E. J. Candes and T. Tao, ``Decoding by Linear Programming,''
+\emph{IEEE Trans. Inf. Theory} 51(12), 4203--4215, 2005.
+
+{[}10{]} L. Ambrosio, N. Gigli, and G. Savare, \emph{Gradient Flows in
+Metric Spaces and in the Space of Probability Measures}, Birkhauser,
+2008.
+
+{[}11{]} A. Vaswani et al., ``Attention Is All You Need,''
+\emph{NeurIPS}, 2017.
+
+{[}12{]} Y. Bengio, A. Courville, and P. Vincent, ``Representation
+Learning: A Review and New Perspectives,'' \emph{IEEE Trans. PAMI}
+35(8), 2013.
+
+\end{document}

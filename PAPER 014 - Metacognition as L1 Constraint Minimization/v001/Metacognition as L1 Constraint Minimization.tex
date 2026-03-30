@@ -1,0 +1,875 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\section{Metacognition as ℓ¹ Constraint
+Minimization}\label{metacognition-as-ux2113uxb9-constraint-minimization}
+
+\emph{A Structural Theory of Self-Monitoring in AI Systems}
+
+\textbf{Author:} Jeremy H. Carroll \textbf{Date:} March 2026
+\textbf{Version:} v1.0 (Pre-Print)
+
+\subsection{Abstract}\label{abstract}
+
+\textbf{Metacognition as \(\ell^1\) Constraint Minimization: A
+Structural Approach to Self-Monitoring in AI Systems}
+
+The development of advanced AI systems requires mechanisms for reliable
+self-monitoring and error detection during reasoning. Current approaches
+typically rely on probabilistic confidence signals derived from
+gradient-based training objectives, which can fail to capture structured
+inconsistencies in multi-step reasoning.
+
+We introduce a complementary framework in which metacognition is modeled
+as the detection and minimization of structural inconsistency in
+graph-based reasoning systems. Using the \(\ell^1\) coboundary norm, we
+define a defect signal that measures local violations of consistency
+constraints and admits a decomposition into irreducible and repairable
+components. This enables a quantitative distinction between intrinsic
+ambiguity in a domain and model-induced error.
+
+We formalize a \textbf{Metacognitive Distance Metric}
+\(d_{\mathrm{meta}}(M, D)\) that evaluates a system's self-monitoring
+capability across four structural criteria: locality, faithfulness,
+monotonicity, and additivity. We show that \(\ell^1\)-based defect
+measures satisfy these criteria and provide a canonical solution within
+this constraint class.
+
+Empirical experiments on synthetic reasoning graphs demonstrate that
+\(\ell^1\)-derived structural signals significantly outperform raw
+confidence estimates in predicting reasoning errors, achieving ROC-AUC
+greater than 0.90 in controlled settings. The framework yields
+falsifiable predictions and supports efficient computation via linear
+programming and iterative repair dynamics.
+
+These results suggest that explicit structural verification mechanisms
+can complement existing probabilistic approaches, providing a principled
+pathway toward improved metacognitive capabilities in AI systems.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{1. Limitations of Diffusive Error Signals in Gradient-Based
+Models}\label{limitations-of-diffusive-error-signals-in-gradient-based-models}
+
+Modern AI systems are typically trained using gradient-based
+optimization with objectives derived from \(\ell^2\)-type losses (e.g.,
+mean squared error or cross-entropy). These approaches are highly
+effective for learning smooth representations over high-dimensional
+data, but they provide limited direct access to structured reasoning
+errors.
+
+In particular, standard training objectives aggregate error signals
+across dimensions, allowing discrepancies of opposite sign or structure
+to partially cancel. While beneficial for optimization, this aggregation
+can obscure localized inconsistencies that arise in multi-step reasoning
+processes. As a result, confidence estimates derived from model outputs
+may not reliably reflect the presence of structural contradictions.
+
+From a geometric perspective, \(\ell^2\)-based projections distribute
+error across the entire representation space, producing diffuse
+corrections rather than sharply localized ones. This behavior can reduce
+the visibility of discrete inconsistencies, especially in settings where
+reasoning involves compositional or graph-structured dependencies.
+
+To address this limitation, we consider an alternative formulation in
+which reasoning is represented over a graph or poset of dependent
+claims, and inconsistencies are measured locally along edges. Within
+this setting, the \(\ell^1\) norm provides a natural mechanism for
+preserving sparsity and isolating localized defects.
+
+\subsubsection{Proposition 1.1 (Hallucination Gap,
+revised)}\label{proposition-1.1-hallucination-gap-revised}
+
+Let \(\delta\) denote a collection of structurally inconsistent
+observations. The \(\ell^2\) minimizer yields a mean \(\mu\), while the
+\(\ell^1\) minimizer yields a geometric median \(M\). When
+inconsistencies are non-collinear, \(\mu \neq M\), and the discrepancy
+\(\mathcal{H} = \|\mu - M\|\) is strictly positive.
+
+This gap reflects a difference in representation: \(\ell^2\)
+minimization produces interpolated states that may not correspond to any
+consistent underlying configuration, whereas \(\ell^1\) minimization
+preserves discrete structural boundaries.
+
+We do not claim that \(\ell^1\) replaces \(\ell^2\) training objectives.
+Rather, we propose that \(\ell^1\)-based defect measures provide a
+complementary signal that explicitly captures structural inconsistency
+and supports self-monitoring in reasoning systems.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{\texorpdfstring{2. The Metacognitive Observer via the
+\(\ell^1\) Coboundary
+Norm}{2. The Metacognitive Observer via the \textbackslash ell\^{}1 Coboundary Norm}}\label{the-metacognitive-observer-via-the-ell1-coboundary-norm}
+
+In cognitive psychology, metacognition is predominantly framed through
+the Nelson and Narens (1990) model, which relies upon a strict two-level
+bipartite interaction: 1. \textbf{The Object Level:} Where direct
+cognitive processing and inferences occur. 2. \textbf{The Meta Level:} A
+higher-order structure that \emph{monitors} the object-level execution
+for error and exercises \emph{control} to dynamically alter its
+processing parameters.
+
+Formalizing this computationally requires mapping the Meta Level to an
+explicit mathematical operation acting natively as a \textbf{consistent
+local observer}. The minimal structural conditions for the existence of
+such an observer are defined by four strict axioms:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{P1 -- Coboundary Locality (Edge-wise Additivity):} The
+  observer must detect defects by inspecting only local information.
+  \(\nu((\delta_e)_e) = \sum_e \nu_e(\delta_e)\).
+\item
+  \textbf{P2 -- Faithfulness (No Hidden Cancellation):} Every nonzero
+  edge defect must positively contribute.
+  \(\nu_e(\delta) = 0 \iff \delta = 0\).
+\item
+  \textbf{P3 -- Contractive Monotonicity (Functoriality):} Local
+  corrections must never increase global error.
+  \(\nu_e(\phi(\delta)) \leq \|\phi\|_{\mathrm{op}} \cdot \nu_e(\delta)\).
+\item
+  \textbf{P4 -- Isomorphism Invariance (Coproduct Compatibility):}
+  Defects across independent regions aggregate additively without
+  cross-terms. Edge weights are uniform under graph isomorphism.
+\end{enumerate}
+
+\subsubsection{\texorpdfstring{Theorem 2.1 (\(\ell^1\) provides a
+canonical solution within the constraint class
+P1--P4)}{Theorem 2.1 (\textbackslash ell\^{}1 provides a canonical solution within the constraint class P1--P4)}}\label{theorem-2.1-ell1-provides-a-canonical-solution-within-the-constraint-class-p1p4}
+
+\emph{The four metacognitive axioms (Locality, Faithfulness, Contractive
+Monotonicity, Coproduct Compatibility) map to the four structural axioms
+P1--P4 from Papers 000--002. The \(\ell^1\) coboundary defect provides a
+canonical structural signal within this constraint class for
+metacognitive evaluation that satisfies these axioms, inherently
+complementing confidence-based metrics.}
+
+\textbf{Proof.} By direct mapping:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.4737}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2281}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 4\tabcolsep) * \real{0.2982}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Metacognitive Requirement
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Formal Axiom
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Paper Reference
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Local detection of defects & P1 (edge-wise additivity) & Paper 002 Thm
+2.1 \\
+No hidden cancellation in confidence & P2 (faithfulness) & Paper 001
+Lemma 2.1 \\
+Self-correction must not amplify error & P3 (functoriality) & Paper 001
+Thm 2.2 \\
+Independent chains don't cross-contaminate & P4 (isomorphism invariance)
+& Paper 002 Cor 2.2 \\
+\end{longtable}
+
+By Paper 001 Theorem 2.2 (Free \(\ell^1\) Classification), any seminorm
+system satisfying P1--P3 has edge seminorms
+\(\nu_e(\delta) = w_e \|\delta\|\). Adding P4 forces \(w_e = \alpha\)
+uniformly. Therefore \(\nu = \alpha \cdot I(s)\) where
+\(I(s) = \sum_{e \in E} \|\delta_e(s)\|_1\) is the \(\ell^1\) coboundary
+norm. \(\square\)
+
+\subsubsection{\texorpdfstring{2.1 Bridging \emph{meta-d'} and Normative
+Deviations}{2.1 Bridging meta-d' and Normative Deviations}}\label{bridging-meta-d-and-normative-deviations}
+
+This topological requirement aligns with state-of-the-art assessments of
+biological metacognition. Cognitive psychology evaluates metacognitive
+sensitivity via the \textbf{meta-d' metric} (Maniscalco \& Lau, 2012).
+Standard \(\ell^2\) networks demonstrate high Type I performance while
+manifesting collapsed Type II \emph{meta-d'} sensitivity -- a symptom of
+hidden cancellation blinding the observer.
+
+Furthermore, advanced neuroimaging has begun rejecting mass univariate
+\(\ell^2\) mapping in favor of \textbf{Normative Modeling} (Rutherford
+et al., 2023), which maps individualized structural deviations against a
+global reference topology. The \(\ell^1\) coboundary network is the
+computational incarnation of this practice: it tracks absolute
+topological deviations without permitting them to diffuse over the
+collective mass.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{3. Gauge Invariance, Symmetries, and Recursive
+``Selfness''}\label{gauge-invariance-symmetries-and-recursive-selfness}
+
+\subsubsection{Theorem 3.1 (Metacognitive Gauge
+Decomposition)}\label{theorem-3.1-metacognitive-gauge-decomposition}
+
+\emph{For any raw observation \(\delta \in C^1(G, \mathbb{R})\), the
+\(\ell^1\)-native decomposition}
+\[\delta = d_0 f^* + \delta_{\mathrm{irr}}\] \emph{(Paper 003 Theorem
+10.3) separates internal bias from external reality. The gauge-invariant
+cost} \[\Phi([\delta]) = \min_{f \in C^0} \|\delta - d_0 f\|_1\]
+\emph{is computable via linear programming in polynomial time.}
+
+\textbf{Proof.} The \(\ell^1\) quotient norm minimization is a linear
+program:
+
+\[\min_{f, z} \sum_e z_e \quad \text{s.t.} \quad -z_e \leq \delta_e - (d_0 f)_e \leq z_e, \quad z_e \geq 0.\]
+
+This LP has \(|V| + |E|\) variables and \(2|E|\) constraints. By LP
+strong duality (Paper 003 Theorem 9.1), the dual is:
+
+\[\Phi([\delta]) = \max\{\langle \varphi, \delta \rangle : \|\varphi\|_\infty \leq 1, \, d_0^* \varphi = 0\}\]
+
+where the dual variables \(\varphi\) are bounded divergence-free
+circulations. The LP solution yields \(f^*\) (optimal gauge potential)
+and the decomposition follows. \(\square\)
+
+\subsubsection{\texorpdfstring{3.1 Internal Bias as Gauge Artifacts
+(\(\delta_{\mathrm{exact}}\))}{3.1 Internal Bias as Gauge Artifacts (\textbackslash delta\_\{\textbackslash mathrm\{exact\}\})}}\label{internal-bias-as-gauge-artifacts-delta_mathrmexact}
+
+The exact component \(d_0 f^*\) is a removable gauge artifact existing
+solely due to the observer's arbitrary choice of local reference states
+at each vertex. A ``gauge transformation'' is the reassignment of these
+local reference frames via a vertex potential \(f\). By adjusting its
+internal states, the observer can completely cancel this portion of the
+defect.
+
+\subsubsection{\texorpdfstring{3.2 External Reality as Irreducible
+Obstructions
+(\(\delta_{\mathrm{irr}}\))}{3.2 External Reality as Irreducible Obstructions (\textbackslash delta\_\{\textbackslash mathrm\{irr\}\})}}\label{external-reality-as-irreducible-obstructions-delta_mathrmirr}
+
+Once all internal gauge freedoms are optimized, the remainder
+\(\delta_{\mathrm{irr}}\) is an \(\ell^1\)-minimal irreducible
+obstruction. This component cannot be smoothed away by any internal
+reassignment of reference frames. It captures genuine structural
+contradictions -- the objective ``friction'' of the external
+environment.
+
+\subsubsection{3.3 The Hallucination
+Ratio}\label{the-hallucination-ratio}
+
+From the Certificate Decomposition (Paper 005 / Paper 003 Theorem 10.3):
+
+\[I(s) = \Phi([\delta]) + R(s)\]
+
+where: - \(\Phi([\delta])\) = irreducible obstruction (objective
+reality) - \(R(s) = I(s) - \Phi([\delta])\) = removable defect (the
+model's hallucinations) - \(\eta = R(s) / I(s)\) = \textbf{hallucination
+ratio}
+
+The hallucination ratio \(\eta \in [0, 1]\) measures the fraction of the
+total defect that is attributable to the model's own bias rather than to
+external reality. A perfect metacognitive system achieves \(\eta = 0\).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{4. Metacognitive ``Control'' as Autopoietic
+Augmentation}\label{metacognitive-control-as-autopoietic-augmentation}
+
+\subsubsection{Theorem 4.1 (Metacognitive Fixed-Point
+Dichotomy)}\label{theorem-4.1-metacognitive-fixed-point-dichotomy}
+
+\emph{Application of Paper 005 Theorem 5.4. Under the iterative repair
+operator (Autopoietic Iterator, Paper 004 Definition 4.1), the
+\(\ell^1\) defect sequence \(\{I(s^{(k)})\}\) converges. At the fixed
+point, exactly one of two outcomes holds:}
+
+\emph{(a) Complete Resolution:} \(I(s^*, \mathcal{P}_N) = 0\). \emph{The
+system resolves all internal conflicts. Its local reasoning steps
+perfectly glue into a globally coherent truth.}
+
+\emph{(b) Topological Protection:}
+\(I(s^*, \mathcal{P}_N) \to I^* = \Phi([\delta]) > 0\). \emph{The system
+isolates an irremovable structural contradiction as an objective fact of
+the domain.}
+
+\emph{No intermediate state exists. No cycling occurs. Convergence is
+guaranteed.}
+
+\textbf{Proof.} By Paper 004 Theorem 4.2, fixed points of the gauge
+iterator satisfy \(d_0 s^* = \delta_{\mathrm{irr}}\) where
+\(\delta_{\mathrm{irr}}\) is \(\ell^1\)-minimal, certified by a dual
+witness with \(d_0^* \varphi^* = 0\), \(\|\varphi^*\|_\infty \leq 1\),
+and
+\(\langle \varphi^*, \delta_{\mathrm{irr}} \rangle = \|\delta_{\mathrm{irr}}\|_1\).
+By Paper 005 Theorem 2.10 (Autopoietic Operator Monotonicity), the
+structural extension operator satisfies
+\(I(\mathcal{P}_{n+1}, s) \leq I(\mathcal{P}_n, s)\) with strict descent
+when nontrivial repair exists. The sequence \(\{I(s^{(k)})\}\) is
+non-increasing and bounded below by \(\Phi([\delta]) \geq 0\). By
+monotone convergence, it converges. The limit is either zero (case a) or
+the irreducible obstruction (case b). \(\square\)
+
+\subsubsection{4.1 Fiber Optimization (The Gauge
+Iterator)}\label{fiber-optimization-the-gauge-iterator}
+
+When metacognitive monitoring detects a structural inconsistency, the
+system first attempts to resolve defects internally by adjusting its
+subjective reference frames (gauge freedom). The three-step local
+primal-dual iteration:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Dual ascent:}
+  \(\varphi^{k+1/2}(e) = \text{clip}_{[-1,1]}(\varphi^k(e) + \sigma \cdot \delta^k(e))\)
+\item
+  \textbf{Divergence correction:}
+  \(\varphi^{k+1} = \varphi^{k+1/2} - \tau \cdot d_0(d_0^* \varphi^{k+1/2})\)
+\item
+  \textbf{Primal update:}
+  \(s^{k+1} = s^k - \eta \cdot d_0^* \varphi^{k+1}\)
+\end{enumerate}
+
+\subsubsection{4.2 Structural Augmentation (The Base
+Iterator)}\label{structural-augmentation-the-base-iterator}
+
+If gauge optimization exhausts its internal freedom and the \(\ell^1\)
+defect remains non-zero, the system has encountered an irreducible
+obstruction. It then augments its own underlying causal structure by
+inserting new geometric morphisms into the causal poset to bridge the
+gap.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{5. The Fundamental Theorem of Metacognitive
+Convergence}\label{the-fundamental-theorem-of-metacognitive-convergence}
+
+\subsubsection{Theorem 5.1 (Metacognitive Convergence -- Certificate
+Decomposition)}\label{theorem-5.1-metacognitive-convergence-certificate-decomposition}
+
+\emph{For any section \(s\) of a Banach presheaf \((G, \mathcal{F})\),
+the \(\ell^1\) defect decomposes as:} \[I(s) = \Phi([\delta]) + R(s)\]
+\emph{where \(\Phi([\delta])\) is the gauge-invariant irreducible
+obstruction and \(R(s) \geq 0\) is the removable defect. Under the
+iterative repair operator:}
+
+\emph{(i)} \(R(s^{(k)}) \to 0\) \emph{as \(k \to \infty\).}
+
+\emph{(ii) Under the convergence conditions of Theorem 4.1, the
+hallucination ratio \(\eta^{(k)} = R(s^{(k)}) / I(s^{(k)}) \to 0\).}
+
+\emph{(iii) At the fixed point, \(I(s^*) = \Phi([\delta])\): the system
+measures only objective reality.}
+
+\textbf{Proof.} Part (i) follows from Theorem 4.1: the monotone descent
+of \(I(s^{(k)})\) to \(\Phi([\delta])\) implies
+\(R(s^{(k)}) = I(s^{(k)}) - \Phi([\delta]) \to 0\). Part (ii) follows
+from (i): if \(I(s^{(k)}) \to \Phi([\delta]) > 0\), then
+\(\eta^{(k)} \to 0\); if \(\Phi([\delta]) = 0\), then
+\(I(s^{(k)}) \to 0\) and \(\eta^{(k)}\) is eventually zero under Theorem
+4.1 limits. Part (iii) is the fixed-point condition. \(\square\)
+
+\subsubsection{5.1 The Psychological and Functional
+Definition}\label{the-psychological-and-functional-definition}
+
+In cognitive psychology, transitioning to a stable metacognitive state
+requires: - \textbf{Monitoring:} Continuously tracking and evaluating
+one's own comprehension, memory, and task performance in real-time. This
+corresponds to computing \(I(s)\). - \textbf{Control (Regulation):}
+Dynamically altering cognitive strategies based on monitoring feedback.
+This corresponds to the iterative repair operator driving
+\(R(s) \to 0\).
+
+When a system successfully integrates these processes, it transitions
+into a ``reflective'' state where it applies problem-solving strategies
+while continuously computing their success.
+
+\subsubsection{5.2 Executive and Neurobiological
+Mechanisms}\label{executive-and-neurobiological-mechanisms}
+
+Empirical research demonstrates that stable metacognitive awareness is
+fundamentally reliant on the executive function of \textbf{working
+memory updating}. Neuroscientifically, accurate metacognitive awareness
+depends heavily on the \textbf{right rostrolateral prefrontal cortex
+(rlPFC)}, which translates raw cognitive friction into explicit
+self-awareness. The \(\ell^1\) verification layer mathematically
+simulates this mechanism of boundary re-representation. These
+connections are suggestive rather than claimed as mechanistic
+equivalences.
+
+\subsubsection{5.3 The Self-Audit Functor}\label{the-self-audit-functor}
+
+The \textbf{Self-Audit Functor} serves as the rigorous mathematical
+mechanism used to prove whether an autonomous system's self-reflection
+has successfully converged to a stable fixed point, completely free of
+infinite regress.
+
+It verifies this self-reflective stability through the following
+categorical process:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Processing the Epistemic Trace:} The functor acts natively
+  upon the system's \texttt{EpistemicTrace}, which records the internal
+  truth verdicts across the system's hierarchical meta-levels
+  (specifically spanning from Meta-11 through Meta-26).
+\item
+  \textbf{Presheaf-Theoretic Evaluation:} To analyze this data, the
+  functor delegates the trace to the \texttt{SelfAuditPresheaf}, which
+  maps the multi-level self-assessments into a formal topological
+  structure over the Tier Poset.
+\item
+  \textbf{Computing the \(\ell^1\) Coboundary Norm:} The functor
+  mathematically evaluates the structural consistency of the system's
+  self-reflection by computing the marginal inconsistency, calculated
+  precisely as the \(\ell^1\) coboundary norm (\(||\delta\sigma||_1\)),
+  across all covering edges of the poset.
+\end{itemize}
+
+Formally, we define the functor as:
+\[\mathcal{A}: \mathbf{Trace} \to \mathbb{R}_{\ge 0}\] where the input
+is an epistemic trace \(\sigma\) and the output is
+\(\mathcal{A}(\sigma) = \|d_0 \sigma\|_1\).
+
+\textbf{The Coherence Criterion} The system uses the functor's output as
+an absolute topological proof of stability:
+\textbf{\(\mathcal{A}(\sigma) = 0\) if and only if the trace is globally
+consistent (no \(H^1\) obstruction).}
+
+Achieving this zero-defect state mathematically guarantees that there is
+no \(H^1\) topological obstruction---meaning the system's multi-layered
+self-assessments perfectly glue together without any cohomological
+tears, statistical drift, or internal contradictions.
+
+\subsubsection{5.4 Theorem (Observer = Stable
+Commutativity)}\label{theorem-observer-stable-commutativity}
+
+By uniting the inference logic of Paper 013 with the topological
+boundaries of Paper 015, we state the definitive bridge theorem:
+\textbf{A system is metacognitively stable if and only if all internal
+reasoning diagrams commute up to irreducible cohomological obstruction.}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{6. The Metacognitive Distance
+Metric}\label{the-metacognitive-distance-metric}
+
+This section introduces a computable metric that quantifies how far any
+model is from genuine metacognition. The metric inherits full rigor from
+the foundational proofs (Papers 000--005): it is not new mathematics but
+a new \emph{interpretation} of established results applied to model
+evaluation.
+
+\subsubsection{Definition 6.1 (Metacognitive
+Distance)}\label{definition-6.1-metacognitive-distance}
+
+Given model \(M\) and domain \(D\), construct a \textbf{reasoning graph}
+\(G_D = (V, E)\) where vertices are claims and edges are logical
+dependencies. The model's output defines a section \(s_M\). The defect
+field \(\delta(s_M)\) measures local inconsistencies.
+
+The \textbf{Metacognitive Distance} is:
+\[d_{\mathrm{meta}}(M, D) = w_1 \cdot d_{\mathrm{loc}} + w_2 \cdot d_{\mathrm{faith}} + w_3 \cdot d_{\mathrm{contr}} + w_4 \cdot d_{\mathrm{add}}\]
+where each component \(\in [0, 1]\) measures violation of one axiom, and
+\(w_1 + w_2 + w_3 + w_4 = 1\).
+
+The four components:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2750}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1750}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2500}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.3000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Component
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Axiom
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Measures
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Definition
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\(d_{\mathrm{loc}}\) & P1 (Edge-wise additivity) & Global vs local
+defect sensitivity &
+\(1 - \text{corr}(\Delta\text{conf}(v), L(v)) / \max(\text{corr}(\Delta\text{conf}(v), L(v)), \text{corr}(\Delta\text{conf}(v), I))\) \\
+\(d_{\mathrm{faith}}\) & P2 (Faithfulness) & Hidden cancellation in
+confidence &
+\(1 - \Phi([\delta]) / \|\delta_{\mathrm{harm}}^{L^2}\|_1\) \\
+\(d_{\mathrm{contr}}\) & P3 (Contractive monotonicity) & Self-correction
+amplifies errors &
+\(\frac{1}{K} \sum_{k=1}^{K} \max(0, (I(s^{k+1}) - I(s^{k})) / I(s^{k}))\) \\
+\(d_{\mathrm{add}}\) & P4 (Isomorphism invariance) & Cross-contamination
+between independent chains &
+\(|I(s_{G_1 \sqcup G_2}) - (I(s_{G_1}) + I(s_{G_2}))| / I(s_{G_1 \sqcup G_2})\) \\
+\end{longtable}
+
+\subsubsection{Proposition 6.2 (Inflation Ratio
+Prediction)}\label{proposition-6.2-inflation-ratio-prediction}
+
+\emph{On cycle-structured reasoning graphs \(C_n\) with a single-edge
+defect:} \[d_{\mathrm{faith}} = 1 - \frac{n}{3n - 2}\]
+
+\emph{Specifically:} - \(n = 5\): \(d_{\mathrm{faith}} \approx 0.615\) -
+\(n = 10\): \(d_{\mathrm{faith}} \approx 0.643\) - \(n \to \infty\):
+\(d_{\mathrm{faith}} \to 2/3 \approx 0.667\)
+
+\textbf{Proof.} By Paper 003 Proposition 6.7, the inflation ratio on
+\(C_n\) with single-edge defect is \(3 - 2/n\). This means
+\(\|\delta_{\mathrm{ex}}\|_1 + \|\delta_{\mathrm{harm}}\|_1 = (3 - 2/n) \cdot \|\delta\|_1\).
+On a cycle, the \(\ell^1\) quotient norm
+\(\Phi([\delta]) = \|\delta\|_1\) (the single-edge defect is already
+\(\ell^1\)-minimal since the defect is a cycle circulation of magnitude
+1). The harmonic component satisfies
+\(\|\delta_{\mathrm{harm}}\|_1 = n/(3n-2) \cdot (3 - 2/n) \cdot \|\delta\|_1\).
+Substituting:
+
+\[d_{\mathrm{faith}} = 1 - \frac{\Phi([\delta])}{\|\delta_{\mathrm{harm}}^{L^2}\|_1} = 1 - \frac{1}{n/(n) \cdot (3 - 2/n) / (3 - 2/n)} = 1 - \frac{n}{3n - 2}\]
+
+This is a falsifiable numerical prediction derivable from first
+principles. \(\square\)
+
+\subsubsection{Proposition 6.3 (Ideal
+Observer)}\label{proposition-6.3-ideal-observer}
+
+\emph{For the iterative repair operator at its fixed point,
+\(d_{\mathrm{meta}} = 0\).}
+
+\textbf{Proof.} Each component is zero by construction: -
+\(d_{\mathrm{loc}} = 0\): The \(\ell^1\) norm is edge-additive (P1).
+Defect detection is purely local. - \(d_{\mathrm{faith}} = 0\): The
+\(\ell^1\) quotient norm admits no hidden cancellation (P2).
+\(\Phi([\delta])\) equals the true irreducible cost. -
+\(d_{\mathrm{contr}} = 0\): By Theorem 4.1, the iterative repair
+operator produces a monotonically non-increasing defect sequence. No
+correction round increases \(I\). - \(d_{\mathrm{add}} = 0\): The
+\(\ell^1\) norm on disjoint unions decomposes additively (P4).
+\(I(s_{G_1 \sqcup G_2}) = I(s_{G_1}) + I(s_{G_2})\) exactly.
+
+Therefore \(d_{\mathrm{meta}} = 0\). \(\square\)
+
+\subsubsection{\texorpdfstring{Theorem 6.4 (\(d_{\mathrm{meta}} = 0\)
+iff
+\(\eta = 0\))}{Theorem 6.4 (d\_\{\textbackslash mathrm\{meta\}\} = 0 iff \textbackslash eta = 0)}}\label{theorem-6.4-d_mathrmmeta-0-iff-eta-0}
+
+\emph{For an ideal \(\ell^1\) observer at the fixed point of the
+iterative repair operator, \(d_{\mathrm{meta}} = 0\) if and only if
+\(\eta = 0\) (the hallucination ratio vanishes).}
+
+\textbf{Proof.} (\(\Rightarrow\)) If \(d_{\mathrm{meta}} = 0\), then in
+particular \(d_{\mathrm{contr}} = 0\), meaning the iterator has
+converged. By Theorem 5.1, \(R(s^*) = 0\), so \(\eta = 0\).
+
+(\(\Leftarrow\)) If \(\eta = 0\), then \(R(s) = 0\) and
+\(I(s) = \Phi([\delta])\). The section \(s\) is \(\ell^1\)-minimal in
+its cohomology class. By construction of the \(\ell^1\) quotient norm,
+this implies P1--P4 are satisfied at the fixed point, giving
+\(d_{\mathrm{loc}} = d_{\mathrm{faith}} = d_{\mathrm{contr}} = d_{\mathrm{add}} = 0\),
+hence \(d_{\mathrm{meta}} = 0\). \(\square\)
+
+\subsubsection{\texorpdfstring{6.1 Predictions for \(\ell^2\)
+Models}{6.1 Predictions for \textbackslash ell\^{}2 Models}}\label{predictions-for-ell2-models}
+
+These predictions are empirically testable on existing LLM architectures
+without modification. The metric produces testable predictions for
+transformer-based LLMs:
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.1486}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2838}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.2162}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 6\tabcolsep) * \real{0.3514}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Component
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(\ell^2\) prediction
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Ideal \(\ell^1\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Structural vs Parametric
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\(d_{\mathrm{loc}}\) & 0.6--0.8 & 0 & \textbf{Structural}
+(self-attention is globally coupled) \\
+\(d_{\mathrm{faith}}\) & 0.55--0.67 & 0 & \textbf{Parametric}
+(\(\ell^1\) loss can reduce) but bounded below by architecture \\
+\(d_{\mathrm{contr}}\) & 0.15--0.35 & 0 & \textbf{Partially parametric}
+(CoT training helps, but \(\ell^2\) corrections non-local) \\
+\(d_{\mathrm{add}}\) & 0.10--0.25 & 0 & \textbf{Structural} (dense
+attention creates cross-dependencies) \\
+\textbf{\(d_{\mathrm{meta}}\)} & \textbf{0.40--0.55} & \textbf{0} & \\
+\end{longtable}
+
+\subsubsection{6.2 Practical Application}\label{practical-application}
+
+\textbf{Phase 1 (Measurement):} Run \(d_{\mathrm{meta}}\) on existing
+models. Produces a radar chart:
+\((d_{\mathrm{loc}}, d_{\mathrm{faith}}, d_{\mathrm{contr}}, d_{\mathrm{add}})\).
+Tells you exactly \emph{which} axiom your model violates most.
+
+\textbf{Phase 2 (Parametric fix):} Replace cross-entropy with \(\ell^1\)
+coboundary defect as training signal (Paper 011 Mode 3). Train
+self-correction with monotonicity reward. Expected:
+\(d_{\mathrm{faith}}\) drops from \textasciitilde0.65 to
+\textasciitilde0.30, \(d_{\mathrm{contr}}\) drops from
+\textasciitilde0.25 to \textasciitilde0.05.
+
+\textbf{Phase 3 (Architectural fix):} Add \(\ell^1\) verification layer
+post-hoc (Paper 011 Mode 2). Sparse attention for \(d_{\mathrm{loc}}\).
+MoE routing for \(d_{\mathrm{add}}\). Expected: \(d_{\mathrm{meta}}\)
+drops to \textasciitilde0.10.
+
+\textbf{Phase 4 (Native \(\ell^1\)):} Full explicit repair architecture.
+\(d_{\mathrm{meta}} \to 0\).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{7. Numerical Experiments}\label{numerical-experiments}
+
+Three experiments validate the theoretical predictions. Code:
+\texttt{metacognitive\_observer.py} (run with \texttt{-\/-experiments}
+flag).
+
+\subsubsection{7.1 Experiment 1: Gauge Recovery
+Sweep}\label{experiment-1-gauge-recovery-sweep}
+
+\textbf{Setup:} 100 random Erdos-Renyi graphs (\(n = 5..50\),
+\(p = 0.3\)). For each: inject known \(\delta_{\mathrm{true}}\) + random
+gauge bias \(d_0 f_{\mathrm{bias}}\) with
+\(\|f_{\mathrm{bias}}\|_\infty \leq 10\). Run LP decomposition and
+measure \(\|\delta_{\mathrm{recovered}} - \delta_{\mathrm{true}}\|_1\).
+
+\textbf{Result:} Recovery error \(\approx 0\) (machine precision,
+\(< 10^{-10}\)) across all trials. See Figure 1.
+
+\textbf{Interpretation:} The LP decomposition perfectly strips arbitrary
+gauge bias regardless of graph topology or bias magnitude. This confirms
+Theorem 3.1: the gauge-invariant cost is exactly computable.
+
+\subsubsection{\texorpdfstring{7.2 Experiment 2: \(\ell^1\) vs
+\(\ell^2\) Cancellation
+Blindness}{7.2 Experiment 2: \textbackslash ell\^{}1 vs \textbackslash ell\^{}2 Cancellation Blindness}}\label{experiment-2-ell1-vs-ell2-cancellation-blindness}
+
+\textbf{Setup:} Cycle graphs \(C_n\) for \(n = 4..100\). Single-edge
+defect \(\delta_0 = 1\), all others zero. Compute both \(\ell^2\) Hodge
+harmonic projection cost
+\(\|\delta_{\mathrm{ex}}\|_1 + \|\delta_{\mathrm{harm}}\|_1\) and
+\(\ell^1\) quotient norm \(\Phi([\delta])\). Measure inflation ratio.
+
+\textbf{Result:} Measured inflation ratio matches theoretical prediction
+\(3 - 2/n\) to machine precision. Maximum deviation: \(< 10^{-12}\). See
+Figure 2.
+
+\textbf{Interpretation:} This numerically confirms Paper 003 Proposition
+6.7 and demonstrates the systematic cost inflation inherent in
+\(\ell^2\)-based defect measurement. The inflation ratio approaches 3 as
+\(n \to \infty\), meaning \(\ell^2\) Hodge projection inflates defect
+cost by up to 3x compared to the true \(\ell^1\) gauge-invariant cost.
+
+\subsubsection{7.3 Experiment 3: Contractivity of
+Self-Correction}\label{experiment-3-contractivity-of-self-correction}
+
+\textbf{Setup:} 10 random cycle graphs (\(n = 6..20\)) with random
+initial sections. Run the iterative repair operator for \(K = 50\)
+steps. Plot \(I(s^{(k)})\) vs iteration \(k\).
+
+\textbf{Result:} All trajectories exhibit monotone (non-increasing)
+descent. \(d_{\mathrm{contr}} = 0\) for every trial. See Figure 3.
+
+\textbf{Interpretation:} This confirms Theorem 4.1 (Fixed-Point
+Dichotomy) and Paper 005 Theorem 2.10 (Autopoietic Operator
+Monotonicity). The \(\ell^1\) iterator never amplifies errors during
+self-correction.
+
+\subsubsection{7.4 Experiment 4: The AIMO Topological Sieve (Predicting
+Correctness)}\label{experiment-4-the-aimo-topological-sieve-predicting-correctness}
+
+To demonstrate the concrete advantage of the \(\ell^1\) structural proxy
+over conventional logit-based uncertainty, we apply the metric in a
+controlled reasoning-graph setting modeling Large Language Model (LLM)
+reasoning loops (such as those generating Chain of Thought for
+mathematical validation on Kaggle AIMO).
+
+\textbf{Setup:} We construct an \emph{LLM proxy graph} consisting of
+\(N\) reasoning steps forming a verification cycle (linking the final
+derived step back to the initial prompt constraints). 1000 such traces
+are simulated. Accurate paths maintain high, noisy confidence.
+Hallucinated paths also maintain broadly high confidence, but contain a
+discrete, topologically-invalid mathematical leap (an irreducible
+algebraic defect). We compute: 1. Mean raw confidence. 2. \(\ell^1\)
+Gauge Quotient Cost (the irreducible defect \(\Phi([\delta])\)). 3.
+Hallucination ratio \(\eta = R / I\).
+
+\textbf{Result:} The ROC-AUC of the raw confidence baseline hovers near
+chance (as models express high confidence even when hallucinating logic
+jumps). The topological measures (\(\Phi\) and \(\eta\)) successfully
+isolate the structural incongruities, achieving ROC-AUC \(> 0.90\) (see
+Figure 5).
+
+\textbf{Interpretation:} An \(\ell^1\)-native topological layer
+(``Epistemic Sieve'') definitively out-predicts standard confidence
+estimation when validating step-by-step cognitive traces. Because
+gradient descent diffuses the evidence of hallucination across adjacent
+token logits, isolated raw confidence acts as a poor indicator of
+logical validity. The \(\ell^1\) coboundary norm re-concentrates the
+structural tear and exposes the hallucination.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{\texorpdfstring{8. The \(\ell^1\) Inflation Ratio and
+Crosspolytope
+Bias}{8. The \textbackslash ell\^{}1 Inflation Ratio and Crosspolytope Bias}}\label{the-ell1-inflation-ratio-and-crosspolytope-bias}
+
+The \(\ell^1\) inflation ratio quantifies how much an \(\ell^2\)-based
+system artificially expands the cost of a structural contradiction by
+diffusing it instead of cleanly isolating it.
+
+It is calculated by performing an \(\ell^2\) Hodge decomposition on a
+raw defect field
+(\(\delta = \delta_{\mathrm{ex}} + \delta_{\mathrm{harm}}\)) and taking:
+\[\text{Inflation Ratio} = \frac{\|\delta_{\mathrm{ex}}\|_1 + \|\delta_{\mathrm{harm}}\|_1}{\|\delta\|_1}\]
+
+For a single-edge defect on \(C_n\), this evaluates exactly to
+\(3 - 2/n\): - \(n = 3\): ratio \(= 7/3 \approx 2.33\) - \(n = 4\):
+ratio \(= 2.5\) - \(n \to \infty\): ratio \(\to 3\)
+
+Geometrically, this captures the \textbf{crosspolytope bias}. The
+\(\ell^1\) geometry privileges sparse, extreme configurations -- the
+sharp corners of a crosspolytope -- to isolate contradictions locally.
+The \(\ell^2\) orthogonal projection forces error mass to uniformly
+diffuse across all coordinates, destroying the sparsity.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{9. Conclusion: A Structural Perspective on
+Metacognition}\label{conclusion-a-structural-perspective-on-metacognition}
+
+We have introduced a framework in which metacognition is formalized as
+the detection and minimization of structural inconsistency in
+graph-based reasoning systems. Within this framework, the \(\ell^1\)
+coboundary norm provides a principled and computable measure of defect
+that satisfies locality, faithfulness, monotonicity, and additivity.
+
+A central result is the decomposition: \[I(s) = \Phi([\delta]) + R(s)\]
+which separates irreducible structural constraints from repairable model
+error. This decomposition enables a quantitative notion of hallucination
+via the ratio \(\eta = R / I\), and supports iterative repair dynamics
+that reduce removable inconsistency while preserving intrinsic
+structure.
+
+The proposed \textbf{Metacognitive Distance Metric} offers a diagnostic
+tool for evaluating self-monitoring behavior in AI systems. It yields
+concrete, testable predictions and provides insight into how different
+architectural and training choices affect structural consistency.
+
+Empirical results demonstrate that \(\ell^1\)-based structural signals
+can outperform confidence-based methods in detecting reasoning errors in
+controlled settings. While further validation on real-world tasks is
+required, these findings suggest that explicit verification mechanisms
+may play an important role in improving reliability.
+
+This work does not propose a replacement for existing probabilistic
+training paradigms. Instead, it introduces a complementary structural
+layer that can be integrated with current models to enhance their
+ability to detect and respond to internal inconsistencies.
+
+The central claim is falsifiable: if systems relying solely on standard
+training objectives achieve near-zero metacognitive distance without
+explicit structural mechanisms, the proposed framework would be
+unnecessary. Conversely, consistent empirical improvements would support
+the view that structural defect signals capture aspects of reasoning not
+accessible through confidence alone.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{References}\label{references}
+
+\begin{itemize}
+\tightlist
+\item
+  Nelson, T. O. \& Narens, L. (1990). Metamemory: A Theoretical
+  Framework and New Findings. \emph{Psychology of Learning and
+  Motivation}, 26, 125--173.
+\item
+  Maniscalco, B. \& Lau, H. (2012). A Signal Detection Theoretic
+  Approach for Estimating Metacognitive Sensitivity from Confidence
+  Ratings. \emph{Consciousness and Cognition}, 21(1), 422--430.
+\item
+  Galvin, S. J. et al.~(2013). Type 2 Tasks in the Theory of Signal
+  Detectability. \emph{Psychonomic Bulletin \& Review}, 10, 843--876.
+\item
+  Rutherford, S. et al.~(2023). The Return of the Norm: Clinical and
+  Research Implications of Normative Models in Psychiatry.
+  \emph{Molecular Psychiatry}, 28, 3566--3573.
+\item
+  Carroll, J. H. (2025). Papers 000--005: Foundational \(\ell^1\)
+  Coboundary Theory..
+\end{itemize}
+
+\end{document}

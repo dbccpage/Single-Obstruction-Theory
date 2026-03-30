@@ -1,0 +1,571 @@
+# An $\ell^1$ Obstruction Framework for Coboundary Defects
+**Author:** Jeremy H. Carroll
+**Date:** March 2026
+**Version:** 3.0 (Pre-print)
+
+---
+
+## Classification of Results
+
+| Layer | Status | What it contains |
+|-------|--------|------------------|
+| **A: Established** | Proved in Papers 000-003 | $\ell^1$ classification (combinatorial, Banach, dynamical), Hodge quotient norm, density persistence |
+| **B: Theorems** | Proved in this paper | Functorial aggregation monotonicity, operator-valued extension to Schatten-1, sheaf Laplacian gradient structure |
+| **C: Conjectural** | Research program | Born rule emergence from $\ell^1$ dynamics, causal set extensions |
+
+---
+
+## Abstract
+
+Papers 000-003 established, through independent proofs at four structural levels, that within the class of edge-additive, faithful, and functorial diagnostics on coboundary defects, the $\ell^1$ coboundary norm is uniquely determined within this class (up to positive scaling). Paper 002 proved this at the combinatorial level (coordinate additivity on finite graph cochains). Paper 001 extended it to Banach presheaves (functoriality under bounded linear maps). Paper 000 showed that projection dynamics generate intrinsic defects measured by this norm, persisting at non-vanishing density. Paper 003 demonstrated that the forced $\ell^1$ geometry induces a canonical gauge-invariant quotient norm on first cohomology. Alternative classes of functionals (e.g., relaxing edge-additivity to subadditivity, or faithfulness to semi-faithfulness) may yield different geometries; the uniqueness results hold precisely within the axiom class specified.
+
+This paper synthesizes these results into a unified obstruction framework and extends them in three directions. First, we prove that the $\ell^1$ coboundary norm is monotone under coarse-graining functors: topological defects cannot vanish upon aggregation unless their local boundaries cancel on collapsed edges (Theorem 2.1). Second, we extend the framework from scalar and vector-valued presheaves to operator-valued presheaves, showing that when stalks are spaces of bounded operators on Hilbert spaces, the $\ell^1$ coboundary norm lifts canonically to the Schatten-1 (trace) norm (Theorem 3.1). Third, we define the **Local $\ell^1$ Primal--Dual Iterator** as the canonical local primal--dual realization of $\ell^1$ defect minimization consistent with dual feasibility constraints. We prove that this iteration, constrained by local compositional invariance on operator-valued presheaves, restricts admissible local automorphisms to unitary conjugation, corresponding to a $U(n)$ gauge structure (Theorem 4.10).
+
+We further outline, at the level of a research program, how these three extensions connect the foundational quad to subsequent applications in autopoietic structural posets (Paper 005), gauge group emergence, the fermion sign problem, and the behavior of coupling constants. All conjectural claims are explicitly marked.
+
+---
+
+## 1. Introduction
+
+### 1.1 The Foundational Quad
+
+The preceding four papers establish a single structural conclusion at four levels of generality:
+
+1. **Combinatorial (Paper 002)** [6]: On finite graph cochains, edge locality, coordinate additivity over disjoint supports, coordinate symmetry, and graph invariance force the $\ell^1$ norm as the unique diagnostic geometry, up to a global scalar.
+
+2. **Functional-analytic (Paper 001)** [5]: On Banach presheaf coboundaries, edge-wise additivity, faithfulness, functoriality under bounded linear endomorphisms, and isomorphism invariance force the $\ell^1$ coboundary norm as the unique edge-additive seminorm, up to a positive scalar.
+
+3. **Dynamical (Paper 000)** [4]: Projection of linear many-body evolution onto a nonlinear manifold produces intrinsic coboundary defects that (a) obstruct linear conjugacy of the projected flow, (b) are measured by the uniquely forced $\ell^1$ diagnostic, and (c) persist at non-vanishing density over a finite time window independent of system size.
+
+4. **Cohomological (Paper 003)** [7]: The forced $\ell^1$ geometry on $C^1(G)$ induces a canonical quotient norm $\Phi$ on $H^1(G)$, providing the unique gauge-invariant measure of irreducible obstruction. The $\ell^2$ Hodge projection generically inflates $\ell^1$ cost by a factor approaching 3 on cycle graphs.
+
+The present paper is not a new proof of $\ell^1$ rigidity. It is a synthesis: we organize the quad into a single categorical framework, extend it to new structural settings, and identify the connections to subsequent work. We emphasize that the uniqueness results hold within the precisely defined class of admissible diagnostics (edge-additive, faithful, functorial, invariant); alternative axiom classes may well select different geometries.
+
+### 1.2 What This Paper Contributes
+
+Three theorems extend the quad:
+
+- **Theorem 2.1 (Functorial Aggregation Monotonicity):** The $\ell^1$ coboundary norm is monotonically non-increasing under coarse-graining functors. Defects cannot increase under aggregation, and can only decrease through cancellation on collapsed edges.
+
+- **Theorem 3.1 (Operator-Valued Extension):** When presheaf stalks are operator algebras $\mathcal{B}(\mathcal{H})$, the $\ell^1$ coboundary norm lifts to the Schatten-1 (trace) norm, preserving all four classification axioms.
+
+- **Theorem 4.2 (Fixed Point Characterization):** The Local $\ell^1$ Primal--Dual Iterator's fixed points are precisely the $\ell^1$-minimal representatives in their cohomology classes, certified by LP strong duality via divergence-free dual witnesses.
+
+- **Theorem 4.10 (Unitary Gauge Structure):** Under the operator-valued Schatten-1 topology, preserving compositional invariance against the Iterator uniquely restricts admissible local automorphisms to unitary conjugation, corresponding to a $U(n)$ gauge structure.
+
+### 1.3 Relation to the Full Program
+
+The program proceeds in stages:
+
+- Papers 000–003: Establish the $\ell^1$ obstruction framework across combinatorial, functional, dynamical, and cohomological settings.
+
+- Paper 004 (this work): Synthesizes and extends the framework (aggregation, operator-valued extension, dynamical structure).
+
+- Subsequent papers: Explore applications of the framework to increasingly structured physical and computational settings, including gauge structure, fermionic systems, and coupling behavior.
+
+### 1.4 Computational Companion
+
+This paper is accompanied by illustrative Python scripts (`universal_obstruction.py` and `isotropy_emergence_primal_dual.py`) that model aspects of the framework. The former demonstrates the Distinguishability Bound Theorem (Theorem 5.1) on operator-valued presheaves; the latter illustrates the primal–dual iteration of Definition 4.1 on scalar grid graphs with visualization of defect concentration. These scripts serve as structural illustrations of the mathematical framework rather than formal physical simulations. **Note:** The primal–dual script implements a two-step Chambolle–Pock variant (omitting the divergence correction step of Definition 4.1); see Section 4.2 for the full three-step scheme.
+
+### 1.5 Conventions
+
+Norms are denoted $\lVert \cdot \rVert$ with appropriate subscripts. The Schatten-$p$ norm on $\mathcal{B}(\mathcal{H})$ is $\|A\|_p = (\mathrm{Tr}|A|^p)^{1/p}$, where $|A| = (A^*A)^{1/2}$. The Schatten-1 norm is the trace norm $\|A\|_1 = \mathrm{Tr}|A|$. Scalar absolute values are denoted $|\cdot|$.
+
+---
+
+## 2. Functorial Defect Aggregation
+
+### 2.1 Setup
+
+Let $(P, \leq)$ be a finite poset with covering relations $E_{\mathrm{cov}}$, and let $F$ be a Banach presheaf over $P$. A **coarse-graining functor** is a surjective order-preserving map $\pi: P \to Q$ to a smaller poset $Q$, together with a natural transformation that aggregates the stalks: for each $q \in Q$, the aggregated stalk is $G(q) = \bigoplus_{x \in \pi^{-1}(q)} F(x)$ with restriction maps induced from $F$.
+
+The **pushforward** of a section $s$ of $F$ is the section $\pi_* s$ of $G$ defined by $(\pi_* s)(q) = (s(x))_{x \in \pi^{-1}(q)}$.
+
+### 2.2 Monotonicity
+
+> **Theorem 2.1 (Functorial Aggregation Monotonicity).** **(Layer B)** Let $\pi: (P, F) \to (Q, G)$ be a coarse-graining as above. Assume all restriction maps are contractive with respect to the underlying Banach norms. Then
+> $$I_Q(\pi_* s) \leq I_P(s)$$
+> for every section $s$ of $F$. Equality holds if and only if (i) every type-(a) edge (with $\pi(a) \neq \pi(b)$) has isometric induced restriction on the aggregated stalks, and (ii) every type-(b) edge (collapsed, $\pi(a) = \pi(b)$) has zero coboundary defect $\delta_e(s) = 0$.
+
+*Proof.* The $\ell^1$ coboundary norm on $P$ sums over all covering edges of $P$:
+$$I_P(s) = \sum_{e \in E_{\mathrm{cov}}(P)} \|\delta_e(s)\|$$
+
+Under $\pi$, the edges of $P$ partition into two classes: (a) edges $e = (a, b)$ with $\pi(a) \neq \pi(b)$, which map to covering edges of $Q$, and (b) edges $e = (a, b)$ with $\pi(a) = \pi(b)$, which are collapsed.
+
+For edges of type (a), the coboundary defect on $Q$ satisfies $\|\delta_{\pi(e)}(\pi_* s)\| \leq \|\delta_e(s)\|$ by contractivity of the induced restriction maps on the aggregated stalks.
+
+Edges of type (b) contribute to $I_P(s)$ but not to $I_Q(\pi_* s)$, since they are no longer covering relations in $Q$.
+
+Therefore:
+$$I_Q(\pi_* s) \leq \sum_{e: \pi(a) \neq \pi(b)} \|\delta_e(s)\| \leq I_P(s)$$
+
+Equality requires both that the type-(a) contractions are isometric and that all type-(b) edges have zero defect. $\square$
+
+**Interpretation.** Topological defects cannot be hidden by coarse-graining. An $\ell^1$ defect that is present at the fine scale either persists at the coarse scale or was already zero on the collapsed edges. This monotonicity property ensures that $\ell^1$ obstruction theory is stable under renormalization, distinguishing it from quadratic diagnostics where cancellations may occur.
+
+---
+
+## 3. Operator-Valued Presheaves and the Schatten-1 Norm
+
+### 3.1 From Scalars to Operators
+
+Papers 001 and 002 classify the $\ell^1$ norm on presheaves with scalar or vector-valued stalks. In quantum many-body systems, the natural stalks are spaces of density operators on local Hilbert spaces. This section extends the classification to this setting.
+
+Let $(P, \leq)$ be a finite poset. An **operator-valued presheaf** $F$ over $P$ assigns:
+- To each $x \in P$, a finite-dimensional Hilbert space $\mathcal{H}_x$ and the Banach space $F(x) = \mathcal{B}_1(\mathcal{H}_x)$ of trace-class operators, equipped with the Schatten-1 (trace) norm $\|A\|_1 = \mathrm{Tr}|A|$.
+- To each covering edge $e = (a, b)$, a completely positive trace-non-increasing restriction map $r_{b,a}: F(b) \to F(a)$ (the partial trace or a conditional expectation).
+
+The coboundary defect at edge $e = (a, b)$ for a section $\rho = (\rho_x)_{x \in P}$ (where $\rho_x \in F(x)$ is a local density operator) is:
+$$\delta_e(\rho) = r_{b,a}(\rho_b) - \rho_a \in F(a)$$
+
+This measures the failure of the local state $\rho_a$ to be the marginal of $\rho_b$ --- precisely the quantum marginal incompatibility.
+
+### 3.2 Classification Extension
+
+> **Theorem 3.1 (Operator-Valued $\ell^1$ Classification).** **(Layer B)** Let $\nu$ be a seminorm on the operator-valued 1-cochain space $C^1(P, F) = \bigoplus_{e \in E_{\mathrm{cov}}} \mathcal{B}_1(\mathcal{H}_{a_e})$ satisfying:
+>
+> (P1) Edge-wise additivity: $\nu((\delta_e)_e) = \sum_e \nu_e(\delta_e)$
+>
+> (P2) Faithfulness: $\nu_e(\delta) = 0 \iff \delta = 0$
+>
+> (P3) Functoriality: $\nu_e(\Phi(\delta)) \leq \|\Phi\|_{\mathrm{op}} \cdot \nu_e(\delta)$ for every bounded linear map $\Phi: \mathcal{B}_1(\mathcal{H}) \to \mathcal{B}_1(\mathcal{H})$
+>
+> (P4) Isomorphism invariance
+>
+> Then $\nu_e(\delta) = w_e \cdot \|\delta\|_1$ for some $w_e > 0$, where $\|\cdot\|_1$ is the Schatten-1 (trace) norm. If (P4) holds, $w_e = \alpha$ for all $e$.
+
+*Proof sketch.* The argument follows the structure of Paper 001, Theorem 2.2. The key step is the direction-independence lemma: for any two operators $A, B \in \mathcal{B}_1(\mathcal{H})$ with $\|A\|_1 = \|B\|_1 \neq 0$, we must show $\nu_e(A) = \nu_e(B)$.
+
+By the operator-valued Hahn--Banach theorem (a consequence of the duality $\mathcal{B}_1(\mathcal{H})^* = \mathcal{B}(\mathcal{H})$), for any $A$ with $\|A\|_1 = 1$, there exists $X \in \mathcal{B}(\mathcal{H})$ with $\|X\|_{\mathrm{op}} = 1$ and $\mathrm{Tr}(X^* A) = 1$. Define the rank-one map $\Phi: \mathcal{B}_1(\mathcal{H}) \to \mathcal{B}_1(\mathcal{H})$ by $\Phi(C) = \mathrm{Tr}(X^* C) \cdot B / \|B\|_1$, which is bounded with operator norm $\leq 1$; the extension to complete boundedness follows from standard results on trace-class duality. Then $\Phi(A) = B$, and (P3) gives $\nu_e(B) \leq \nu_e(A)$. By symmetry, equality follows.
+
+The remainder proceeds identically to the scalar case: direction independence plus homogeneity forces $\nu_e = w_e \|\cdot\|_1$, and (P4) forces uniform weights. $\square$
+
+**Remark 3.1 (Physical interpretation).** In the quantum setting, the physically natural restriction maps are completely positive, trace-non-increasing (CPTN) maps. Axiom (P3) is stated for all bounded linear maps, which is the stronger condition used in the proof (the rank-one map $\Phi$ constructed above is bounded and linear but not generally completely positive). Since the class of CPTN maps is a proper subset of bounded linear maps, the classification result applies a fortiori when restriction maps happen to be CPTN: the Schatten-1 norm is the unique admissible diagnostic even under this stronger functoriality requirement. The physical content is that the classification holds regardless of whether one demands functoriality under all bounded maps or only under quantum channels. The classification is proved under functoriality with respect to all bounded linear maps; restriction to CPTN maps is a physically motivated subclass for which the result remains valid, though the proof uses the larger class.
+
+### 3.3 Structural Consequences
+
+**Quantum marginal incompatibility.** When $\rho$ is a global quantum state and $\Pi(\rho) = \bigotimes_x \mathrm{Tr}_{\bar{x}}(\rho)$ is the product-state retraction, the coboundary defect $\delta_e(\Pi(\rho))$ measures the entanglement across edge $e$ in trace norm. Theorem 3.1 shows this is the unique additive, faithful, functorial measure of marginal incompatibility.
+
+**Entanglement constraints.** The edge-wise additivity (P1) combined with the trace norm structure places strict bounds on the total defect across all edges sharing a vertex. This additive limit is structurally consistent with monogamy-type constraints on distributed quantum correlations, consistent with the known result that localized entanglement cannot be infinitely shared.
+
+---
+
+## 4. The Local $\ell^1$ Primal--Dual Iterator
+
+### 4.1 Discarding the $\ell^2$ Laplacian
+
+Classical formulations utilize the $\ell^2$ Sheaf Laplacian ($\Delta_\mathcal{F} = d^*d$) as an analytically convenient smoothing operator to define local dynamics. However, as established in Paper 003, the $\ell^2$ structure represents a geometric misalignment characterized by density inflation ($3 - 2/n$). If the fundamental interaction geometry is strictly determined by the $\ell^1$ quotient norm, the time evolution mechanism cannot be an $\ell^2$ continuum diffusion process like the Laplacian. It must be a direct flow across the $\ell^1$ cost surface.
+
+### 4.2 The Local $\ell^1$ Primal--Dual Iterator (Discrete Form)
+
+The differential inclusion
+$$ \dot{s} \in -\partial_{\ell^1} \|ds\|_1 $$
+provides a formal characterization of $\ell^1$ defect minimization, but does not by itself define a constructive or local dynamical system.
+
+We therefore introduce an explicit **discrete primal–dual iteration** whose fixed points coincide with $\ell^1$-minimal representatives. Among local update rules consistent with the $\ell^1$ variational principle and dual feasibility constraints ($d_0^* \phi = 0$, $\|\phi\|_\infty \le 1$), this primal--dual scheme provides a natural realization: the dual step enforces sign alignment, the divergence correction enforces conservation, and the primal step follows the resulting gradient. The fixed-point set is determined by the LP optimality conditions (Theorem 4.2) and is shared by any correct solver for the $\ell^1$ minimization problem; the specific three-step decomposition is chosen for its physical interpretability and locality, not claimed to be unique among all possible algorithms.
+
+**Definition 4.1 (Local $\ell^1$ Primal--Dual Iterator).** Let $(P, F)$ be a finite presheaf over a poset with covering edges $E_{\mathrm{cov}}$. Let $s^k \in C^0(P, F)$ be a section at iteration $k$, and define the defect field:
+$$ \delta^k = d_0 s^k \in C^1(P, F) $$
+
+Introduce dual variables $\phi^k \in C^1(P, F)$, initialized arbitrarily with $\|\phi^0\|_\infty \le 1$.
+
+For step sizes $\sigma, \tau, \eta > 0$, define:
+
+**(1) Dual ascent (edge-local)**
+$$ \phi^{k+\frac{1}{2}}(e) = \operatorname{clip}_{[-1,1]} \Big( \phi^k(e) + \sigma \cdot \delta^k(e) \Big) $$
+
+**(2) Divergence correction (vertex-local)**
+$$ \phi^{k+1} = \phi^{k+\frac{1}{2}} - \tau \cdot d_0 (d_0^* \phi^{k+\frac{1}{2}}) $$
+
+**(3) Primal update (vertex-local)**
+$$ s^{k+1} = s^k - \eta \cdot d_0^* \phi^{k+1} $$
+
+**Interpretation:**
+* Step (1) aligns dual variables with the local defect (sign selection).
+* Step (2) enforces the approximate divergence-free constraint $d_0^* \phi \approx 0$.
+* Step (3) updates the section to reduce the coboundary defect.
+
+All operations are strictly local: edge updates depend only on edge endpoints, and vertex updates depend only on adjacent edges.
+
+**Proposition 4.1 (Self-Consistent Defect Resolution).**
+The Local $\ell^1$ Primal--Dual Iterator defines a closed local system in which:
+1. Defects generate dual responses (Step 1).
+2. Dual responses enforce global consistency (Step 2).
+3. Consistency feeds back to reduce defects (Step 3).
+
+The system requires no global solver and maintains only local interactions. Under appropriate step-size conditions (which depend on the spectral radius of $d_0 d_0^*$ and the interaction between the three steps; see Remark below), convergence is conjectured; the scheme is consistent with known primal--dual methods but differs due to the intermediate correction step. Full convergence analysis, including explicit step-size bounds, is deferred to subsequent work.
+
+**Remark (Step-size conditions).** The three-step scheme of Definition 4.1 is structurally related to Chambolle--Pock primal--dual splitting [8], but the intermediate divergence correction (Step 2) makes it a non-standard variant. The standard Chambolle--Pock step-size condition $\sigma \tau \|d_0\|^2_{\mathrm{op}} < 1$ does not directly apply without accounting for the correction step. Establishing the precise step-size regime for this three-step scheme is an open problem.
+
+**Theorem 4.2 (Fixed Point Characterization).** **(Layer B)** Let $s^k$ evolve under the Local $\ell^1$ Primal--Dual Iterator. Any fixed point $s^*$ satisfies:
+$$ d_0 s^* = \delta_{\mathrm{irr}} $$
+where $\delta_{\mathrm{irr}}$ is an $\ell^1$-minimal representative in its cohomology class. Moreover, there exists a dual witness $\phi^*$ such that:
+* $\phi^* \in \partial \|\delta_{\mathrm{irr}}\|_1$
+* $d_0^* \phi^* = 0$
+* $\langle \phi^*, \delta_{\mathrm{irr}} \rangle = \|\delta_{\mathrm{irr}}\|_1$
+
+At the fixed point, the system stabilizes exactly at the **$\ell^1$-native decomposition**: $\delta = d_0 f^* + \delta_{\mathrm{irr}}$. The $\ell^1$-minimality follows from LP strong duality (Paper 003, Theorem 9a.6; cf. [8]): the dual feasibility condition $d_0^* \phi^* = 0$ together with the complementary slackness condition $\langle \phi^*, \delta_{\mathrm{irr}} \rangle = \|\delta_{\mathrm{irr}}\|_1$ certify primal optimality. We emphasize that Theorem 4.2 characterizes the structure of fixed points; convergence of the iteration to a fixed point is conjectured (Conjecture 4.3) but not proved here.
+
+**Remark.** The continuous-time differential inclusion $\dot{s} \in -\partial_{\ell^1} \|ds\|_1$ is formally recovered as the continuous-time limit of this discrete iterator.
+
+**Conjecture 4.3 (Local $\ell^1$ Defect Descent).** **(Layer C)** Let $s^k$ evolve under the Local $\ell^1$ Primal--Dual Iterator with sufficiently small step sizes $\sigma, \tau, \eta > 0$. Then the $\ell^1$ defect functional $I(s^k) := \|d_0 s^k\|_1$ satisfies:
+$$ I(s^{k+1}) \le I(s^k) $$
+with strict inequality unless $s^k$ is a fixed point.
+
+*Proof Sketch.* 
+1. **Dual alignment increases pairing:** From Step (1), $\phi^{k+\frac{1}{2}} \approx \operatorname{sign}(\delta^k)$, implying $\langle \phi^{k+\frac{1}{2}}, \delta^k \rangle \approx \|\delta^k\|_1$, with clipping ensuring $\|\phi^{k+\frac{1}{2}}\|_\infty \le 1$.
+2. **Divergence correction preserves feasibility:** Step (2) reduces $d_0^* \phi$ while keeping $\phi$ approximately within the feasible dual set.
+3. **Primal update reduces defect:** Step (3) evolves the defect as $\delta^{k+1} = d_0 s^{k+1} = \delta^k - \eta d_0 d_0^* \phi^{k+1}$.
+4. **Energy decrease (incomplete):** One expects $\|\delta^{k+1}\|_1 \le \|\delta^k\|_1 - \eta \langle \phi^{k+1}, d_0 d_0^* \phi^{k+1} \rangle + O(\eta^2)$. Since $d_0 d_0^*$ is positive semidefinite and $\phi^{k+1}$ aligns with $\delta^k$, descent would follow. However, the $\ell^1$ norm is non-smooth, and the standard convexity inequality provides a lower bound, not the upper bound needed here. A rigorous descent proof requires either a Lyapunov function argument (e.g., showing the primal-dual gap decreases monotonically) or appeal to the theory of monotone operator splitting with explicit step-size conditions for this three-step variant. This gap is the reason we classify descent as Layer C rather than Layer B. $\square$
+
+**Interpretation.** The Local $\ell^1$ Primal--Dual Iterator is designed as a **descent process on the $\ell^1$ defect functional**. Each iteration aligns dual variables with local defect structure, enforces global consistency via divergence correction, and updates the primal state to reduce the total defect. The system is designed to act as a locally driven global optimizer, with fixed points characterized by $\ell^1$ minimality; convergence remains an open problem.
+
+**Theorem 4.4 (Local Edge-Wise Descent).** **(Layer B)** Let $s^k$ evolve under the Local $\ell^1$ Primal--Dual Iterator. For each edge $e = (a,b)$, define the local defect $\delta^k(e) = r_{b,a}(s^k(b)) - s^k(a)$. Then for sufficiently small step sizes, the update satisfies:
+$$ |\delta^{k+1}(e)| \le |\delta^k(e)| + \sum_{e' \sim e} \epsilon_{e,e'} $$
+where $e' \sim e$ are edges sharing a vertex with $e$, and $\epsilon_{e,e'}$ are higher-order coupling terms bounded at $O(\eta^2)$.
+
+*Interpretation.* Each edge attempts to reduce its own defect using only local information, experiencing only bounded interference from neighboring edges. This establishes the system as enacting **distributed local descent**. Each individual edge behaves as a local constraint enforcer minimizing its own inconsistency, while shared vertices mediate conflicting boundaries.
+
+*Proof Sketch.* The update at a vertex depends only on adjacent edges. For an edge $e=(a,b)$, the defect evolves as $\delta^{k+1}(e) = \delta^k(e) - \eta \big(\sum_{e' \ni b} \phi(e') - \sum_{e' \ni a} \phi(e')\big)$. This decomposes naturally into a self-contribution from $e$ (which reliably drives reduction since $\phi(e) \approx \operatorname{sign}(\delta(e))$) and cross-contributions from neighboring edges $e'$. Because the $\ell^\infty$ bounding clip ensures normalized magnitudes, the local self-term stably reduces $|\delta(e)|$, while interactions from neighbors contribute only bounded perturbations. $\square$
+
+**Proposition 4.2 (Cycle Concentration Mechanism).** Under the Local $\ell^1$ Primal--Dual Iterator, local defect minimization heavily mediated by shared vertex constraints drives residual defects to concentrate on topological cycles, which act as stable self-organizing configurations under the generic flow.
+
+*(This provides the formal mathematical mechanism for structure formation: local incompatible constraints cannot all be satisfied simultaneously at vertices, requiring stable structures to persist geometrically as topological cycles).*
+
+### 4.3 Autopoietic Structures and Cycle Stability
+
+We now formalize the conditions under which topological defects persist as stable macroscopic features rather than dissolving under the optimization flow.
+
+**Definition 4.2 (Cycle-Supported Defect).** A defect field $\delta \in C^1$ is *cycle-supported* if its support lies entirely on a set of edges forming a topological cycle $C \subseteq E$, and satisfies $d_0^* \phi = 0$ for some $\phi \in \partial \|\delta\|_1$. Equivalently, the defect has no net divergence at any vertex and is natively in the dual-feasible space.
+
+**Theorem 4.5 (Cycle Stability Under $\ell^1$ Flow).** **(Layer B)** Let $\delta^k = d_0 s^k$ evolve under the Local $\ell^1$ Primal--Dual Iterator. If at iteration $k$, the defect configuration $\delta^k$ is supported on a cycle and admits a dual certificate $\phi^k \in \partial \|\delta^k\|_1$ with $d_0^* \phi^k = 0$, then $\delta^{k+1} = \delta^k$, marking the configuration as a fixed point of the iteration. Stability holds under the absence of perturbations that break dual feasibility.
+
+*Proof Sketch.* At the discrete update, $d_0^* \phi^k = 0$ implies the primal update vanishes ($s^{k+1} = s^k \Rightarrow \delta^{k+1} = \delta^k$). Because $\phi^k$ strictly lies in the subdifferential and is divergence-free, the configuration is already $\ell^1$-minimal. By the convexity of the $\ell^1$ norm, no descent direction exists ($|\delta^k - d_0 f|_1 \ge |\delta^k|_1$). Ergo, neither primal nor dual state adjusts, and the cycle is strictly stable. $\square$
+
+**Interpretation.** Cycle-supported defects with divergence-free dual certificates are dynamically stable under local optimization: no local iteration can reduce them because cancellation strictly requires divergence, which cycles lack. Consequently, system dynamics trap unresolvable frustration specifically on cycles, acting as the system's topological attractors.
+
+**Definition 4.3 (Autopoietic Structure).** A defect configuration is a physical *Autopoietic Structure* (a proto-object) if it is:
+1. $\ell^1$-minimal in its cohomology class
+2. Supported structurally on a geometric cycle
+3. Strictly invariant under the continued Local $\ell^1$ Primal--Dual Iterator flow.
+
+**Corollary 4.1 (Tree Instability).** If a generic defect configuration has support restricted to an acyclic subgraph (a tree), it is not stable under the Local $\ell^1$ Primal--Dual Iterator and predictably collapses under local interaction. Thus, trees theoretically collapse; cycles structurally persist. This serves as the geometric selection principle for structural object emergence.
+
+### 4.4 Cycle Interaction and the $\ell^1$ Potential
+
+Once autopoietic objects (stable cycles) emerge, they physically influence each other by communicating constraints across shared macroscopic vertices.
+
+**Theorem 4.6 (Cycle Interaction Principle).** **(Layer B)** Let two stable cycle-supported defects $\delta^{(1)}, \delta^{(2)}$ evolve together under the Local $\ell^1$ Primal--Dual Iterator, evaluated collectively as $\delta = \delta^{(1)} + \delta^{(2)}$.
+1. **Disjoint Case:** If $\text{supp}(\delta^{(1)}) \cap \text{supp}(\delta^{(2)}) = \emptyset$, then $\delta$ remains a stable fixed point. Disjoint cycles assert no interactive coupling constraint.
+2. **Overlapping Case:** If the cycles share vertices, the combined configuration $\delta$ is generically (i.e., outside a measure-zero set in the space of defect assignments) not $\ell^1$-minimal. The combined dual may fail feasibility either through divergence ($d_0^*(\phi^{(1)} + \phi^{(2)}) \neq 0$ at shared vertices) or through norm-bound violation ($\|\phi^{(1)} + \phi^{(2)}\|_\infty > 1$ at shared edges). In either case, the iterator reactivates to drive the overlap toward a configuration $\delta \to \delta_{\text{new}}$ with strictly lower total $\ell^1$ cost.
+
+*Mechanism.* Where interaction vertices are shared, the independent cycles induce competing dual flows $\phi^{(1)}, \phi^{(2)}$. The local iterator evaluates the simple scalar sum $d_0^*(\phi^{(1)} + \phi^{(2)}) \neq 0$. The resulting newly non-zero divergence breaks the fixed-point condition, reactivating the iterative physical flow to minimize the combined macroscopic defect. Continuous interaction evaluates not as an extrinsic phenomenological "force," but strictly as structural re-optimization under logically shared constraints.
+
+**Definition 4.4 ($\ell^1$ Interaction Functional).** We define the topological interaction potential between adjacent stable cycles on cohomology classes:
+$$ \mathcal{I}([\delta^{(1)}], [\delta^{(2)}]) = \Phi([\delta^{(1)} + \delta^{(2)}]) - \big(\Phi([\delta^{(1)}]) + \Phi([\delta^{(2)}])\big) $$
+where $\Phi([\delta]) = \min_f \|\delta - d_0 f\|_1$ is the $\ell^1$ quotient norm from Paper 003. At the cochain level, the triangle inequality forces $\|\delta^{(1)} + \delta^{(2)}\|_1 \le \|\delta^{(1)}\|_1 + \|\delta^{(2)}\|_1$, so the interaction is always non-positive. However, on cohomology classes the interaction $\mathcal{I}$ can have either sign, because the joint gauge optimization $\min_f \|\delta^{(1)} + \delta^{(2)} - d_0 f\|_1$ differs from separate optimizations $\min_{f_1} \|\delta^{(1)} - d_0 f_1\|_1 + \min_{f_2} \|\delta^{(2)} - d_0 f_2\|_1$ (the joint problem shares the gauge degree of freedom).
+
+This interaction functional enables the following structural properties:
+* **Subadditive regime ($\mathcal{I} < 0$):** The joint gauge optimization achieves greater cancellation than separate optimizations, pulling the configuration tighter together.
+* **Superadditive regime ($\mathcal{I} > 0$):** Sharing gauge freedom forces a less favorable decomposition than separate optimization, causing the topology to reconfigure to avoid the overlap.
+* **Fusion:** Two overlapping cycles merge into a single extended defect cycle if $\Phi([\delta_{\text{merged}}]) < \Phi([\delta^{(1)}]) + \Phi([\delta^{(2)}])$.
+* **Annihilation:** If $[\delta^{(1)}] = -[\delta^{(2)}]$, the interaction enables complete phase cancellation $[\delta] \to 0$.
+
+### 4.5 Defect Propagation and Causal Signals
+
+To complete the physical picture of localized dynamics, we must specify how disturbances propagate through the $\ell^1$ lattice.
+
+**Definition 4.5 (Local Disturbance).** Let $s$ be a stable configuration with defect $\delta = \delta_{\text{irr}}$. A *local disturbance* at vertex $x$ is a perturbation $s(x) \mapsto s(x) + \epsilon$ inducing a defect change $\delta \mapsto \delta + \Delta \delta$ supported on edges incident to $x$.
+
+**Theorem 4.7 (Defect Propagation Under $\ell^1$ Flow).** **(Layer B)** Under the Local $\ell^1$ Primal--Dual Iterator, a local disturbance propagates along adjacent edges according to:
+$$ \delta^{k+1} = \delta^k - \eta \, d_0 d_0^* \phi^k $$
+with dual certificate $\phi^k \in \partial \|\delta^k\|_1$.
+
+*Mechanism.* At the disturbed vertex, consistency breaks, producing localized divergence ($d_0^* \phi \neq 0$). The dual update aligns with the defect sign structure; divergence correction redistributes the imbalance subject to $\|\phi\|_\infty \le 1$.
+
+**Interpretation.** The propagation operator $d_0 d_0^*$ acts as a discrete Laplacian, but driven by the $\ell^1$ subgradient rather than $\ell^2$ diffusion. This distinction is fundamental: $\ell^2$ diffusion spreads mass uniformly and destroys structure, while $\ell^1$ propagation is *edge-selective*, preferring minimal paths and concentrating signal flow along sharp boundaries.
+
+**Corollary 4.2 (Finite-Speed Propagation).** A disturbance at vertex $x$ affects only vertices within graph distance $k$ after $k$ iterations.
+
+This enforces causal structure in the weak sense: local updates dictate finite propagation speed, eliminating instantaneous non-local effects. The iteration index $k$ serves as the intrinsic time parameter, corresponding to descent in the $\ell^1$ action rather than an externally imposed clock. However, this causal structure does not by itself imply an invariant propagation speed, Lorentz symmetry, or observer-independent frame structure; propagation speed depends on the local graph connectivity and step-size parameters. The framework derives causal ordering from variational descent; metric spacetime structure remains an open emergence problem.
+
+*(Cycle–Field Interaction).* When a propagating disturbance encounters a stable cycle (Theorem 4.5), the cycle resists absorption due to its divergence-free certification. The disturbance routes *around* the cycle or modifies only the adjacent lattice. Stable cycles therefore act as topological obstacles to propagation—the first structural instance of field–matter interaction derived purely from $\ell^1$ constraint logic.
+
+**Remark 4.3 (Cone Structure from Dual Feasibility).** The dual feasibility constraint $\|\phi\|_\infty \le 1$ imposes a bounded flux per edge per iteration. Combined with locality, this induces a cone of admissible influence: after $k$ steps from vertex $x$, only vertices within the set $\mathcal{C}(x,k) = \{ y \mid d_G(x,y) \le k \}$ can be affected, and the magnitude of influence is bounded by the cumulative flux capacity along any path. Because $\ell^1$ dynamics prefer minimal-support flows (sparse paths), propagation concentrates along lowest-cost routes rather than spreading isotropically. The defect field itself naturally defines a path cost $d_\delta(x,y) = \inf_{\gamma: x \to y} \sum_{e \in \gamma} |\delta(e)|$, yielding an emergent metric structure in which geometry depends on the field configuration. This provides a structural basis for causal geometry arising from the dynamics, rather than being imposed a priori. However, this cone and metric are graph-dependent and generically anisotropic; whether they can yield isotropic large-scale geometry under aggregation is an open problem (see Section 6.4).
+
+### 4.6 The Continuum Limit: Total Variation Flow
+
+The discrete $\ell^1$ autopoietic rules provide an exact computable basis for generating causal interacting poset graphs. We now establish their formal continuum scaling. The logical chain is: $\ell^1$ forces sparsity; sparsity forces concentration of gradients into measure-valued distributions; measure-valued gradients live in the space of functions of bounded variation (BV); and the natural variational functional on BV is total variation. The $\ell^1$ coboundary structure therefore is consistent with total variation–type continuum functionals under standard scaling limits. The precise isotropy of the limiting functional depends on the symmetry of the underlying discretization: anisotropic or crystalline graph sequences yield anisotropic TV, while isotropic refinement yields the standard (Euclidean) total variation. The continuum geometric structure is inherited from the embedding of the graph sequence; the $\ell^1$ framework determines the variational form, while the ambient geometry determines its metric structure.
+
+**Theorem 4.8 (Continuum Emergence).** **(Layer C — Formal Limit)** Let $G_h$ be a sequence of graphs with uniformly bounded degree admitting a consistent geometric embedding in a domain $\Omega \subset \mathbb{R}^d$, with appropriately scaled edge weights and mesh spacing $h \to 0$. Under isotropic refinement, the rescaling $I_h(s_h) = \sum_e |\delta_h(e)| \to \int_\Omega |\nabla s(x)| \, dx$ admits total variation flow as the canonical local continuum limit, and the Local $\ell^1$ Primal--Dual Iterator is consistent with a minimizing-movement discretization of this flow:
+$$ \partial_t s(x,t) \in -\partial \int_\Omega |\nabla s(x,t)| \, dx $$
+
+Where the field is smooth, this reduces to:
+$$ \partial_t s = \nabla \cdot \left( \frac{\nabla s}{|\nabla s|} \right) $$
+
+**Interpretation.** The iterator defines an intrinsic time parameter corresponding to descent in the $\ell^1$ action, yielding a minimizing-movement interpretation of evolution (in the sense of De Giorgi), rather than a direct time discretization of the PDE. In the continuum limit, the $\ell^1$ defect dynamics are consistent with total variation flow, producing nonlinear, edge-preserving field evolution. This establishes a fundamental structural contrast:
+
+1. **Classical $\ell^2$ Diffusion:** $\partial_t s = \Delta s$. Isotropically smooths all gradients, destroying object structure toward featureless equilibrium.
+2. **Autopoietic $\ell^1$ Flow:** $\partial_t s = \nabla \cdot (\nabla s / |\nabla s|)$. Preserves step-edges, concentrates gradients into sharp topological boundaries, and drives geometry under mean curvature.
+
+Crucially, the dynamics do not eliminate structure globally; they concentrate irreducible defect onto stable sets (cycles in the discrete setting, interfaces in the continuum), preserving topological information while reducing total variation. Discrete cycles characterizing autopoietic stable objects converge to sharp level-set boundaries (codimension-1 manifolds) enclosing persistent domains, consistent with known graph-to-TV $\Gamma$-convergence results in the variational literature (cf. Chambolle 2004, van Gennip–Bertozzi 2012). In the operator-valued case, the Schatten-1 functional $\int_\Omega \|\nabla \rho(x)\|_1 \, dx$ suggests a formally analogous structure, though a rigorous continuum theory for operator-valued total variation remains open and constitutes a nontrivial extension beyond the scalar setting.
+
+### 4.7 Fiber-Wise Symmetry and $U(n)$ Gauge Fields
+
+Because the Local $\ell^1$ Primal--Dual Iterator continuously strips away exact artifacts to isolate topological frustration, it enforces strict constraints on the emergent symmetry groups. We impose a single mathematically necessary constraint ensuring that optimization logic remains stable across equivalent observers:
+
+**Axiom (Local Compositional Invariance).** The absolute $\ell^1$ defect magnitude must remain invariant under local relabelings of internal states. Let $s(x) \mapsto g_x s(x)$. Preserving the coboundary norm requires:
+$$ \|\delta_e(g \cdot s)\|_1 = \|\delta_e(s)\|_1 $$
+
+This invariance immediately forces the naturality constraint $r_{b,a} \circ g_b = g_a \circ r_{b,a}$.
+
+**Lemma 4.9 (Trace-Norm Automorphisms).** Any surjective trace-norm preserving, completely positive, compositional automorphism of $\mathcal{B}_1(\mathcal{H})$ is unitary conjugation.
+*Proof Sketch.* By the Kadison isometry theorem [9] and its extension to Schatten ideals by Sourour [10], every surjective linear isometry of $\mathcal{B}_1(\mathbb{C}^n)$ has the form $A \mapsto UAV$ or $A \mapsto UA^T V$ for unitaries $U, V$. The requirement of complete positivity excludes the transpose (which is positive but not completely positive for $n \ge 2$, as its Choi matrix has a negative eigenvalue). The requirement of compositional consistency over the presheaf restriction maps ($g_a \circ r_{b,a} = r_{b,a} \circ g_b$) forces $V = U^*$: when $r_{b,a}$ includes partial traces, the equation $U_a \operatorname{Tr}_{\bar{a}}(\rho) V_a = \operatorname{Tr}_{\bar{a}}(U_b \rho V_b)$ for all $\rho$ requires $V_a = U_a^*$ (see, e.g., Watrous, *The Theory of Quantum Information*, Proposition 2.24). The admissible transformations reduce to unitary conjugation $A \mapsto UAU^*$. $\square$
+
+**Theorem 4.10 (Unitary Gauge Structure).** **(Layer B)** When stalks are finite-dimensional operator algebras $F(x) = \mathcal{B}_1(\mathbb{C}^n)$ evaluated under the Schatten-1 trace norm (Theorem 3.1), the local transformations satisfying compositional invariance restrict admissible local automorphisms to unitary conjugation, corresponding to a $U(n)$ gauge structure.
+
+1. By Lemma 4.9, the automorphisms $g_x$ must be trace-norm isometries acting via unitary conjugation: $g_x(A) = U_x A U_x^*$.
+2. The presheaf restriction maps $r_{b,a}$ behave as **discrete parallel transport**, defining geometric paths across the tensor network.
+3. The optimal terminal defect $\delta_{\text{irr}}$ produced by the Iterator acts exactly as the unresolvable physical gauge curvature (holonomy) constrained within the graph.
+
+The Local $\ell^1$ Primal--Dual Iterator thus dynamically derives internal $U(n)$ gauge fields purely from the requirement to minimize the Schatten-1 sequence distance between adjoining operator states.
+
+**Remark (U(n) vs. PU(n)).** The gauge group acts by conjugation $A \mapsto UAU^*$, under which the center $U(1) \subset U(n)$ acts trivially (scalar phase cancels). The group that acts faithfully on the stalks is therefore $PU(n) = U(n)/U(1)$. We write $U(n)$ to denote the group of local frame changes (the assignment $x \mapsto U_x$), which is the standard convention in lattice gauge theory where the $U(1)$ phase carries physical meaning as the global gauge choice. Complete positivity is an additional physical axiom motivated by quantum mechanics (quantum channels must be CP); it is not forced by the $\ell^1$ structure alone.
+
+Establishing subgroups $SU(3) \times SU(2) \times U(1)$ requires explicit constraints (rank, phase, symmetry breaking) that descend from specific bounded dual topologies during combinatorial lattice scaling.
+
+### 4.8 Geometry Emergence: Manifolds from Defects
+
+The continuum limit reveals a profound geometric consequence of $\ell^1$ structure.
+
+**Theorem 4.11 (Interface Emergence).** **(Layer C)** In the continuum limit of the $\ell^1$ defect functional $E(s) = \int_\Omega |\nabla s(x)| \, dx$, under standard BV regularity assumptions, the support of the singular part of $\nabla s$ concentrates on codimension-1 sets $\Sigma \subset \Omega$, which evolve under total variation flow by mean curvature.
+
+*Proof Sketch.* Total variation minimization selects functions of bounded variation whose gradients are Radon measures. By the structure theorem for BV functions (under appropriate regularity), the singular part of $\nabla s$ concentrates on rectifiable sets of codimension 1. Under TV flow, these sets evolve by mean curvature motion (established in geometric measure theory by the work of Evans–Spruck and Chen–Giga–Goto). $\square$
+
+**Interpretation.** The $\ell^1$ framework produces a *stratified geometry* in which the field is constant almost everywhere, with all structure concentrated on evolving codimension-1 manifolds $\Sigma$. The codimension-1 nature of emergent structures follows from the measure-minimizing property of total variation, which penalizes surface measure rather than volume. The emergent interfaces are not static regularity artifacts but dynamically interacting structures governed by a variational principle and conservation laws (Theorems 4.14–4.15), elevating them from mere features of BV regularity to carriers of physical structure. In this framework, geometry is encoded variationally through the $\ell^1$ action rather than through a pre-specified metric tensor. The discrete-to-continuum correspondence is direct:
+
+| Discrete | Continuum |
+|---|---|
+| Stable cycles | Codimension-1 interfaces $\Sigma$ |
+| Cycle stability (Thm 4.5) | Interface persistence under curvature flow |
+| Cycle interaction (Thm 4.6) | Interface merging, splitting, annihilation |
+| Tree instability (Cor 4.1) | Smooth regions carry no structure |
+
+### 4.9 Emergent Connection–Curvature–Holonomy Structure
+
+The dual variables and cycle defects of the $\ell^1$ framework naturally organize into a connection-like geometric structure.
+
+**Definition 4.6 ($\ell^1$ Holonomy).** For a cycle $C$ in the graph, define the $\ell^1$ holonomy:
+$$ \mathrm{Hol}(C) := \sum_{e \in C} \delta_{\mathrm{irr}}(e) $$
+
+Since exact parts cancel around any cycle ($\sum_{e \in C} d_0 f = 0$), holonomy depends only on the cohomology class $[\delta]$.
+
+**Definition 4.7 ($\ell^1$ Connection).** Edge restriction maps $r_{b,a}$ define local transport rules. The defect $\delta_e = r_{b,a}(s(b)) - s(a)$ measures transport failure. The connection is the collection of local transport operators; the defect is its curvature.
+
+**Definition 4.8 ($\ell^1$ Curvature).** For a cycle $C$, define $F(C) := \mathrm{Hol}(C)$. Curvature is the failure of consistent transport around a closed loop—structurally identical to gauge curvature.
+
+**Theorem 4.12 (Dual Field as Conserved Flux).** **(Layer B)** In the continuum limit, the dual variable $\phi$ defines a divergence-free unit flux field:
+$$ |\phi(x)| \le 1, \quad \nabla \cdot \phi = 0 $$
+aligned with defect gradients and supported on the emergent interfaces $\Sigma$.
+
+*Proof Sketch.* The dual optimality condition $d_0^* \phi = 0$ becomes $\nabla \cdot \phi = 0$ in the continuum. The constraint $\|\phi\|_\infty \le 1$ persists under scaling. Since $\nabla s$ concentrates on $\Sigma$, the alignment condition $\phi \in \partial |\nabla s|$ forces $\phi$ to be supported on $\Sigma$ with $\phi$ parallel to the normal direction. $\square$
+
+**Theorem 4.13 (Emergent Gauge Structure).** **(Layer B)** In the $\ell^1$ autopoietic framework:
+1. Edge defects define a *connection* via local transport inconsistency.
+2. Cycle defects define *holonomy* as irreducible accumulated mismatch.
+3. Holonomy defines *curvature*.
+4. Dual variables define *conserved flux fields* compatible with this structure.
+
+We emphasize that this construction does not assume a Lie group-valued connection or a principal bundle; rather, the connection–curvature–holonomy structure arises abstractly from defect transport on presheaf stalks. The parallel to standard gauge theory is structural, not definitional. Combined with the $U(n)$ result (Theorem 4.10), in the operator-valued setting the connection acts on trace-class stalks with unitary gauge symmetry, and holonomy measures the accumulated Schatten-1 mismatch around closed loops.
+
+### 4.10 The $\ell^1$ Gauge Action and Variational Principle
+
+We now promote the defect functional to a gauge-invariant action.
+
+**Definition 4.9 ($\ell^1$ Gauge Action).** Define the **section-level action**:
+$$ \mathcal{S}(s) := \|d_0 s\|_1 $$
+
+This is not gauge-invariant: under a gauge shift $s \mapsto s + f$, the defect transforms as $d_0 s \mapsto d_0 s + d_0 f$, and generically $\|d_0 s + d_0 f\|_1 \neq \|d_0 s\|_1$. The **gauge-invariant action** is the quotient norm:
+$$ \bar{\mathcal{S}}([\delta]) := \Phi([\delta]) = \min_f \|\delta - d_0 f\|_1 $$
+
+which depends only on the cohomology class $[\delta] \in H^1$. Physical configurations minimize $\bar{\mathcal{S}}$; the section-level action $\mathcal{S}(s)$ is an upper bound for $\bar{\mathcal{S}}([d_0 s])$.
+
+**Theorem 4.14 ($\ell^1$ Variational Principle).** **(Layer B)** Physical configurations are minimizers of the gauge-invariant action:
+$$ \delta_{\mathrm{irr}} = \arg\min_{[\delta]} \bar{\mathcal{S}}([\delta]) $$
+
+The Euler–Lagrange condition is:
+$$ 0 \in \partial \|d_0 s\|_1 \quad \Longleftrightarrow \quad d_0^* \phi = 0, \quad \phi \in \partial \|\delta\|_1 $$
+
+That is: the field equation *is* the divergence-free dual condition. Conservation laws are field equations.
+
+**Curvature Formulation.** When the irreducible defect $\delta_{\mathrm{irr}}$ is supported on edge-disjoint cycles $\{C_i\}$, the gauge-invariant action rewrites as:
+$$ \bar{\mathcal{S}} = \sum_i |\mathrm{Hol}(C_i)| $$
+
+For general defect configurations on overlapping cycles, this decomposition is a lower bound; the exact action requires solving the $\ell^1$ quotient norm optimization. The cycle-basis representation is the structural $\ell^1$ analogue of the Yang–Mills action $\sum \|F\|^2$, with $\ell^1$ replacing $\ell^2$.
+
+**Dual Formulation.** By LP duality:
+$$ \mathcal{S}(\delta) = \max_{\phi:\, d_0^* \phi = 0,\, \|\phi\|_\infty \le 1} \langle \phi, \delta \rangle $$
+
+The action equals the maximum flux compatible with divergence-free and boundedness constraints. This primal–dual identity—action equals flux capacity—is the structural core of the framework.
+
+**Continuum Action.** Under the scaling of Theorem 4.8:
+$$ \mathcal{S}(s) = \int_\Omega |\nabla s| \, dx $$
+whose variation recovers TV flow, confirming consistency with the iterator dynamics.
+
+### 4.11 Symmetry and Conservation: $\ell^1$ Noether Correspondence
+
+**Definition 4.10 (Symmetry of the $\ell^1$ Action).** A transformation $T$ acting on sections $s \in C^0$ is a *symmetry* if $\|d_0(Ts)\|_1 = \|d_0 s\|_1$. Examples include additive gauge shifts ($s \mapsto s + f$ for $f$ constant on connected components), unitary conjugation (operator-valued case, Theorem 4.10), and graph automorphisms.
+
+**Theorem 4.15 ($\ell^1$ Noether-Type Conservation Law).** **(Layer B)** Let $T_\epsilon$ be a continuous one-parameter family of symmetries of the $\ell^1$ action. Then along any solution of the $\ell^1$ variational principle, there exists a dual field $\phi$ such that:
+$$ d_0^* \phi = 0 \quad \text{and} \quad \left.\frac{d}{d\epsilon}\right|_{\epsilon=0} \|d_0(T_\epsilon s)\|_1 = \langle \phi, d_0(\dot{s}) \rangle = 0 $$
+
+*Proof Sketch.* Action invariance gives $\frac{d}{d\epsilon} \mathcal{S}(T_\epsilon s) = 0$. By the subgradient structure, $\delta \mathcal{S} = \langle \phi, \delta(\cdot) \rangle$ for $\phi \in \partial \|\delta\|_1$. The stationarity condition $\langle \phi, d_0 \dot{s} \rangle = 0$ integrates by parts (discrete adjoint) to $\langle d_0^* \phi, \dot{s} \rangle = 0$. Since this holds for all admissible variations $\dot{s}$, we obtain $d_0^* \phi = 0$. **Regularity caveat:** The $\ell^1$ norm is not differentiable at points where $\delta_e = 0$ for some edges. At such points, the subdifferential $\partial \|\delta\|_1$ is multi-valued (the dual variable $\phi(e) \in [-1, 1]$ is not uniquely determined). The conservation law holds for every subgradient selection $\phi \in \partial \|\delta\|_1$, but the conserved dual field is not unique at non-smooth configurations. $\square$
+
+**Interpretation.** Symmetries of the $\ell^1$ action generate divergence-free dual fields—conserved flux. In classical physics, Noether's theorem says: symmetry $\to$ conserved current. In the $\ell^1$ framework: symmetry $\to$ dual feasibility $\to$ conserved flux. The correspondence is structural, not analogical.
+
+| Classical Field Theory | $\ell^1$ Cohomological Framework |
+|---|---|
+| Action $\mathcal{S}$ | $\|d_0 s\|_1$ |
+| Field | Section $s$ |
+| Curvature | Holonomy $\mathrm{Hol}(C)$ |
+| Gauge invariance | $s \sim s + f$ (quotient structure) |
+| Field equation | $d_0^* \phi = 0$ |
+| Conserved current | Divergence-free $\phi$ |
+
+**Continuum Version.** Under scaling, the conservation law becomes $\nabla \cdot \phi = 0$ with $\phi$ the continuum dual flux. This is the classical conservation equation structure.
+
+---
+
+## 5. The Distinguishability Bound (The Bridge to Physics)
+
+### 5.1 The Distinguishability Bound Theorem
+
+The results of Papers 000--004 establish that the $\ell^1$ coboundary norm is the unique additive defect diagnostic, and that it lifts canonically to the Schatten-1 trace norm natively in operator-valued presheaves. This structural rigidity allows us to formally map abstract topological obstruction directly to standard distance metrics in information theory.
+
+> **Theorem 5.1 (Distinguishability Bound).** **(Layer B)** Let $(\rho_x)_{x \in P}$ be an operator-valued presheaf section over a path graph connecting nodes $a$ and $b$, with uniform local Hilbert spaces $\mathcal{H}_x = \mathcal{H}$ for all $x$, and let $I(s) = \sum_e \|\delta_e(s)\|_1$ be the $\ell^1$ coboundary defect. Let $R_{b,a} = r_{1,0} \circ r_{2,1} \circ \cdots \circ r_{m,m-1}$ denote the composed restriction (parallel transport) from $b$ to $a$. Then the quantum trace distance satisfies:
+> $$ T(\rho_a, R_{b,a}(\rho_b)) \le \frac{1}{2} I(s) $$
+
+*Proof Sketch.* By telescoping and the contractivity of each restriction map: $\|R_{b,a}(\rho_b) - \rho_a\|_1 \le \sum_{i} \|r_{i+1,i}(\rho_{i+1}) - \rho_i\|_1 = \sum_{e \in \text{path}(a,b)} \|\delta_e\|_1 = I(s)$. Noting that trace distance is precisely half the trace norm yields the result. When all Hilbert spaces are identical and restriction maps are the identity, this reduces to the standard triangle inequality $T(\rho_a, \rho_b) \le \frac{1}{2} I(s)$. $\square$
+
+This theorem provides a structural link between the framework and operational distinguishability in quantum information, contingent on identifying presheaf sections with physical quantum states. The $\ell^1$ topological tension $I(s)$ actively bounds the maximum quantum distinguishability between any two local subsystems. Furthermore, returning to the Hodge cohomology of Paper 003, the quotient norm $\Phi([\delta])$ bounds the *minimal unavoidable distinguishability* (irreducible correlation) that remains after all local gauge transformations are exhausted.
+
+### 5.2 Connection to the Fermion Sign Problem (Layer C --- Conjectural)
+
+The Schatten-1 extension (Theorem 3.1) suggests a structural connection to the fermion sign problem. When the presheaf stalks carry fermionic statistics, the restriction maps $r_{b,a}$ involve antisymmetrization, and the coboundary defect $\delta_e$ would measure the failure of local fermionic states to glue consistently. Whether the trace norm of this defect can be rigorously identified with sign frustration requires formal development beyond this paper's scope [11].
+
+If this connection holds, it would provide a structural interpretation: the fermion sign problem would be a manifestation of $\ell^1$ gauge frustration on operator-valued presheaves, rather than an artifact of computational representation. However, this remains conjectural and requires explicit construction of the fermionic presheaf and verification that the coboundary defect captures the relevant sign structure.
+
+### 5.3 Connection to Coupling Constraints (Layer C --- Conjectural)
+
+Subsequent work [12] explores whether the fine structure constant can be derived from the bounding limits of a minimal $\ell^1$ obstruction seed. The structural constraints proposed here suggest that:
+
+1. The $\ell^1$ obstruction on a 2-node graph has an absolute coboundary norm gap.
+2. Subdivision interpolation (expanding to a 3-node lattice) preserves the defect monotonically by Theorem 2.1.
+3. The Schatten-1 extension (Theorem 3.1) guarantees this topological constraint survives when evaluating localized quantum states.
+
+Whether the derivation of wave mechanics, the Born rule, and coupling constants formally descends from these bounding trace constraints remains deeply speculative. The present paper only provides the structural foundation demonstrating that the $\ell^1$ Distinguishability Bound mathematically governs such limiting constraints.
+
+---
+
+## 6. Discussion
+
+### 6.1 What This Paper Proves
+
+This paper extends the foundational quad (Papers 000–003) in five directions:
+
+1. **Functorial aggregation is monotone** (Theorem 2.1): $\ell^1$ defects cannot be hidden by coarse-graining.
+
+2. **The operator-valued extension is canonical** (Theorem 3.1): The trace norm is the unique diagnostic on operator-valued presheaves satisfying the foundational axioms.
+
+3. **The Local $\ell^1$ Primal--Dual Iterator characterizes defect fixed points** (Definition 4.1, Theorem 4.2, Theorem 4.4): A local $\ell^1$ primal–dual iterator whose fixed points are $\ell^1$-minimal representatives (Theorem 4.2), with edge-wise local descent bounds (Theorem 4.4). Monotonic global descent is conjectured (Conjecture 4.3) but not proved.
+
+4. **Stable structure emerges and interacts** (Theorems 4.5–4.7): Cycle-supported defects are fixed points; overlapping cycles interact via re-optimization; disturbances propagate at finite speed.
+
+5. **A gauge-invariant variational structure exists** (Theorems 4.11–4.15): The $\ell^1$ action, its curvature formulation, the emergent connection–holonomy framework, and the Noether-type conservation law provide a field-theoretic structure derived from defect minimization alone.
+
+### 6.2 What This Paper Does Not Prove
+
+The conjectural elements (Layer C) are explicitly marked:
+
+- The continuum limit (Theorem 4.8) is stated as a formal scaling limit; full $\Gamma$-convergence is not proved.
+- The geometry emergence result (Theorem 4.11) invokes established results from geometric measure theory under standard BV regularity assumptions but does not re-derive them.
+- The connections to the Standard Model gauge groups remain structural observations pending explicit derivation.
+- The derivation chain to quantum mechanics (Section 5.1) contains both established and open steps.
+- Monotonic descent of the iterator (Conjecture 4.3) is not proved; the convergence analysis for the three-step primal–dual variant is deferred to subsequent work.
+- The finite-speed propagation (Corollary 4.2) establishes causal ordering but does not imply Lorentz invariance, an invariant propagation speed, or relativistic frame equivalence; whether additional symmetry constraints on the $\ell^1$ action can force an invariant speed remains open.
+
+The conditionality of all claims is preserved. The $\ell^1$ framework is forced *given* the axioms of Papers 001--002. The extensions proved here are forced *given* the $\ell^1$ framework. The conjectural elements indicate where the program requires further formal development.
+
+### 6.3 Position in the Program
+
+Papers 000--003 answer: *What must the defect metric be?* ($\ell^1$, uniquely.)
+
+This paper answers: *What is its static and variational structure?* (Monotone under aggregation, canonical on operators, governed by a gauge-invariant action whose symmetries generate conserved flux, with emergent connection–curvature–holonomy structure and a formal continuum limit recovering total variation flow.)
+
+Paper 005 inherits: *How does local dynamics realize this action?* (The Autopoietic Iterator as the local engine driving causal poset construction, propagation, and structural emergence.)
+
+The program is falsifiable at every joint: if any proved theorem is incorrect, or if any conjectured step fails, the downstream structure requires revision at that point. The separation of established results (Layers A, B) from conjectures (Layer C) is maintained to make this falsification structure transparent.
+
+### 6.4 The Scope of Geometric Emergence
+
+The $\ell^1$ framework does not prescribe the ambient geometric substrate—the topology, dimensionality, or embedding of the underlying graph or poset are inputs, not outputs. Rather, the framework determines the variational structure governing defect minimization, which in turn forces all nontrivial structure to concentrate on minimal geometric carriers. In the continuum limit, this yields codimension-1 interfaces evolving under curvature-driven dynamics. Geometry in this sense is not imposed a priori but emerges as the support of irreducible defect under the $\ell^1$ action.
+
+Concretely, the framework derives:
+
+* **Where structure lives:** on minimal-measure carriers (cycles → interfaces)
+* **How structure behaves:** curvature-driven evolution, finite-speed propagation
+* **What counts as irreducible:** gauge-invariant cohomological content ($\Phi([\delta])$)
+
+It does not derive:
+
+* The ambient dimension or topology of the substrate
+* A Riemannian metric on the background space
+* The specific graph connectivity or embedding
+
+This distinction positions the framework as a theory of **geometric content** (what structures exist and how they interact) rather than **geometric background** (what space they inhabit). The substrate is given; the physics living on it is derived. The framework derives causal structure first (finite-speed propagation, causal ordering from variational descent); metric structure—including Lorentz symmetry, invariant speed, and observer equivalence—remains an open emergence problem requiring additional symmetry constraints on the action or the graph ensemble.
+
+### 6.5 Open Problems: Emergent Metric and Homogenization
+
+The cone structure identified in Remark 4.3 and the defect-induced path cost $d_\delta(x,y) = \inf_\gamma \sum_{e \in \gamma} |\delta(e)|$ define a candidate emergent metric. Three open questions determine whether this candidate can bridge to physical geometry:
+
+1. **Homogenization under aggregation.** While the defect-induced metric is generically anisotropic at microscopic scales, the combination of $\ell^1$ minimization (which penalizes redundant directional concentration) and functorial aggregation (Theorem 2.1, which preserves total defect under coarse-graining) suggests a homogenization mechanism. *Open problem:* Does repeated coarse-graining of generic $\ell^1$ defect configurations converge to an approximately isotropic metric in distribution, for sufficiently symmetric or ergodic graph ensembles?
+
+2. **Invariant speed.** The dual feasibility constraint $\|\phi\|_\infty \le 1$ imposes a uniform flux bound, yielding a maximal propagation rate. *Open problem:* Under what symmetry conditions on the $\ell^1$ action does this maximal rate become invariant under admissible transformations?
+
+3. **Metric–dynamics coupling.** The defect-induced metric $d_\delta$ depends on the field configuration, so geometry and dynamics are coupled. *Open problem:* Does this coupling admit a consistent continuum limit in which the emergent metric satisfies a geometric evolution equation (analogous to Ricci flow or Einstein equations)?
+
+A positive answer to (1) would establish a serious bridge between the $\ell^1$ framework and spacetime structure. A counterexample—a stable, strongly anisotropic defect configuration resistant to aggregation—would bound the geometric ambitions of the program. This constitutes the critical falsification test for the physics-level extension of the framework.
+
+---
+
+## Acknowledgments
+
+No external funding. No conflicts of interest.
+
+---
+
+## References
+
+[1] S. Mac Lane, *Categories for the Working Mathematician*, Springer, 1971.
+
+[2] B. Eckmann, "Harmonische Funktionen und Randwertaufgaben in einem Komplex," *Commentarii Mathematici Helvetici* **17** (1944/45), 240--255.
+
+[3] J. A. Hansen and R. Ghrist, "Toward a spectral theory of cellular sheaves," *Journal of Applied and Computational Topology* **3** (2019), 315--358.
+
+[4] J. H. Carroll, "Projection Obstruction Theory - Retraction Nonlinearity, l1 Rigidity, and Density Scaling," Zenodo, 2026. https://doi.org/10.5281/zenodo.19151803
+
+[5] J. H. Carroll, "The Free $\ell^1$ Seminorm on Banach Presheaf Coboundaries," Zenodo, 2026. https://doi.org/10.5281/zenodo.19152115
+
+[6] J. H. Carroll, "Coordinate-Wise Additivity and the $\ell^1$ Norm on Finite Graph Cochains," Zenodo, 2026. https://doi.org/10.5281/zenodo.19152599
+
+[7] J. H. Carroll, "Hodge Structure and Gauge Equivalence of $\ell^1$ Defect Fields," Zenodo, 2026. https://doi.org/10.5281/zenodo.19152799
+
+[8] R. T. Rockafellar, *Convex Analysis*, Princeton University Press, 1970.
+
+[9] R. V. Kadison, "Isometries of operator algebras," *Annals of Mathematics* **54** (1951), 325--338.
+
+[10] A. R. Sourour, "Isometries of norm ideals of compact operators," *Journal of Functional Analysis* **43** (1981), 69--77.
+
+[11] M. Troyer and U.-J. Wiese, "Computational complexity and fundamental limitations to fermionic quantum Monte Carlo simulations," *Physical Review Letters* **94** (2005), 170201.
+
+[12] J. H. Carroll, "Emergent Gauge Symmetry from $\ell^1$ Defect Flow," Zenodo, 2026. https://doi.org/10.5281/zenodo.19182289
